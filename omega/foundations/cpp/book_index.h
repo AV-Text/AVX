@@ -1,3 +1,4 @@
+#pragma once
 #include <avxgen.h>
 #include <written.h>
 #include <chapter_index.h>
@@ -27,7 +28,7 @@ public:
         
         inline const AVXWritten::AVXWrit* const getWrit()
         {
-            return AVXWritten::written[num];
+            return AVXWritten::getWrit(this->num);
         }
         inline const AVXWritten::AVXWrit* const getWrit(uint8 chapter)
         {
@@ -35,7 +36,7 @@ public:
                 return nullptr;
 
             auto ichapter = AVXChapterIndex::index[this->chapter_idx + chapter - 1];
-            return AVXWritten::written[num] + ichapter.bk_writ_idx;
+            return AVXBook::getWrit() + ichapter.writ_idx;
         }
         const AVXWritten::AVXWrit* const getWrit(uint8 chapter, uint8 verse)
         {
@@ -47,16 +48,24 @@ public:
             if (verse > ichapter.verse_cnt || verse < 1)
                 return nullptr;
 
-            auto iverse = &(AVXVerseIndex::index[ichapter.verse_idx + verse - 1]);
-
-            uint32 offset = ichapter.bk_writ_idx;
+            auto writ_idx = ichapter.writ_idx;
+            auto iwrit = this->getWrit();
 
             for (uint8 v = 1; v < verse; v++)
             {
-                offset += iverse->word_cnt;
-                iverse++;
+                iwrit += iwrit->wc;
             }
-            return AVXWritten::written[num] + offset;
+            return iwrit;
+        }
+        const AVXBook* getBook(uint16 chapter_idx)
+        {
+            for (int i = 1; i <= 66; i++)
+            {
+                auto book = AVXBookIndex::index[i];
+                if (chapter_idx > book.chapter_idx)
+                    return &book;
+            }
+            return nullptr;
         }
     };
 

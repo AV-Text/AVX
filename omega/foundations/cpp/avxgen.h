@@ -1,6 +1,4 @@
-//
-// Created by Me on 1/7/2023.
-//
+#pragma once
 
 #ifndef CPP_AVXGEN_H
 #define CPP_AVXGEN_H

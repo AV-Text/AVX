@@ -1,3 +1,4 @@
+#pragma once
 #include <avxgen.h>
 const char AVXLemmaOOV_File[] = "AV-Lemma-OOV.dxi"; // from AV-Inventory-Z31.bom
 const uint32 AXVLemmaOOV_RecordCnt  =  771;       // from AV-Inventory-Z31.bom

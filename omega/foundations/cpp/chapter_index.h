@@ -1,3 +1,4 @@
+#pragma once
 #include <avxgen.h>
 const char AVXChapterIndex_File[] = "AV-Chapter.ix";    // from AV-Inventory-Z31.bom
 const uint32 AVXChapterIndex_RecordLen =    8;     // from AV-Inventory-Z31.bom

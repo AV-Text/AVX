@@ -1,3 +1,4 @@
+#pragma once
 #include <avxgen.h>
 const char AVXVerseIndex_File[] = "AV-Verse.ix";    // from AV-Inventory-Z31.bom
 const uint32 AVXVerseIndex_RecordLen =      4; // from AV-Inventory-Z31.bom

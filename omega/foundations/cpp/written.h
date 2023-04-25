@@ -1,3 +1,4 @@
+#pragma once
 #include <avxgen.h>
 const char AVXWritten_File[]        = "AV-Writ.dx"; // from AV-Inventory-Z31.bom
 const uint32 AVXWritten_RecordLen   =       22;     // from AV-Inventory-Z31.bom
@@ -86,7 +87,6 @@ public:
         const uint8  c;
         const uint8  v;
         const uint8  wc;
-        const uint16 verse_idx;
         const uint16 word;
         const uint8  punc;
         const uint8  trans;
@@ -166,5 +166,77 @@ public:
     static AVXWrit const written_65[608];
     static AVXWrit const written_66[11995];
 
-    static AVXWrit const *written[67];
+    inline static const AVXWritten::AVXWrit* const getWrit(uint8 bknum)
+    {
+        switch (bknum)
+        {
+        case  1:    return AVXWritten::written_01;
+        case  2:    return AVXWritten::written_02;
+        case  3:    return AVXWritten::written_03;
+        case  4:    return AVXWritten::written_04;
+        case  5:    return AVXWritten::written_05;
+        case  6:    return AVXWritten::written_06;
+        case  7:    return AVXWritten::written_07;
+        case  8:    return AVXWritten::written_08;
+        case  9:    return AVXWritten::written_09;
+        case 10:    return AVXWritten::written_10;
+        case 11:    return AVXWritten::written_11;
+        case 12:    return AVXWritten::written_12;
+        case 13:    return AVXWritten::written_13;
+        case 14:    return AVXWritten::written_14;
+        case 15:    return AVXWritten::written_15;
+        case 16:    return AVXWritten::written_16;
+        case 17:    return AVXWritten::written_17;
+        case 18:    return AVXWritten::written_18;
+        case 19:    return AVXWritten::written_19;
+        case 20:    return AVXWritten::written_20;
+        case 21:    return AVXWritten::written_21;
+        case 22:    return AVXWritten::written_22;
+        case 23:    return AVXWritten::written_23;
+        case 24:    return AVXWritten::written_24;
+        case 25:    return AVXWritten::written_25;
+        case 26:    return AVXWritten::written_26;
+        case 27:    return AVXWritten::written_27;
+        case 28:    return AVXWritten::written_28;
+        case 29:    return AVXWritten::written_29;
+        case 30:    return AVXWritten::written_30;
+        case 31:    return AVXWritten::written_31;
+        case 32:    return AVXWritten::written_32;
+        case 33:    return AVXWritten::written_33;
+        case 34:    return AVXWritten::written_34;
+        case 35:    return AVXWritten::written_35;
+        case 36:    return AVXWritten::written_36;
+        case 37:    return AVXWritten::written_37;
+        case 38:    return AVXWritten::written_38;
+        case 39:    return AVXWritten::written_39;
+        case 40:    return AVXWritten::written_40;
+        case 41:    return AVXWritten::written_41;
+        case 42:    return AVXWritten::written_42;
+        case 43:    return AVXWritten::written_43;
+        case 44:    return AVXWritten::written_44;
+        case 45:    return AVXWritten::written_45;
+        case 46:    return AVXWritten::written_46;
+        case 47:    return AVXWritten::written_47;
+        case 48:    return AVXWritten::written_48;
+        case 49:    return AVXWritten::written_49;
+        case 50:    return AVXWritten::written_50;
+        case 51:    return AVXWritten::written_51;
+        case 52:    return AVXWritten::written_52;
+        case 53:    return AVXWritten::written_53;
+        case 54:    return AVXWritten::written_54;
+        case 55:    return AVXWritten::written_55;
+        case 56:    return AVXWritten::written_56;
+        case 57:    return AVXWritten::written_57;
+        case 58:    return AVXWritten::written_58;
+        case 59:    return AVXWritten::written_59;
+        case 60:    return AVXWritten::written_60;
+        case 61:    return AVXWritten::written_61;
+        case 62:    return AVXWritten::written_62;
+        case 63:    return AVXWritten::written_63;
+        case 64:    return AVXWritten::written_64;
+        case 65:    return AVXWritten::written_65;
+        case 66:    return AVXWritten::written_66;
+        }
+        return nullptr;
+    }
 };

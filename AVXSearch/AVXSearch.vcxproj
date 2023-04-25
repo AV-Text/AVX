@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{03447c6f-ba1a-4386-9412-8f52a0399a41}</ProjectGuid>
+    <RootNamespace>AVXSearch</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\omega\foundations\cpp\avxgen.h" />
+    <ClInclude Include="..\omega\foundations\cpp\book_index.h" />
+    <ClInclude Include="..\omega\foundations\cpp\chapter_index.h" />
+    <ClInclude Include="..\omega\foundations\cpp\framework.h" />
+    <ClInclude Include="..\omega\foundations\cpp\lemmata.h" />
+    <ClInclude Include="..\omega\foundations\cpp\lexicon.h" />
+    <ClInclude Include="..\omega\foundations\cpp\names.h" />
+    <ClInclude Include="..\omega\foundations\cpp\oov_lemmata.h" />
+    <ClInclude Include="..\omega\foundations\cpp\verse_index.h" />
+    <ClInclude Include="..\omega\foundations\cpp\written.h" />
+    <ClInclude Include="AVXComparator.h" />
+    <ClInclude Include="AVXDeltaComparator.h" />
+    <ClInclude Include="AVXFind.h" />
+    <ClInclude Include="AVXFound.h" />
+    <ClInclude Include="AVXFragment.h" />
+    <ClInclude Include="AVXLemmaComparator.h" />
+    <ClInclude Include="AVXMatch.h" />
+    <ClInclude Include="AVXPOS16Comparator.h" />
+    <ClInclude Include="AVXPOS32Comparator.h" />
+    <ClInclude Include="AVXPuncComparator.h" />
+    <ClInclude Include="AVXRender.h" />
+    <ClInclude Include="AVXResults.h" />
+    <ClInclude Include="AVXSearch.h" />
+    <ClInclude Include="AVXSegment.h" />
+    <ClInclude Include="AVXStrongsComparator.h" />
+    <ClInclude Include="AVXWordComparator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\omega\foundations\cpp\book_index.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\chapter_index.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\lemmata.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\lexicon.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\library.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\names.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\oov_lemmata.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\verse_index.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_01.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_02.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_03.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_04.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_05.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_06.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_07.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_08.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_09.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_10.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_11.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_12.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_13.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_14.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_15.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_16.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_17.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_18.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_19.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_20.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_21.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_22.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_23.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_24.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_25.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_26.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_27.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_28.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_29.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_30.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_31.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_32.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_33.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_34.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_35.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_36.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_37.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_38.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_39.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_40.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_41.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_42.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_43.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_44.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_45.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_46.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_47.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_48.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_49.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_50.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_51.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_52.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_53.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_54.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_55.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_56.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_57.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_58.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_59.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_60.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_61.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_62.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_63.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_64.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_65.cpp" />
+    <ClCompile Include="..\omega\foundations\cpp\written\written_66.cpp" />
+    <ClCompile Include="AVXDeltaComparator.cpp" />
+    <ClCompile Include="AVXFind.cpp" />
+    <ClCompile Include="AVXFound.cpp" />
+    <ClCompile Include="AVXFragment.cpp" />
+    <ClCompile Include="AVXLemmaComparator.cpp" />
+    <ClCompile Include="AVXMatch.cpp" />
+    <ClCompile Include="AVXPOS16Comparator.cpp" />
+    <ClCompile Include="AVXPOS32Comparator.cpp" />
+    <ClCompile Include="AVXPuncComparator.cpp" />
+    <ClCompile Include="AVXRender.cpp" />
+    <ClCompile Include="AVXResults.cpp" />
+    <ClCompile Include="AVXSearch.cpp" />
+    <ClCompile Include="AVXSegment.cpp" />
+    <ClCompile Include="AVXStrongsComparator.cpp" />
+    <ClCompile Include="AVXWordComparator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\omega\foundations\cpp\cmakelists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\omega\foundations\cpp\CMakeSettings.json" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
