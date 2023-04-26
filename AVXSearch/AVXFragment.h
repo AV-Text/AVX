@@ -4,7 +4,7 @@
 #include <written.h>
 class AVXComparator;
 
-using namespace Blueprint::Request;
+using namespace XBlueprint;
 
 class AVXFragment
 {

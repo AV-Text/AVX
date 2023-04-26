@@ -5,7 +5,7 @@
 #include <blueprint_reply_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace Blueprint::Reply;
+using namespace XBlueprint;
 
 class AVXFound;
 

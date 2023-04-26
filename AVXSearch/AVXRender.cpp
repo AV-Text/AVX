@@ -1,7 +1,7 @@
 #include "AVXRender.h"
 #include <unordered_set>
 
-using namespace Blueprint::Request;
+using namespace XBlueprint;
 
 static std::unordered_set<uintptr_t> MemoryTable;
 

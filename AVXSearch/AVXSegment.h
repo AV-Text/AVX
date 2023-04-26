@@ -2,7 +2,7 @@
 #include <blueprint_request_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace Blueprint::Request;
+using namespace XBlueprint;
 
 #include <written.h>
 class AVXFragment;

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <written.h>
 
-using namespace Blueprint::Request;
+using namespace XBlueprint;
 
 class AVXComparator
 {

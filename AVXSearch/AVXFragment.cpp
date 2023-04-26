@@ -13,7 +13,7 @@
 
 #include <written.h>
 
-using namespace Blueprint::Request;
+using namespace XBlueprint;
 
 static AVXComparator* create_feature(const XFeature* feature)
 {
