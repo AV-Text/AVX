@@ -1,6 +1,7 @@
 #pragma once
 #include <blueprint_request_generated.h>
 #include <flatbuffers/flatbuffers.h>
+#include <written.h>
 class AVXComparator;
 
 using namespace Blueprint::Request;
@@ -14,4 +15,6 @@ public:
 	AVXFragment(const XFragment* xfragments);
 
 	~AVXFragment();
+
+	bool compare(AVXWritten::AVXWrit& writ);
 };

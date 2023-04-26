@@ -6,7 +6,7 @@ class AVXLemmaComparator : public AVXComparator
 public:
 	uint16* lemmata;
 	AVXLemmaComparator(const XFeature* feature);
-	virtual bool compare(AVXWritten& writ);
+	virtual bool compare(AVXWritten::AVXWrit& writ);
 	virtual ~AVXLemmaComparator();
 };
 

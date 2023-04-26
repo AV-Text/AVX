@@ -11,6 +11,8 @@
 #include <blueprint_request_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
+#include <written.h>
+
 using namespace Blueprint::Request;
 
 static AVXComparator* create_feature(const XFeature* feature)
@@ -57,13 +59,18 @@ AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragm
     if (xfeatures != nullptr)
     {
         int features_size = xfeatures->size();
-        this->features = (AVXComparator**)calloc(features_size + 1, sizeof(AVXComparator**));
+        this->features = (AVXComparator**)calloc(features_size + 1, sizeof(AVXComparator*));
         for (int f = 0; f < features_size; f++)
         {
             auto xfragment = (*xfeatures)[f];
             this->features[f] = create_feature(xfragment);
         }
     }
+}
+
+bool AVXFragment::compare(AVXWritten::AVXWrit& writ)
+{
+    return false;
 }
 
 AVXFragment::~AVXFragment()

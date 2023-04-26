@@ -1,7 +1,7 @@
 #include "AVXPOS32Comparator.h"
 #include <stdlib.h>
 
-bool AVXPOS32Comparator::compare(AVXWritten& writ)
+bool AVXPOS32Comparator::compare(AVXWritten::AVXWrit& writ)
 {
 	return false;
 }

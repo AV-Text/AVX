@@ -46,7 +46,7 @@ public:
     }
 };
 
-class AVXSegments;
+class AVXSegment;
 class AVXSearch
 {
 private:
@@ -58,7 +58,7 @@ private:
     const char* spec;
     bool negate;
     bool quoted;
-    AVXSegments** segments;
+    AVXSegment** segments;
     XSegment* xsegments;
 
 public:

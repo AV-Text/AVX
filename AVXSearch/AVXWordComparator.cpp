@@ -1,7 +1,7 @@
 #include "AVXWordComparator.h"
 #include <stdlib.h>
 
-bool AVXWordComparator::compare(AVXWritten& writ)
+bool AVXWordComparator::compare(AVXWritten::AVXWrit& writ)
 {
 	return false;
 }

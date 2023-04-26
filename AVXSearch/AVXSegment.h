@@ -4,6 +4,7 @@
 
 using namespace Blueprint::Request;
 
+#include <written.h>
 class AVXFragment;
 class AVXSegment
 {
@@ -17,5 +18,7 @@ public:
 	//AVXSegment(const XSegment* xsegments);
 
 	~AVXSegment();
+
+	bool compare(AVXWritten::AVXWrit& writ);
 };
 

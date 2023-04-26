@@ -1,7 +1,7 @@
 #include "AVXPuncComparator.h"
 #include <stdlib.h>
 
-bool AVXPuncComparator::compare(AVXWritten& writ)
+bool AVXPuncComparator::compare(AVXWritten::AVXWrit& writ)
 {
 	return false;
 }

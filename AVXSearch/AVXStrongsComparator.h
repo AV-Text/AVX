@@ -7,7 +7,7 @@ public:
 	XLangEnum lang;
 	uint16 number;
 	AVXStrongsComparator(const XFeature* feature);
-	virtual bool compare(AVXWritten& writ);
+	virtual bool compare(AVXWritten::AVXWrit& writ);
 	virtual ~AVXStrongsComparator();
 };
 

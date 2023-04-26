@@ -1,7 +1,7 @@
 #include "AVXStrongsComparator.h"
 #include <stdlib.h>
 
-bool AVXStrongsComparator::compare(AVXWritten& writ)
+bool AVXStrongsComparator::compare(AVXWritten::AVXWrit& writ)
 {
 	return false;
 }

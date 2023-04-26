@@ -1,7 +1,7 @@
 #include "AVXDeltaComparator.h"
 #include <stdlib.h>
 
-bool AVXDeltaComparator::compare(AVXWritten& writ)
+bool AVXDeltaComparator::compare(AVXWritten::AVXWrit& writ)
 {
 	return false;
 }

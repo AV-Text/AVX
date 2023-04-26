@@ -1,7 +1,7 @@
 #include "AVXLemmaComparator.h"
 #include <stdlib.h>
 
-bool AVXLemmaComparator::compare(AVXWritten& writ)
+bool AVXLemmaComparator::compare(AVXWritten::AVXWrit& writ)
 {
 	return false;
 }
