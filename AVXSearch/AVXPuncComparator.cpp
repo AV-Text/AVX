@@ -1,9 +1,14 @@
 #include "AVXPuncComparator.h"
 #include <stdlib.h>
 
-bool AVXPuncComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXPuncComparator::compare(AVXWritten::AVXWrit& writ)
 {
-	return false;
+	bool positive = !this->negate;
+	uint8 punc = this->punc;
+	uint8 mask = (punc & writ.punc);
+
+	bool match = positive ? (punc == mask) : (punc != mask);
+	return match ? this->feature : nullptr;
 }
 
 AVXPuncComparator::AVXPuncComparator(const XFeature* feature) : AVXComparator(feature), punc(0)

@@ -184,6 +184,7 @@
     <ClInclude Include="AVXSearch.h" />
     <ClInclude Include="AVXSegment.h" />
     <ClInclude Include="AVXStrongsComparator.h" />
+    <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +276,7 @@
     <ClCompile Include="AVXSearch.cpp" />
     <ClCompile Include="AVXSegment.cpp" />
     <ClCompile Include="AVXStrongsComparator.cpp" />
+    <ClCompile Include="AVXTransitionComparator.cpp" />
     <ClCompile Include="AVXWordComparator.cpp" />
   </ItemGroup>
   <ItemGroup>

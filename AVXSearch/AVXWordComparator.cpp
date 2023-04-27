@@ -1,9 +1,17 @@
 #include "AVXWordComparator.h"
 #include <stdlib.h>
 
-bool AVXWordComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXWordComparator::compare(AVXWritten::AVXWrit& writ)
 {
-	return false;
+	bool positive = !this->negate;
+
+	if (this->wkeys != nullptr)
+	{
+		for (int i = 0; wkeys[i]; i++)
+			if (wkeys[i] == writ.word)
+				return this->feature;
+	}
+	return positive ? nullptr : this->feature;
 }
 
 AVXWordComparator::AVXWordComparator(const XFeature* feature) : AVXComparator(feature), wkeys(nullptr)

@@ -40,7 +40,9 @@ bool AVXResults::execute()
                 for (int r = 0; r < search_size; r++)
                 {
                     auto rxsearch = (*xsearch)[r];
-                    AVXSearch search(rxsearch, *this, settings);
+                    auto find = new AVXFind(rxsearch->negate(), rxsearch->search()->c_str());
+                    this->searches.push_back(find);
+                    AVXSearch search(rxsearch, *find, settings);
 
                     // This is redundant for multiple searches, but neither time-complexity nor memory bloat is not a real concern here
                     // This makes the search cleaner 9and thiere is often only one anyway most of the time)

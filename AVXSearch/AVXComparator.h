@@ -18,7 +18,7 @@ public:
     const char* feature;
     const char* rule;
     const bool negate;
-    virtual bool compare(AVXWritten::AVXWrit& writ) = 0;
+    virtual const char* compare(AVXWritten::AVXWrit& writ) = 0;
 
     virtual ~AVXComparator()
     {

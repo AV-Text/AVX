@@ -13,7 +13,7 @@ public:
     std::string feature;
     uint32 coordinates;
 
-    AVXMatch(const char* fragment, const char* feature, uint32 coordinates)
+    AVXMatch(uint32 coordinates, const char* fragment, const char* feature)
     {
         this->fragment = fragment;
         this->feature = feature;

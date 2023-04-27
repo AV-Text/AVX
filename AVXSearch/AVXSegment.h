@@ -1,6 +1,7 @@
 #pragma once
 #include <blueprint_request_generated.h>
 #include <flatbuffers/flatbuffers.h>
+#include <map>
 
 using namespace XBlueprint;
 
@@ -19,6 +20,6 @@ public:
 
 	~AVXSegment();
 
-	bool compare(AVXWritten::AVXWrit& writ);
+	bool compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matches);
 };
 

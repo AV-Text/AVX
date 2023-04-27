@@ -1,95 +1,129 @@
 #include "AVXSearch.h"
 #include "AVXSegment.h"
 #include "AVXResults.h"
+#include "AVXFind.h"
+#include "AVXFound.h"
+#include "AVXMatch.h"
 #include <map>
 
 static std::unordered_set<uintptr_t> MemoryTable;
-/*
-static uint32 Find(AVXSearch& search, AVXResults& results)
+
+bool AVXSearch::search_quoted()
 {
     auto books = AVXBookIndex::index;
     auto chapters = AVXChapterIndex::index;
 
+    uint32 seg_cnt = 0;
+    if (this->segments = nullptr)
+        return false;
+    for (/**/; this->segments[seg_cnt]; seg_cnt++)
+        ;
+    if (seg_cnt == 0)
+        return false;
+
+    bool hit = false;
     for (uint8 b = 1; b <= 66; b++)
     {
         auto book = books + b;
         auto chap = chapters + book->chapter_idx;
-        auto writ = AVXWritten::getWrit(b);
+        AVXWritten::AVXWrit* writ = const_cast<AVXWritten::AVXWrit*>(AVXWritten::getWrit(b));
         uint8 c = 1;
         uint8 v = 1;
 
-        for (uint32 w = 0; w < book->writ_cnt; w++, writ++)
-        {
-            for (int f  = 0; f < search.; f++)
-            {
-                auto find = request.search[f];
-            for (auto find : request.sea)
-            {
+        uint32 w;
 
-        foreach(var clause in vector.Searches)
+        if (this->settings.span > 0)
         {
-            foreach(var segment in clause.Segments)
+            uint32 len = 0;
+            for (w = 0; w < book->writ_cnt; w++, writ++)
             {
-                int frags = 0;
-
-                foreach(var fragment in segment.Fragments) // and'ed
+                if (len == 0)
                 {
-                    bool hit = false;
-                    foreach(var feature in fragment.Features) // or'ed
+                    len = w + this->settings.span;
+                    if (len > book->writ_cnt)
+                        len = book->writ_cnt;
+                }
+                std::map<uint32, std::tuple<const char*, const char*>> matched;
+                bool found = this->segments[0]->compare(*writ, matched);
+                if (found)
+                {
+                    uint32 wi = w;
+                    uint32 wi_len = wi + len;
+
+                    auto spanwrit = writ + 1;
+
+                    for (uint32 seg_idx = 1; this->segments[seg_idx]; seg_idx++)
                     {
-                        var ftype = feature.GetType();
-                        if (ftype == typeof(QWord))
+                        for (auto& segment = *(this->segments[seg_idx]); wi < len; wi++, spanwrit++)
                         {
-                            hit = (writ.WordKey & 0x3FFF) == (uint)((QWord)feature).WordKeys[0];    // todo: wordkeys is now multi-valued
-                        }
-                        else if (ftype == typeof(QLemma))
-                        {
-                            foreach(var lemma in((QLemma)feature).Lemmata)
+                            if (!segment.compare(*spanwrit, matched))
                             {
-                                hit = writ.Lemma == lemma;
-                                if (hit)
-                                    break;
+                                if (segment.anchored)
+                                    goto NOT_FOUND_1;
+                                if (wi == len-1) // end-of-verse with verse-span granularity
+                                    goto NOT_FOUND_1;
                             }
                         }
-                        else if (ftype == typeof(QPartOfSpeech))
-                        {
-                            var fpos = ((QPartOfSpeech)feature);
+                    }
+                    hit = true;
+                    auto found = new AVXFound();
+                    for (auto const& [coord, pair] : matched)
+                    {
+                        const char* frag = std::get<0>(pair);
+                        const char* feat = std::get<0>(pair);
+                        auto match = new AVXMatch((uint32) coord, frag, feat);
+                        found->add(match);
+                    }
+                    this->results.founds.push_back(found);
+                }
+            NOT_FOUND_1:
+            continue;
+            }
+        }
+        else
+        {
+            uint32 len = writ->wc;
+            for (w = 0; w < book->writ_cnt; w += len, writ += len)
+            {
+                std::map<uint32, std::tuple<const char*, const char*>> matched;
+                bool found = this->segments[0]->compare(*writ, matched);
+                if (found)
+                {
+                    uint32 wi = w;
+                    uint32 wi_len = wi + len;
 
-                            if (fpos.Pos32 != 0)
-                                hit = writ.POS32 == fpos.Pos32;
-                            else if (fpos.PnPos12 != 0)
-                                hit = (writ.pnPOS12 & fpos.PnPos12) == fpos.PnPos12;
-                            if (fpos.Negate)
-                                hit = !hit;
-                            if (hit)
-                                break;
+                    auto spanwrit = writ + 1;
+
+                    for (uint32 seg_idx = 1; this->segments[seg_idx]; seg_idx++)
+                    { 
+                        for (auto& segment = *(this->segments[seg_idx]); wi < wi_len; wi++, spanwrit++)
+                        {
+                            if (!segment.compare(*spanwrit, matched))
+                            {
+                                if (segment.anchored)
+                                    goto NOT_FOUND_2;
+                                if (wi == wi_len - 1) // end-of-verse with verse-span granularity
+                                    goto NOT_FOUND_2;
+                            }
                         }
                     }
-                    if (!hit)
-                        break;
-                    frags++;
+                    hit = true;
+                    auto found = new AVXFound();
+                    for (auto const& [coord, pair] : matched)
+                    {
+                        const char* frag = std::get<0>(pair);
+                        const char* feat = std::get<0>(pair);
+                        auto match = new AVXMatch((uint32)coord, frag, feat);
+                        found->add(match);
+                    }
+                    this->results.founds.push_back(found);
                 }
-                if (frags == segment.Fragments.Count)
-                    yield return (writ.BCVWc.B, writ.BCVWc.C, writ.BCVWc.V, writ.BCVWc.WC, 1);
+            NOT_FOUND_2:
+            continue;
             }
         }
     }
-}
-
-
-static void ProcessSearch(QImplicitCommands vector)
-{
-	foreach(var record in Find(vector))
-	{
-		var book = AVX.Mem.Book.Slice((int)record.b, 1).Span[0];
-		Console.WriteLine(book.name + " " + record.c.ToString() + ":" + record.v.ToString());
-	}
-}
-*/
-
-bool AVXSearch::search_quoted()
-{
-    return false;
+    return hit;
 }
 bool AVXSearch::search_unquoted()
 {
@@ -101,6 +135,8 @@ bool AVXSearch::search_unquoted()
         return false;
     for (/**/; this->segments[seg_cnt]; seg_cnt++)
         ;
+    if (seg_cnt == 0)
+        return false;
 
     bool found = false;
     bool *hits = new bool[seg_cnt];
@@ -110,23 +146,26 @@ bool AVXSearch::search_unquoted()
 
         auto book = books + b;
         auto chap = chapters + book->chapter_idx;
-        const AVXWritten::AVXWrit* writ = AVXWritten::getWrit(b);
+        AVXWritten::AVXWrit* writ = const_cast<AVXWritten::AVXWrit*>(AVXWritten::getWrit(b));
         uint8 c = 1;
         uint8 v = 1;
 
         for (uint32 w = 0; w < book->writ_cnt; w++)
         {
-            auto spanwrit = const_cast<AVXWritten::AVXWrit*>(writ);
+            auto spanwrit = writ;
             uint32 cnt = 0;
             for (uint32 i = 0; i < seg_cnt; i++)
                 hits[i] = false;
             uint32 until = w + this->settings.span > 0 ? this->settings.span - 1 : writ->wc - 1;
+            if (until > book->writ_cnt - 1)
+                until = book->writ_cnt - 1;
             for (uint32 wi = w; wi <= until; wi++, spanwrit++)
             {
-                bool found = this->segments[0]->compare(*spanwrit);
+                std::map<uint32, std::tuple<const char*, const char*>> matched;
+                bool found = this->segments[0]->compare(*spanwrit, matched);
                 for (uint32 s = 1; (!found) && (s < seg_cnt); s++)
                 {
-                    found = this->segments[s]->compare(*spanwrit);
+                    found = this->segments[s]->compare(*spanwrit, matched);
                     if (found)
                     {
                         cnt++;
@@ -134,20 +173,35 @@ bool AVXSearch::search_unquoted()
                     }
                     else break;
                 }
-            }
-            if (cnt >= seg_cnt)
-            {
-                uint32 hit_cnt = 0;
-                for (uint32 i = 0; i < seg_cnt; i++)
-                    hit_cnt++;
+                if (cnt == 0 && wi == w)
+                    break;
 
-                if (hit_cnt == seg_cnt)
+                if (cnt >= seg_cnt)
                 {
-                    found = true;
-                    // TO DO:
-                    // add result
+                    uint32 hit_cnt = 0;
+                    for (uint32 i = 0; i < seg_cnt; i++)
+                        hit_cnt++;
+
+                    if (hit_cnt == seg_cnt)
+                    {
+                        found = true;
+                        auto found = new AVXFound();
+                        for (auto const& [coord, pair] : matched)
+                        {
+                            const char* frag = std::get<0>(pair);
+                            const char* feat = std::get<0>(pair);
+                            auto match = new AVXMatch((uint32)coord, frag, feat);
+                            found->add(match);
+                        }
+                        this->results.founds.push_back(found);
+                        break;
+                    }
                 }
             }
+            if (this->settings.span == 0) // verse granularity
+                writ += writ->wc;
+            else
+                writ ++;
         }
     }
     delete[] hits;
@@ -158,7 +212,7 @@ void AVXSearch::add_scope(const AVXScope* scope)
     this->scopes.push_back(scope);
 }
 
-AVXSearch::AVXSearch(const XSearch* xsearch, AVXResults& results, const AVXSettings& xsettings):
+AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& xsettings):
     spec(xsearch->search()->c_str()),
     negate(this->xsearch->negate()),
     quoted(this->xsearch->quoted()),
@@ -178,25 +232,7 @@ AVXSearch::AVXSearch(const XSearch* xsearch, AVXResults& results, const AVXSetti
             auto xsegment = (*xsegments)[s];
             if (xsegment != nullptr)
             {
-                this->segments[s] = (AVXSegment*)(new AVXSegment(xsegment));
-
-                auto xfragments = xsegment->fragments();
-                if (xfragments != nullptr)
-                {
-                    int fragments_size = xfragments->size();
-                    for (int frag = 0; frag < fragments_size; frag++)
-                    {
-                        auto xfragment = (*xfragments)[frag];
-                        if (xfragment != nullptr)
-                        {
-                            auto xfeatures = xfragment->features();
-                            if (xfeatures != nullptr)
-                            {
-                                int features_size = xfeatures->size();
-                            }
-                        }
-                    }
-                }
+                this->segments[s] = new AVXSegment(xsegment);
             }
         }
     }

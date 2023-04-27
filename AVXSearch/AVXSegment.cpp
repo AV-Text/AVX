@@ -31,7 +31,14 @@ AVXSegment::~AVXSegment()
     }
 }
 
-bool AVXSegment::compare(AVXWritten::AVXWrit& writ)
+bool AVXSegment::compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
 {
+    if (this->fragments != nullptr)
+    {
+        for (int i = 0; this->fragments[i] != nullptr; i++) // fragments are AND conditions (&)
+            if (this->fragments[i]->compare(writ, matched))
+                return false;
+        return true;
+    }
     return false;
 }

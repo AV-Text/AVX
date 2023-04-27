@@ -6,6 +6,7 @@
 #include "AVXPOS32Comparator.h"
 #include "AVXDeltaComparator.h"
 #include "AVXPuncComparator.h"
+#include "AVXTransitionComparator.h"
 #include "AVXStrongsComparator.h"
 
 #include <blueprint_request_generated.h>
@@ -49,6 +50,10 @@ static AVXComparator* create_feature(const XFeature* feature)
         {
             return new AVXStrongsComparator(feature);
         }
+        if (std::strncmp(rule, "transition", 8) == 0)
+        {
+            return new AVXTransitionComparator(feature);
+        }
     }
     return nullptr;
 }
@@ -68,8 +73,21 @@ AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragm
     }
 }
 
-bool AVXFragment::compare(AVXWritten::AVXWrit& writ)
+bool AVXFragment::compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
 {
+    if (this->features != nullptr) // features are OR conditions (|)
+    {
+        for (int i = 0; this->features[i] != nullptr; i++)
+        {
+            auto hit = this->features[i]->compare(writ);
+            if (hit != nullptr)
+            {
+                auto coord = WritAsCoordinate(writ);
+                matched[coord] = std::make_tuple((const char*)this->fragment, hit);
+            }
+        }
+        return false;
+    }
     return false;
 }
 

@@ -16,13 +16,12 @@ public:
     std::string find;
     bool negate;
 
-
     AVXFind()
     {
         this->negate = false;
         this->find = "";
     }
-    AVXFind(bool negate, std::string search)
+    AVXFind(bool negate, const char* search)
     {
         this->negate = negate;
         this->find = search;

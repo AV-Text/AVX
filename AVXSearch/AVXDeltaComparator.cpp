@@ -1,9 +1,9 @@
 #include "AVXDeltaComparator.h"
 #include <stdlib.h>
 
-bool AVXDeltaComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXDeltaComparator::compare(AVXWritten::AVXWrit& writ)
 {
-	return false;
+	return nullptr; // TODO: I need to load the lexicon for this one
 }
 
 AVXDeltaComparator::AVXDeltaComparator(const XFeature* feature) : AVXComparator(feature), delta(false)

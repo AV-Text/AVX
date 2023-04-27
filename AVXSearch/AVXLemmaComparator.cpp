@@ -1,9 +1,17 @@
 #include "AVXLemmaComparator.h"
 #include <stdlib.h>
 
-bool AVXLemmaComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXLemmaComparator::compare(AVXWritten::AVXWrit& writ)
 {
-	return false;
+	bool positive = !this->negate;
+
+	if (this->lemmata != nullptr)
+	{
+		for (int i = 0; lemmata[i]; i++)
+			if (positive && (lemmata[i] == writ.lemma))
+				return this->feature;
+	}
+	return positive ? nullptr : this->feature;
 }
 
 AVXLemmaComparator::AVXLemmaComparator(const XFeature* feature) : AVXComparator(feature), lemmata(nullptr)

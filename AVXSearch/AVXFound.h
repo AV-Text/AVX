@@ -15,7 +15,7 @@ public:
     uint32 until;
     std::vector<AVXMatch*> matches;
 
-    AVXFound()  // use add w/ position if this constructor is used
+    AVXFound()  // start/until determined in add() method
     {
         this->start = 0;
         this->until = 0xFFFFFFFF;
