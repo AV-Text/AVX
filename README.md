@@ -12,12 +12,12 @@ The Digital-AV SDK is a single 19mb file that can be used to manifest the entire
 
 One dependency that is rolled in here is FlatBuffers, due to its speed, compactness, and ubiquity.
 
-The other dependencies are open source projects, produced and managed by AV Text Ministries. [http://github/kwonus]
+The other dependencies are open source projects, produced and managed by AV Text Ministries. [https://github/kwonus]
 
 How they relate to AVX-Search is depicted in this diagram:
 
 ![](AVXSearch/AVXSearch-context.png)
 
-The Blue boxes above are all in active development. As such, end-user apps are not yet available. They are expected to be completed in 2023. After that, status will be evaluated and work can commence on the gray boxes.  Still it's helpful to have this pic as a roadmap. As you can see, AVX-Search is a central dependency for downstream user-facing apps. Some architectural decisions mitigate a recent surprising discovery: dotnet apps are unable to perform interop with x64 C++ libraries via P/Invoke. Accordingly, the revised architecture diminishes the overall presence of dotnet. For additional details, head on over to  http://github/kwonus, and browse the repositories there.
+The Blue boxes above are all in active development. As such, end-user apps are not yet available. They are expected to be completed in 2023. After that, status will be evaluated and work can commence on the gray boxes.  Still it's helpful to have this pic as a roadmap. As you can see, AVX-Search is a central dependency for downstream user-facing apps. Some architectural decisions mitigate a recent surprising discovery: dotnet apps are unable to perform interop with x64 C++ libraries via P/Invoke. Accordingly, the revised architecture diminishes the overall presence of dotnet. For additional details, head on over to  https://github/kwonus, and browse the repositories there.
 
 The Lord gave the word: great was the company of those that published it. -- Psalm 68:11
