@@ -8,7 +8,7 @@ You can rely on its foundation, with decades of deployments and text validation.
 
 AVX-Search represents a radical step forward at the same time as it reaches back to its roots as the fastest and most compact search tool for the KJV text. This fork from Digital-AV assembles all the pieces into a whole.
 
-The Digital-AV SDK is a single 19mb file that can be used to manifest the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, and other linguistic features. But even with all of that, it's still the KJV Bible at the core. AVX-Search utilizes the C++ foundations of that SDK. That coupled with some open source parsing engines composes a fast and efficient search engine with a minimal set of dependencies.
+The Digital-AV SDK is a single 19mb file that can be used to manifest the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, and other linguistic features. But even with all of that, it's still the KJV Bible at the core. AVX-Search utilizes the C++ foundations of that SDK. Coupling that with some open source parsing engines, results in a fast and efficient search engine with a minimal set of dependencies. Upon this, is built user-facing applications
 
 One dependency that is rolled in here is FlatBuffers, due to its speed, compactness, and ubiquity.
 
