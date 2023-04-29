@@ -279,12 +279,6 @@
     <ClCompile Include="AVXTransitionComparator.cpp" />
     <ClCompile Include="AVXWordComparator.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\omega\foundations\cpp\cmakelists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\omega\foundations\cpp\CMakeSettings.json" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
