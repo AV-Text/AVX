@@ -1,11 +1,11 @@
 #pragma once
 #include <avxgen.h>
-#include <blueprint_request_generated.h>
+#include <blueprint_blue_generated.h>
 #include <flatbuffers/flatbuffers.h>
 #include <stdlib.h>
 #include <written.h>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 class AVXComparator
 {

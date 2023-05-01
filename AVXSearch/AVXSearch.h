@@ -5,11 +5,11 @@
 #include <unordered_set>
 #include <vector>
 
-#include <blueprint_request_generated.h>
-#include <blueprint_reply_generated.h>
+#include <blueprint_blue_generated.h>
+#include <avx_search_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 class AVXSettings
 {

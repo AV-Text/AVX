@@ -1,22 +1,23 @@
 #include "AVXResults.h"
 #include "AVXSearch.h"
 #include "AVXFind.h"
-#include <blueprint_request_generated.h>
-#include <blueprint_reply_generated.h>
+#include <blueprint_blue_generated.h>
+#include <avx_search_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
+using namespace XSearchResults;
 
 #include <book_index.h>
 
 AVXResults::AVXResults(const uint8* const data)
 {
-    const XRequest* req = GetXRequest(data);
-    this->request = (void*)GetXRequest(data);
+    const XBlueprint* req = GetXBlueprint(data);
+    this->request = (void*)req;
 }
 bool AVXResults::execute()
 {
-    const XRequest* req = reinterpret_cast<const XRequest *>(this->request);
+    const XBlueprint* req = reinterpret_cast<const XBlueprint*>(this->request);
     AVXSettings settings(req->settings());
 
     ; // TODO: implement search()

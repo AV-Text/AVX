@@ -285,6 +285,9 @@
     <ClCompile Include="AVXWordComparator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\blueprint-blue\Blueprint-Blue-gRPC\blueprint_blue.grpc.fb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\omega\foundations\cpp\avxgen.h">

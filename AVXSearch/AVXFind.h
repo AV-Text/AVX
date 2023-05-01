@@ -2,10 +2,10 @@
 #include <avxgen.h>
 #include <vector>
 #include <string>
-#include <blueprint_reply_generated.h>
+#include <avx_search_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace XBlueprint;
+using namespace XSearchResults;
 
 class AVXFound;
 

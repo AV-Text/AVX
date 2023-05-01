@@ -1,12 +1,12 @@
 #include "AVXRender.h"
 #include <unordered_set>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 static std::unordered_set<uintptr_t> MemoryTable;
 
 
-static char* internal_create_rendering(const XRequest& request)
+static char* internal_create_rendering(const XBlueprint& request)
 {
 	return nullptr;	// to do: this will be html, json, etc ....
 }

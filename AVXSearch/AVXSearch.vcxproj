@@ -82,7 +82,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +104,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -126,7 +126,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,7 +148,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -188,6 +188,7 @@
     <ClInclude Include="AVXWordComparator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\blueprint-blue\Blueprint-Blue-gRPC\blueprint_blue.grpc.fb.cc" />
     <ClCompile Include="..\omega\foundations\cpp\book_index.cpp" />
     <ClCompile Include="..\omega\foundations\cpp\chapter_index.cpp" />
     <ClCompile Include="..\omega\foundations\cpp\lemmata.cpp" />

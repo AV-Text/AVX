@@ -2,7 +2,7 @@
 #include "AVXFragment.h"
 #include <written.h>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 AVXSegment::AVXSegment(const XSegment* xsegments): segment(xsegments->segment()->c_str()), anchored(xsegments->anchored()), fragments(nullptr)
 {

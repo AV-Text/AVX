@@ -1,10 +1,10 @@
 #pragma once
 #include <avxgen.h>
 #include <vector>
-#include <blueprint_reply_generated.h>
+#include <avx_search_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 class AVXMatch;
 

@@ -9,12 +9,12 @@
 #include "AVXTransitionComparator.h"
 #include "AVXStrongsComparator.h"
 
-#include <blueprint_request_generated.h>
+#include <blueprint_blue_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
 #include <written.h>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 static AVXComparator* create_feature(const XFeature* feature)
 {

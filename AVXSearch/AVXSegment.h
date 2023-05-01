@@ -1,9 +1,9 @@
 #pragma once
-#include <blueprint_request_generated.h>
+#include <blueprint_blue_generated.h>
 #include <flatbuffers/flatbuffers.h>
 #include <map>
 
-using namespace XBlueprint;
+using namespace XBlueprintBlue;
 
 #include <written.h>
 class AVXFragment;
