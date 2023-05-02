@@ -267,9 +267,6 @@
     <ClCompile Include="AVXRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AVXResults.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AVXSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -285,7 +282,7 @@
     <ClCompile Include="AVXWordComparator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\blueprint-blue\Blueprint-Blue-gRPC\blueprint_blue.grpc.fb.cc">
+    <ClCompile Include="AVXBlueprint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -353,9 +350,6 @@
     <ClInclude Include="AVXRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AVXResults.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AVXSearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -369,6 +363,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXWordComparator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXBlueprint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

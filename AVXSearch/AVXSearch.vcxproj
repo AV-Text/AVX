@@ -82,7 +82,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +104,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -126,7 +126,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,7 +148,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-gRPC;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,6 +169,7 @@
     <ClInclude Include="..\omega\foundations\cpp\oov_lemmata.h" />
     <ClInclude Include="..\omega\foundations\cpp\verse_index.h" />
     <ClInclude Include="..\omega\foundations\cpp\written.h" />
+    <ClInclude Include="AVXBlueprint.h" />
     <ClInclude Include="AVXComparator.h" />
     <ClInclude Include="AVXDeltaComparator.h" />
     <ClInclude Include="AVXFind.h" />
@@ -180,7 +181,6 @@
     <ClInclude Include="AVXPOS32Comparator.h" />
     <ClInclude Include="AVXPuncComparator.h" />
     <ClInclude Include="AVXRender.h" />
-    <ClInclude Include="AVXResults.h" />
     <ClInclude Include="AVXSearch.h" />
     <ClInclude Include="AVXSegment.h" />
     <ClInclude Include="AVXStrongsComparator.h" />
@@ -188,7 +188,6 @@
     <ClInclude Include="AVXWordComparator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\blueprint-blue\Blueprint-Blue-gRPC\blueprint_blue.grpc.fb.cc" />
     <ClCompile Include="..\omega\foundations\cpp\book_index.cpp" />
     <ClCompile Include="..\omega\foundations\cpp\chapter_index.cpp" />
     <ClCompile Include="..\omega\foundations\cpp\lemmata.cpp" />
@@ -263,6 +262,7 @@
     <ClCompile Include="..\omega\foundations\cpp\written\written_64.cpp" />
     <ClCompile Include="..\omega\foundations\cpp\written\written_65.cpp" />
     <ClCompile Include="..\omega\foundations\cpp\written\written_66.cpp" />
+    <ClCompile Include="AVXBlueprint.cpp" />
     <ClCompile Include="AVXDeltaComparator.cpp" />
     <ClCompile Include="AVXFind.cpp" />
     <ClCompile Include="AVXFound.cpp" />
@@ -273,7 +273,6 @@
     <ClCompile Include="AVXPOS32Comparator.cpp" />
     <ClCompile Include="AVXPuncComparator.cpp" />
     <ClCompile Include="AVXRender.cpp" />
-    <ClCompile Include="AVXResults.cpp" />
     <ClCompile Include="AVXSearch.cpp" />
     <ClCompile Include="AVXSegment.cpp" />
     <ClCompile Include="AVXStrongsComparator.cpp" />

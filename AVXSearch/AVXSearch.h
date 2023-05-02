@@ -1,5 +1,5 @@
 #pragma once
-#include "AVXResults.h"
+#include "AVXBlueprint.h"
 #include <unordered_set>
 #include <book_index.h>
 #include <unordered_set>

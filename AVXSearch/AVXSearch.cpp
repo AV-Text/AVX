@@ -1,6 +1,6 @@
 #include "AVXSearch.h"
 #include "AVXSegment.h"
-#include "AVXResults.h"
+#include "AVXBlueprint.h"
 #include "AVXFind.h"
 #include "AVXFound.h"
 #include "AVXMatch.h"
@@ -257,31 +257,12 @@ static std::string SayHello(const char* const command)
     auto cmd_offset = builder.CreateString(command);
     auto request_offset = CreateQuelleRequest(builder, cmd_offset);
     builder.Finish(request_offset);
-
-    XBlueprintBlue::XBlueprint blueprint;
-    flatbuffers::
-    auto request_msg = builder.R.ReleaseMessage<HelloRequest>();
-
-    flatbuffers::grpc::Message<HelloReply> response_msg;
-
-    grpc::ClientContext context;
-
-    auto status = stub_->SayHello(&context, request_msg, &response_msg);
-    if (status.ok()) {
-        const HelloReply* response = response_msg.GetRoot();
-        return response->message()->str();
-    }
-    else {
-        std::cerr << status.error_code() << ": " << status.error_message()
-            << std::endl;
-        return "RPC failed";
-    }
 }
 
 // For use with LoadLibrary/GetProcAdress ... no header file required
 extern "C" __declspec(dllexport) const uint8* const avx_create_search(const char* const request)
 {
-    AVXResults search(request);
+    AVXBlueprint search(request);
     search.execute();
     auto results = search.build();
 	if (results != nullptr)

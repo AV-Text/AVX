@@ -1,4 +1,4 @@
-#include "AVXResults.h"
+#include "AVXBlueprint.h"
 #include "AVXSearch.h"
 #include "AVXFind.h"
 #include <blueprint_blue_generated.h>
@@ -10,12 +10,12 @@ using namespace XSearchResults;
 
 #include <book_index.h>
 
-AVXResults::AVXResults(const uint8* const data)
+AVXBlueprint::AVXBlueprint(const uint8* const data)
 {
     const XBlueprint* req = GetXBlueprint(data);
     this->request = (void*)req;
 }
-bool AVXResults::execute()
+bool AVXBlueprint::execute()
 {
     const XBlueprint* req = reinterpret_cast<const XBlueprint*>(this->request);
     AVXSettings settings(req->settings());
@@ -67,7 +67,7 @@ bool AVXResults::execute()
     return false;
 }
 
-const uint8* const AVXResults::build()
+const uint8* const AVXBlueprint::build()
 {
     std::vector<flatbuffers::Offset<XFind>> collection;
     flatbuffers::FlatBufferBuilder builder;

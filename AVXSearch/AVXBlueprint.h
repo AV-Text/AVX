@@ -4,18 +4,18 @@
 
 class AVXFind;
 
-class AVXResults
+class AVXBlueprint
 {
 private:
     void* request;
 public:
-    AVXResults(const uint8* const data);
+    AVXBlueprint(const uint8* const data);
     bool execute();
 
     std::vector<AVXFind*> searches;
     const uint8* const build();
 
-    ~AVXResults()
+    ~AVXBlueprint()
     {
         ;
     }
