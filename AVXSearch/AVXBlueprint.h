@@ -4,7 +4,7 @@
 
 class AVXFind;
 
-class AVXBlueprint
+class __declspec(dllexport) AVXBlueprint
 {
 private:
     void* request;
