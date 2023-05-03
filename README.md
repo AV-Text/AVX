@@ -18,6 +18,6 @@ How they relate to AVX-Search is depicted in this diagram:
 
 ![](AVXSearch/AVXSearch-context.png)
 
-The blue boxes above are all in active development. As such, end-user apps are not yet available. They are expected to be completed in 2023. After that, status will be evaluated and work can commence on the gray boxes.  Still, it's helpful to have this pic as a roadmap. As you can see, AVX-Search is a central dependency for downstream user-facing apps. Some architectural decisions mitigate a recent surprising discovery: dotnet apps are unable to perform interop with x64 C++ libraries via P/Invoke. Accordingly, the revised architecture diminishes the overall presence of dotnet. For additional details, head on over to  https://github/kwonus, and browse the repositories there.
+The blue boxes above are all in active development. As such, end-user apps are not yet available. They are expected to be completed in 2023. After that, status will be evaluated and work can commence on the gray boxes.  Still, it's helpful to have this pic as a roadmap. As you can see, AVX-Search is a central dependency for downstream user-facing apps. Some architectural decisions mitigate a recent surprising discovery: dotnet apps are unable to perform interop with x64 C++ libraries via P/Invoke. Accordingly, the revised architecture diminishes the overall presence of dotnet. For additional details, head on over to  https://github.com/kwonus, and browse the repositories there.
 
 The Lord gave the word: great was the company of those that published it. -- Psalm 68:11
