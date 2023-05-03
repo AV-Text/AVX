@@ -4,7 +4,7 @@
 #include <avx_search_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
-using namespace XBlueprintBlue;
+using namespace XSearchResults;
 
 class AVXMatch
 {

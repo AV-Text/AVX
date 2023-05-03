@@ -11,7 +11,7 @@
 
 using namespace XBlueprintBlue;
 
-class AVXSettings
+class __declspec(dllexport) AVXSettings
 {
 public:
     const XLexEnum lexicon;
@@ -27,7 +27,7 @@ public:
         ;
     }
 };
-class AVXScope
+class __declspec(dllexport) AVXScope
 {
 public:
     const uint8 book;
@@ -46,7 +46,7 @@ public:
 };
 
 class AVXSegment;
-class AVXSearch
+class __declspec(dllexport) AVXSearch
 {
 private:
     const XSearch* xsearch;

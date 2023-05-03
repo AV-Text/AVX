@@ -19,11 +19,12 @@
 #include <iostream>
 #include <string>
 
+#define DEFAULT_BUFFER_MAX 4*1024
 int main()
 {
 	HANDLE hPipe;
 	DWORD dwWritten;
-	uint8 buffer[1024];
+	uint8 defaultBuffer[DEFAULT_BUFFER_MAX];
 
 	hPipe = CreateFile(PIPE_NAME,
 		GENERIC_READ | GENERIC_WRITE,
@@ -64,6 +65,8 @@ int main()
 						&dwWritten,
 						NULL))
 					{
+						auto buffer = (len <= DEFAULT_BUFFER_MAX) ? defaultBuffer : (uint8*)std::malloc(len);
+
 						auto ok = (len <= 1024) && ReadFile(hPipe,
 							buffer,
 							len,
@@ -76,6 +79,10 @@ int main()
 							AVXBlueprint search(buffer);
 							search.execute();
 							auto results = search.build();
+						}
+						if (buffer != defaultBuffer)
+						{
+							free((void*)buffer);
 						}
 					}
 				}

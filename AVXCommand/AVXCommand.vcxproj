@@ -135,7 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="PipeTest.cpp" />
+    <ClCompile Include="AVXCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AVXSearch\AVXSearch.vcxproj">
