@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVXSearch", "AVXSearch.vcxproj", "{03447C6F-BA1A-4386-9412-8F52A0399A41}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PipeTest", "..\..\..\sandbox\PipeTest\PipeTest.vcxproj", "{B3D517F1-8F75-4EFC-A5CD-9401F9796A2E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVXCommand", "..\AVXCommand\AVXCommand.vcxproj", "{B3D517F1-8F75-4EFC-A5CD-9401F9796A2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

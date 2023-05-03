@@ -82,7 +82,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +104,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -126,7 +126,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,7 +148,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\grpc\include;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;C:\src\AVX\omega\foundations\cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
