@@ -251,17 +251,17 @@ AVXSearch::~AVXSearch()
     }
 }
 
-static std::string SayHello(const char* const command)
-{
+static void SayHello_defunct(const char* const command)
+{/*
     flatbuffers::FlatBufferBuilder builder;
     auto cmd_offset = builder.CreateString(command);
     auto request_offset = CreateQuelleRequest(builder, cmd_offset);
-    builder.Finish(request_offset);
+    builder.Finish(request_offset);*/
 }
 
 // For use with LoadLibrary/GetProcAdress ... no header file required
 extern "C" __declspec(dllexport) const uint8* const avx_create_search(const char* const request)
-{
+{/*
     AVXBlueprint search(request);
     search.execute();
     auto results = search.build();
@@ -269,10 +269,11 @@ extern "C" __declspec(dllexport) const uint8* const avx_create_search(const char
 	{
 		MemoryTable.insert(reinterpret_cast<uintptr_t>(results));
 	}
-	return results;
+	return results;*/
+    return nullptr;
 }
 extern "C" __declspec(dllexport) bool avx_delete_search(const uint8* const* results)
-{
+{/*
 	auto entry = reinterpret_cast<uintptr_t>(results);
 	auto memory = reinterpret_cast<char*>(entry);
 
@@ -281,7 +282,7 @@ extern "C" __declspec(dllexport) bool avx_delete_search(const uint8* const* resu
 		MemoryTable.erase(it);
 		free(memory);
 		return true;
-	}
+	}*/
 	return false;
 }
 
