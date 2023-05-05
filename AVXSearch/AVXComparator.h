@@ -3,7 +3,7 @@
 #include <blueprint_blue_generated.h>
 #include <flatbuffers/flatbuffers.h>
 #include <stdlib.h>
-#include <written.h>
+#include <directory.h>
 
 using namespace XBlueprintBlue;
 
@@ -18,7 +18,7 @@ public:
     const char* feature;
     const char* rule;
     const bool negate;
-    virtual const char* compare(AVXWritten::AVXWrit& writ) = 0;
+    virtual const char* compare(const WrittenContent& writ) = 0;
 
     virtual ~AVXComparator()
     {

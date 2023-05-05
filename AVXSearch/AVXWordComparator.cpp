@@ -1,14 +1,14 @@
 #include "AVXWordComparator.h"
 #include <stdlib.h>
 
-const char* AVXWordComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXWordComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 
 	if (this->wkeys != nullptr)
 	{
 		for (int i = 0; wkeys[i]; i++)
-			if (wkeys[i] == writ.word)
+			if (wkeys[i] == writ.wkey)
 				return this->feature;
 	}
 	return positive ? nullptr : this->feature;

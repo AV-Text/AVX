@@ -1,7 +1,7 @@
 #include "AVXStrongsComparator.h"
 #include <stdlib.h>
 
-const char* AVXStrongsComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXStrongsComparator::compare(const WrittenContent& writ)
 {
 	if (writ.b <= 39 && this->lang != XLangEnum_H)
 		return nullptr;

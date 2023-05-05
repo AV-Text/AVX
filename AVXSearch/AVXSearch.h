@@ -1,8 +1,6 @@
 #pragma once
 #include "AVXBlueprint.h"
 #include <unordered_set>
-#include <book_index.h>
-#include <unordered_set>
 #include <vector>
 
 #include <blueprint_blue_generated.h>
@@ -11,7 +9,7 @@
 
 using namespace XBlueprintBlue;
 
-class __declspec(dllexport) AVXSettings
+class AVXSettings
 {
 public:
     const XLexEnum lexicon;
@@ -27,7 +25,7 @@ public:
         ;
     }
 };
-class __declspec(dllexport) AVXScope
+class AVXScope
 {
 public:
     const uint8 book;
@@ -46,7 +44,7 @@ public:
 };
 
 class AVXSegment;
-class __declspec(dllexport) AVXSearch
+class AVXSearch
 {
 private:
     const XSearch* xsearch;

@@ -6,7 +6,7 @@ class AVXPuncComparator : public AVXComparator
 public:
 	uint8 punc;
 	AVXPuncComparator(const XFeature* feature);
-	virtual const char* compare(AVXWritten::AVXWrit& writ);
+	virtual const char* compare(const WrittenContent& writ);
 	virtual ~AVXPuncComparator();
 };
 

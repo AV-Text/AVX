@@ -1,7 +1,7 @@
 #include "AVXLemmaComparator.h"
 #include <stdlib.h>
 
-const char* AVXLemmaComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXLemmaComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 

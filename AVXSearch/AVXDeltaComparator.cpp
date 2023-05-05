@@ -1,7 +1,8 @@
 #include "AVXDeltaComparator.h"
 #include <stdlib.h>
+#include <directory.h>
 
-const char* AVXDeltaComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXDeltaComparator::compare(const WrittenContent& writ)
 {
 	return nullptr; // TODO: I need to load the lexicon for this one
 }

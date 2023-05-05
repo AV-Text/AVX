@@ -8,7 +8,7 @@
 using namespace XBlueprintBlue;
 using namespace XSearchResults;
 
-#include <book_index.h>
+#include <book.h>
 
 AVXBlueprint::AVXBlueprint(const uint8* const data)
 {
@@ -20,19 +20,19 @@ bool AVXBlueprint::execute()
     const XBlueprint* req = reinterpret_cast<const XBlueprint*>(this->request);
     AVXSettings settings(req->settings());
 
-    ; // TODO: implement search()
-    auto books = AVXBookIndex::index;
-    auto chapters = AVXChapterIndex::index;
+    // TODO: implement search()
+    auto chapters = AVXBook::GetBook(1).chapters;
 
     for (uint8 b = 1; b <= 66; b++)
     {
-        auto book = books + b;
-        auto chap = chapters + book->chapter_idx;
-        auto writ = AVXWritten::getWrit(b);
+        auto book = AVXBook::GetBook(b);
+
+        auto chap = chapters + book.chapter_idx;
+        auto writ = book.getWrit(1);
         uint8 c = 1;
         uint8 v = 1;
 
-        for (uint32 w = 0; w < book->writ_cnt; w++, writ++)
+        for (uint32 w = 0; w < book.writ_cnt; w++, writ++)
         {
             auto xsearch = req->search();
             if (xsearch != nullptr)
@@ -56,7 +56,6 @@ bool AVXBlueprint::execute()
                             auto xscope = (*xscopes)[x];
                             auto scope = new AVXScope(xscope);
                             search.add_scope(scope);
-
                         }
                     }
                     search.execute();

@@ -1,7 +1,7 @@
 #pragma once
 #include <blueprint_blue_generated.h>
 #include <flatbuffers/flatbuffers.h>
-#include <written.h>
+#include <directory.h>
 #include <map>
 
 class AVXComparator;
@@ -18,9 +18,9 @@ public:
 
 	~AVXFragment();
 
-	bool compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matches);
+	bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched);
 
-	inline uint32 WritAsCoordinate(AVXWritten::AVXWrit& writ)
+	inline uint32 WritAsCoordinate(const WrittenContent& writ)
 	{
 		return (((uint32)writ.b) << 24) + (((uint32)writ.c) << 16) + (((uint32)writ.b) << 8) + (uint32)writ.wc;
 	}

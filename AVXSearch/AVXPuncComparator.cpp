@@ -1,7 +1,7 @@
 #include "AVXPuncComparator.h"
 #include <stdlib.h>
 
-const char* AVXPuncComparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXPuncComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 	uint8 punc = this->punc;

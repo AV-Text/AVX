@@ -1,11 +1,11 @@
 #include "AVXPOS32Comparator.h"
 #include <stdlib.h>
 
-const char* AVXPOS32Comparator::compare(AVXWritten::AVXWrit& writ)
+const char* AVXPOS32Comparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 	uint32 pos = this->pos32;
-	uint32 mask = (pos & writ.pos);
+	uint32 mask = (pos & writ.pos32);
 
 	bool match = positive ? (pos == mask) : (pos != mask);
 	return match ? this->feature : nullptr;

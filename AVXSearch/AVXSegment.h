@@ -5,7 +5,7 @@
 
 using namespace XBlueprintBlue;
 
-#include <written.h>
+#include <directory.h>
 class AVXFragment;
 class AVXSegment
 {
@@ -16,10 +16,8 @@ public:
 	const bool anchored;
 	AVXFragment** fragments;
 
-	//AVXSegment(const XSegment* xsegments);
-
 	~AVXSegment();
 
-	bool compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matches);
+	bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched);
 };
 

@@ -1,6 +1,6 @@
 #include "AVXSegment.h"
 #include "AVXFragment.h"
-#include <written.h>
+#include <directory.h>
 
 using namespace XBlueprintBlue;
 
@@ -31,7 +31,7 @@ AVXSegment::~AVXSegment()
     }
 }
 
-bool AVXSegment::compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
+bool AVXSegment::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
 {
     if (this->fragments != nullptr)
     {
