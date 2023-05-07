@@ -17,5 +17,9 @@ inline uint32_t Strnlen(const char* str, uint32_t maxlen) {
 #pragma warning(suppress : 4996)
     return (uint32_t) strnlen(str, maxlen);
 }
+inline uint32_t Strnlen(char* str, uint32_t maxlen) {
+#pragma warning(suppress : 4996)
+    return (uint32_t)strnlen(str, maxlen);
+}
 
 #endif    //WINDOWS_XVMem_HEADER

@@ -2,6 +2,16 @@
 #include <avxgen.h>
 #include <XVMem.h>
 
+extern "C" uint32 DIR_cnt;
+extern "C" uint32 WRIT_cnt;
+extern "C" uint32 BOOK_cnt;
+extern "C" uint32 CHAPTER_cnt;
+extern "C" uint32 LEMMA_cnt;
+extern "C" uint32 LEX_cnt;
+extern "C" uint32 NAME_cnt;
+extern "C" uint32 OOV_cnt;
+
+
 #pragma pack(4)
 struct DirectoryContentStruct
 {
@@ -38,12 +48,14 @@ struct BookContentStruct
 	uint8  chapter_count;
 	uint16 chapter_index;
 	uint16 verse_count;	// 0 when variable-length
-	uint32 writ_count;
-	char   name[16];	// book_name
-	char   abbr2[2];
-	char   abbr3[3];
-	char   abbr4[4];
-	char   abbr_alt[9];
+	uint16 writ_count;
+	uint32 writ_index;
+	char   text;	// this is a character-array: book_name[16] + abbreviations[18]
+	//char   name[16];
+	//char   abbr2[2];
+	//char   abbr3[3];
+	//char   abbr4[4];
+	//char   abbr_alt[9];
 };
 typedef struct BookContentStruct BookContent;
 
@@ -64,14 +76,15 @@ struct LemmataContentStruct
 	uint16 wkey;
 	uint16 pn_pos12;
 	uint16 lemma_count;
-	uint16* lemmata;;
+	uint16 lemmata; // [this is an array of uint16]
 };
 typedef struct LemmataContentStruct LemmataContent;
 
+#pragma pack(1)
 struct OOVContentStruct
 {
-	uint32 oov_key;
-	char*  oov_word;
+	uint16 oov_key;
+	char   oov_word; // [this is an array of char]
 };
 typedef struct OOVContentStruct OOVContent;
 
@@ -80,22 +93,25 @@ struct LexiconContentStruct // variable length
 {
 	uint16 entities;
 	uint16 size;
-	uint32* pos; // followed by char*search, char*display, char*modern
+	uint32 pos; // followed by char*search, char*display, char*modern [this is an array of pos]
 };
 typedef struct LexiconContentStruct LexiconContent;
 
-#pragma pack(2)
+#pragma pack(1)
 struct NamesContentStruct
 {
 	uint16 wkey;
-	char*  meanings; // pipe-delimited + null-terminated
+	char   meanings; // pipe-delimited + null-terminated [this is an array of char]
 };
 typedef struct NamesContentStruct NamesContent;
 
 class directory: private XVMem<const uint8>
 {
+private:
+	uint32 version;
 public:
 	directory(const char* omega);
+	~directory();
 	const DirectoryContent const * contents;
 	inline bool isOkay()
 	{

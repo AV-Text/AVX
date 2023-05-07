@@ -31,7 +31,7 @@ public:
     bool IsShared();
     void Release();
     bool Release(bool shared);
-    StructType* Acquire(const char* name, bool writable, bool shared, UINT32 forceCnt = 0, const StructType* bodyVal = NULL, const StructType* firstVal = NULL, const StructType* lastVal = NULL);
+    StructType* Acquire(const char* name, const char* path, bool writable, bool shared, UINT32 forceCnt = 0, const StructType* bodyVal = NULL, const StructType* firstVal = NULL, const StructType* lastVal = NULL);
 
     StructType* GetData();
 };
@@ -111,20 +111,12 @@ template <typename StructType> void XVMem<StructType>::Release()
     }
 }
 
-template <typename StructType> StructType* XVMem<StructType>::Acquire(const char* name, bool writable, bool shared, UINT32 forceCnt, const StructType* bodyVal, const StructType* firstVal, const StructType* lastVal)
+template <typename StructType> StructType* XVMem<StructType>::Acquire(const char* name, const char* path, bool writable, bool shared, UINT32 forceCnt, const StructType* bodyVal, const StructType* firstVal, const StructType* lastVal)
 {
-    if (m_pvData)
-        return m_pvData;
-
     m_bWritable = writable;
 
-    if (g_hSharedHome[0] == (char)0 || name == NULL || name[0] == (char) 0)
-        return NULL;
-
-    char path[MAX_PATH];
-    auto len = Strnlen(g_hSharedHome, MAX_PATH-1);
-    Strncpy(path, g_hSharedHome, MAX_PATH);
-    Strncpy(path + len, name, MAX_PATH - len);
+    if (path == nullptr || path[0] == (char) 0)
+        return nullptr;
 
     if (writable && shared)
     {

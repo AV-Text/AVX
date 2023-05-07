@@ -20,12 +20,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BookChapterVerseMap.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="CLexIndex.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="fivebitencoding.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -37,9 +31,6 @@
     </ClCompile>
     <ClCompile Include="XBitArray.cpp">
       <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="xvmem\XVMem.cpp">
-      <Filter>framework\xvmem</Filter>
     </ClCompile>
     <ClCompile Include="xvmem\XVMem_windows.cpp">
       <Filter>framework\xvmem</Filter>
@@ -53,14 +44,23 @@
     <ClCompile Include="md5.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="foundations\lexicon.cpp">
+      <Filter>framework\foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="foundations\names.cpp">
+      <Filter>framework\foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="foundations\oov_lemmata.cpp">
+      <Filter>framework\foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="foundations\lemmata.cpp">
+      <Filter>framework\foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="foundations\book.cpp">
+      <Filter>framework\foundations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BookChapterVerseMap.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CLexIndex.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Feature.h">
       <Filter>Headers</Filter>
     </ClInclude>

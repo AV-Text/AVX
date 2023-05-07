@@ -10,18 +10,60 @@ const uint32 AVXBookIndex_FileLen = 2948;   // from AV-Inventory-Z31.bom
 
 #include <directory.h>
 
+extern bool reset_omega(DirectoryContent* directory); // this function resave the omega file (it currently fixes a bug in omega-3.2, and revs the version to omega-3.5
+
 class AVXBook {
 private:
-    char  _alternates[10];
-    uint8 _baseAlt2;
-    uint8 _baseAlt3;
+    static const char empty[1];
     static AVXBook* Book[67];
+    static const char* const indexed_substring(const char* const str, uint8 idx)
+    {
+        if (idx == 0)
+        {
+            return str;
+        }
+        char* result = const_cast<char*>(str);
+        int remainder = 9;
+        int len = 0;
+        for (uint8 i = 0; i < idx; i++)
+        {
+            int len = Strnlen(result, remainder);
+            result += (len + 1);
+            remainder -= (len + 1);
+
+            if (remainder < 2)
+                return AVXBook::empty;
+        }
+        for (int i = 0; i < remainder; i++)
+        {
+            if (result[i] == 0) // found null-termination
+            {
+                return result;
+            }
+        }
+        return AVXBook::empty;
+    }
+    static const uint16 const count_verses(const ChapterContent const* chap, uint8 chapter_cnt)
+    {
+        if (chapter_cnt == 0 || chap == nullptr)
+        {
+            return 0;
+        }
+        uint16 v = 0;
+        for (uint8 c = 0; c < chapter_cnt; c++)
+        {
+            v += chap[c].verse_count;
+        }
+        return v;
+    }
+
 public:
     const uint8     num;
     const uint8     chapter_cnt;
     const uint16    chapter_idx;
     const uint16    verse_cnt;
     const uint16    writ_cnt;
+    const uint32    writ_idx;
     const char      name[17];
     const char      abbr2[3];  // strlen == 2 || strlen == 0
     const char      abbr3[4];  // strlen == 3
@@ -36,18 +78,16 @@ public:
         num(book.num),
         chapter_cnt(book.chapter_count),
         chapter_idx(book.chapter_index),
-        verse_cnt(book.verse_count),
+        verse_cnt(count_verses(chap, book.chapter_count)),
         writ_cnt(book.writ_count),
-        name  {book.name[0], book.name[1], book.name[2], book.name[3], book.name[4], book.name[5], book.name[6], book.name[7], book.name[8], book.name[9], book.name[10], book.name[11], book.name[12], book.name[13], book.name[14], book.name[15], 0 },
-        abbr2 {book.abbr2[0], book.abbr2[1], 0 },
-        abbr3 {book.abbr3[0], book.abbr3[1], book.abbr3[2], 0 },
-        abbr4 {book.abbr4[0], book.abbr4[1], book.abbr4[2], book.abbr4[3], 0 },
-        _alternates {book.abbr_alt[0], book.abbr_alt[1], book.abbr_alt[2], book.abbr_alt[3], book.abbr_alt[4], book.abbr_alt[5], book.abbr_alt[6], book.abbr_alt[7], book.abbr_alt[8], 0 },
-        _baseAlt2(book.abbr_alt[0] != 0 ? Strnlen(book.abbr_alt, 9) + 1 : 0),
-        _baseAlt3(_baseAlt2 < 9 && book.abbr_alt[_baseAlt2] != 0 ? Strnlen(book.abbr_alt + _baseAlt2, 9 - _baseAlt2) + 1 : 0),
-        abbrAlt1(this->_alternates),
-        abbrAlt2(_baseAlt2 > 0 ? this->_alternates + _baseAlt2 : this->_alternates + 9),
-        abbrAlt3(_baseAlt3 > 0 ? this->_alternates + _baseAlt3 : this->_alternates + 9),
+        writ_idx(book.writ_index),
+        name  {(&book.text)[0], (&book.text)[1], (&book.text)[2], (&book.text)[3], (&book.text)[4], (&book.text)[5], (&book.text)[6], (&book.text)[7], (&book.text)[8], (&book.text)[9], (&book.text)[10], (&book.text)[11], (&book.text)[12], (&book.text)[13], (&book.text)[14], (&book.text)[15], 0 },
+        abbr2 {(&book.text)[16], (&book.text)[17], 0 },
+        abbr3 {(&book.text)[18], (&book.text)[19], (&book.text)[20], 0 },
+        abbr4 {(&book.text)[21], (&book.text)[22], (&book.text)[23], (&book.text)[24], 0 },
+        abbrAlt1((&book.text)+25),
+        abbrAlt2(indexed_substring((&book.text) + 25, 1)),
+        abbrAlt3(indexed_substring((&book.text) + 25, 2)),
         writ(writ),
         chapters(chap)
     {
@@ -55,11 +95,17 @@ public:
         {
             AVXBook::Book[this->num] = this;
         }
+        if (this->verse_cnt != book.verse_count)
+        {
+            printf("%02d:\t%d != %d\n", (int)book.num, (int)this->verse_cnt, (int)book.verse_count);
+        }
     }
     inline static const AVXBook& GetBook(uint8 num)
     {
         if (num <= 66)
             return *(AVXBook::Book[num]);
+
+        return *(AVXBook::Book[0]);
     }
         
     const WrittenContent* const getWrit(uint8 chapter = 1)

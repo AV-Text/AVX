@@ -6,7 +6,6 @@
 
 #include "AVXBlueprint.h"
 #include <unordered_set>
-#include <book_index.h>
 #include <unordered_set>
 #include <vector>
 
@@ -18,6 +17,8 @@
 
 #include <iostream>
 #include <string>
+
+#include <directory.h>
 
 #define DEFAULT_BUFFER_MAX 4*1024
 int main()
@@ -36,6 +37,8 @@ int main()
 
 	if (hPipe != INVALID_HANDLE_VALUE)
 	{
+		directory omega("C:\\src\\AVX\\omega\\AVX-Omega.data");
+
 		std::string line;
 
 	restart:
