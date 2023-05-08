@@ -8,11 +8,11 @@ You can rely on its foundation, with countless deployments and extensive text va
 
 AVX-Search represents a radical step forward at the same time as it reaches back to its roots as the fastest and most compact search tool for the KJV text. This fork from Digital-AV assembles all the pieces into a whole.
 
-The Digital-AV SDK is a single 19mb file that can be used to manifest the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, and other linguistic features. But even with all of that, it's still the KJV Bible at the core. AVX-Search utilizes the C++ foundations of that SDK. Coupling that with some open source parsing engines, results in a fast and efficient search engine with a minimal set of dependencies. Upon this, is built user-facing applications.
+The Digital-AV SDK is a single 19mb file that can be used to manifest the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, and other linguistic features. But even with all of that, it's still the KJV Bible at the core. AVX-Search replaces the C++ foundations of the Digital-AV SDK with a highly-efficient and compact, file-based implementation in C++ named AVX-Lib, and found in this repo. Also herein can be found the revised/upgraded AVX-Omega-3507 data file of the Digital-AV Omega SDK. Coupling AVX-Search with the open source pinshot-blue and blueprint-blue parsers, produces a fast and efficient search engine, fully optimized for the sacred text, with a spartan set of dependencies. Upon this, we will build user-facing applications.
 
-One dependency that is rolled in here is FlatBuffers, due to its speed, compactness, and ubiquity.
+There is one external dependency of AVX-Search: that is FlatBuffers. It was selected for its speed, compactness, and ubiquity. It is used for communication with the blueprint-blue parser.
 
-The other dependencies are open source projects, produced and managed by AV Text Ministries. [https://github/kwonus]
+Of course, there are several internal dependencies. These are all open source projects, produced and managed by AV Text Ministries. [https://github/kwonus] There was no need to fork these other dependencies as are are already complete and available.
 
 How they relate to AVX-Search is depicted in this diagram:
 
