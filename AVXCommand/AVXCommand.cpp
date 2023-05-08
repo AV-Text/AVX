@@ -37,7 +37,7 @@ int main()
 
 	if (hPipe != INVALID_HANDLE_VALUE)
 	{
-		directory omega("C:\\src\\AVX\\omega\\AVX-Omega.data");
+		directory omega("C:\\src\\AVX\\omega\\AVX-Omega-3507.data");
 
 		std::string line;
 

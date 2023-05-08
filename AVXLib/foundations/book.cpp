@@ -1,8 +1,7 @@
 ﻿#include <book.h>
 #include <md5.h>
+#include <stdio.h>
 #include <inttypes.h>
-
-const char AVXBook::empty[1] = { 0 };
 
 struct OmegaBookRepair {
 public:
@@ -86,18 +85,19 @@ OmegaBookRepair BOOKS[] = {
 	{ 66, "Revelation", "Re", "Rev", "Rev", "", "",  }
 };
 
-bool reset_omega(DirectoryContent* directory)
+bool reset_omega(DirectoryContent* directory, size_t size)
 {
+	directory[0].content_hash[0] = OmegaVersion;
 	uint8* root = reinterpret_cast<uint8*>(directory);
 	uint8* raw = reinterpret_cast<uint8*>(root + directory[1].content_offset);
 	for (uint8 b = 0; b <= 66; b++, raw += 48)
 	{
 		auto replacement = BOOKS[b];
-		auto book = reinterpret_cast<BookContent*>(raw);
+		auto book = reinterpret_cast<BookContent3201*>(raw);
 		book->verse_count = book->writ_count;
 		*((uint32*)&book->writ_count) = b > 0 ? book->writ_index : OmegaVersion;
 
-		auto bookName16 = (char*)&((&book->writ_count)[1]);
+		auto bookName16 = (char*)&((&book->writ_count)[2]);
 		auto a2 = bookName16 + 16;
 		auto a3 = a2 + 3;
 		auto a4 = a3 + 4;
@@ -141,10 +141,21 @@ bool reset_omega(DirectoryContent* directory)
 		for (int i = len; i < 10; i++)
 			alts[i] = 0;
 	}
-	for (int i = 1; i <= 7; i++)
+	for (int i = 1; i < directory[0].record_count; i++)
 	{
 		auto hash = md5(root + directory[i].content_offset, directory[i].content_length, directory[i].content_hash[0], directory[i].content_hash[1]);
 		printf("%d:\t%" PRIX64 "\t%" PRIX64 "\n", i, directory[i].content_hash[0], directory[i].content_hash[1]);
 	}
+	auto file = fopen("AVX-Omega-3507.data", "wb");
+	fwrite(root, sizeof(uint8), size, file);
+	fclose(file);
+
+	uint64 hi, lo;
+	auto hash = md5(root, size, hi, lo);
+	printf("omega:\t%" PRIX64 "\t%" PRIX64 "\n", hi, lo);
+
+	file = fopen("AVX-Omega-3507.md5", "w");
+	fprintf(file, "%" PRIX64 "%" PRIX64 "\n", hi, lo);
+	fclose(file);
 	return true;
 }

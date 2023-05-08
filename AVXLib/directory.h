@@ -47,15 +47,14 @@ struct BookContentStruct
 	uint8  num;
 	uint8  chapter_count;
 	uint16 chapter_index;
-	uint16 verse_count;	// 0 when variable-length
 	uint16 writ_count;
 	uint32 writ_index;
 	char   text;	// this is a character-array: book_name[16] + abbreviations[18]
 	//char   name[16];
-	//char   abbr2[2];
-	//char   abbr3[3];
-	//char   abbr4[4];
-	//char   abbr_alt[9];
+	//char   abbr2[3];
+	//char   abbr3[4];
+	//char   abbr4[5];
+	//char   abbr_alt[10];
 };
 typedef struct BookContentStruct BookContent;
 
@@ -104,6 +103,24 @@ struct NamesContentStruct
 	char   meanings; // pipe-delimited + null-terminated [this is an array of char]
 };
 typedef struct NamesContentStruct NamesContent;
+
+#pragma pack(1)
+struct BookContent3201Struct	// Older Omega format
+{
+	uint8  num;
+	uint8  chapter_count;
+	uint16 chapter_index;
+	uint16 verse_count;
+	uint16 writ_count;
+	uint32 writ_index;
+	char   text;	// this is a character-array: book_name[16] + abbreviations[18]
+	//char   name[16];
+	//char   abbr2[2];
+	//char   abbr3[3];
+	//char   abbr4[4];
+	//char   abbr_alt[9];
+};
+typedef struct BookContent3201Struct BookContent3201;
 
 class directory: private XVMem<const uint8>
 {
