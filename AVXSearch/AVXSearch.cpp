@@ -129,7 +129,7 @@ bool AVXSearch::search_quoted()
 bool AVXSearch::search_unquoted()
 {
     uint32 seg_cnt = 0;
-    if (this->segments = nullptr)
+    if (this->segments == nullptr)
         return false;
     for (/**/; this->segments[seg_cnt]; seg_cnt++)
         ;
