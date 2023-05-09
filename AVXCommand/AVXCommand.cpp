@@ -42,6 +42,7 @@ int main()
 		std::string line;
 
 	restart:
+		std::printf("> ");
 		std::getline(std::cin, line);
 
 		if (!line.empty())
@@ -68,9 +69,9 @@ int main()
 						&dwWritten,
 						NULL))
 					{
-						auto buffer = (len <= DEFAULT_BUFFER_MAX) ? defaultBuffer : (uint8*)std::malloc(len);
+						auto buffer = (uint8*)std::malloc(len);
 
-						auto ok = (len <= 1024) && ReadFile(hPipe,
+						auto ok = ReadFile(hPipe,
 							buffer,
 							len,
 							&dwWritten,

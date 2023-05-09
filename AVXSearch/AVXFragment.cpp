@@ -22,7 +22,7 @@ static AVXComparator* create_feature(const XFeature* feature)
     {
         auto rule = feature->rule()->c_str();
 
-        if (std::strncmp(rule, "text", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
+        if (std::strncmp(rule, "word", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
         {
             return new AVXWordComparator(feature);
         }

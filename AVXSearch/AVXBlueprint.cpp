@@ -45,7 +45,7 @@ bool AVXBlueprint::execute()
                     this->searches.push_back(find);
                     AVXSearch search(rxsearch, *find, settings);
 
-                    // This is redundant for multiple searches, but neither time-complexity nor memory bloat is not a real concern here
+                    // This is redundant for multiple searches, but neither time-complexity nor memory bloat is a real concern here
                     // This makes the search cleaner 9and thiere is often only one anyway most of the time)
                     auto xscopes = req->scope();
                     if (xscopes != nullptr)
