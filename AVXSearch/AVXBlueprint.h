@@ -17,5 +17,10 @@ public:
     std::vector<AVXFind*> searches;
     const uint8* const build();
 
+    inline void* getRequest()
+    {
+        return this->request;
+    }
+
     ~AVXBlueprint();
 };

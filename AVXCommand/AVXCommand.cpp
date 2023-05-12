@@ -13,6 +13,9 @@
 #include <avx_search_generated.h>
 #include <flatbuffers/flatbuffers.h>
 
+using namespace XBlueprintBlue;
+using namespace XSearchResults;
+
 #define PIPE_NAME "\\\\.\\pipe\\Blueprint-Blue-Service"
 
 #include <iostream>
@@ -82,7 +85,7 @@ int main()
 								&dwWritten,
 								NULL))
 							{
-								auto buffer = (uint8*)std::malloc(len);
+								auto buffer = len <= DEFAULT_BUFFER_MAX ? defaultBuffer : (uint8*)std::malloc(len);
 
 								auto ok = ReadFile(hPipe,
 									buffer,
@@ -93,33 +96,50 @@ int main()
 
 								if (ok)
 								{
-									AVXBlueprint search(buffer);
-									search.execute();
-									auto results = search.build();
+									AVXBlueprint blueprint(buffer);
+									XBlueprint* xblue = (XBlueprint*)blueprint.getRequest();
 
-									if (WriteFile(hPipe,
-										&time,
-										sizeof(int64),
-										&dwWritten,
-										NULL))
+									if (xblue->status() == XStatusEnum::XStatusEnum_ACTION_REQUIRED)
 									{
-										char simulation[] = { "Found 0 matching verses in zero books" };
-										len = (uint32)Strnlen(simulation, 64);
+										blueprint.execute();
+									}
+									else if (xblue->status() == XStatusEnum::XStatusEnum_FEEDBACK_EXPECTED)
+									{
+										blueprint.execute();
+										auto results = blueprint.build();
+
 										if (WriteFile(hPipe,
-											&len,
-											sizeof(uint32),
+											&time,
+											sizeof(int64),
 											&dwWritten,
 											NULL))
 										{
+											char simulation[] = { "Found 0 matching verses in zero books" };
+											len = (uint32)Strnlen(simulation, 64);
 											if (WriteFile(hPipe,
-												simulation,
-												len,
+												&len,
+												sizeof(uint32),
 												&dwWritten,
 												NULL))
 											{
-												;
+												if (WriteFile(hPipe,
+													simulation,
+													len,
+													&dwWritten,
+													NULL))
+												{
+													;
+												}
 											}
 										}
+									}
+									else if (xblue->status() == XStatusEnum::XStatusEnum_ERROR)
+									{
+										;
+									}
+									else // XStatusEnum::XStatusEnum_UNKNOWN or anything else
+									{
+										;
 									}
 								}
 								if (buffer != defaultBuffer)
