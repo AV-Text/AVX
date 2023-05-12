@@ -49,7 +49,7 @@ class AVXSearch
 private:
     const XSearch* xsearch;
     AVXFind& results;
-    AVXSettings& settings;
+    const AVXSettings& settings;
     std::vector<const AVXScope*> scopes;
 
     const char* spec;
@@ -62,12 +62,13 @@ public:
     bool search_quoted();
     bool search_unquoted();
 
-    inline bool execute()
+    inline const AVXFind& search()
     {
-        return this->quoted ? search_quoted() : search_unquoted();
+        bool found = this->quoted ? search_quoted() : search_unquoted();
+        return this->results;
     }
 
-    AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& xsettings);
+    AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& settings);
     ~AVXSearch();
     void add_scope(const AVXScope* scope);
 };

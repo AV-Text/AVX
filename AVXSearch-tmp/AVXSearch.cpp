@@ -5,8 +5,6 @@
 #include "AVXFound.h"
 #include "AVXMatch.h"
 #include <map>
-#include <directory.h>
-#include <book.h>
 #include <flatbuffers/flatbuffers.h>
 #include <blueprint_blue_generated.h>
 
@@ -14,6 +12,9 @@ static std::unordered_set<uintptr_t> MemoryTable;
 
 bool AVXSearch::search_quoted()
 {
+    auto books = AVXBookIndex::index;
+    auto chapters = AVXChapterIndex::index;
+
     uint32 seg_cnt = 0;
     if (this->segments = nullptr)
         return false;
@@ -25,9 +26,9 @@ bool AVXSearch::search_quoted()
     bool hit = false;
     for (uint8 b = 1; b <= 66; b++)
     {
-        auto book = AVXBook::GetBook(b);
-        auto chap = book.chapters;
-        auto writ = book.getWrit();
+        auto book = books + b;
+        auto chap = chapters + book->chapter_idx;
+        AVXWritten::AVXWrit* writ = const_cast<AVXWritten::AVXWrit*>(AVXWritten::getWrit(b));
         uint8 c = 1;
         uint8 v = 1;
 
@@ -36,13 +37,13 @@ bool AVXSearch::search_quoted()
         if (this->settings.span > 0)
         {
             uint32 len = 0;
-            for (w = 0; w < book.writ_cnt; w++, writ++)
+            for (w = 0; w < book->writ_cnt; w++, writ++)
             {
                 if (len == 0)
                 {
                     len = w + this->settings.span;
-                    if (len > book.writ_cnt)
-                        len = book.writ_cnt;
+                    if (len > book->writ_cnt)
+                        len = book->writ_cnt;
                 }
                 std::map<uint32, std::tuple<const char*, const char*>> matched;
                 bool found = this->segments[0]->compare(*writ, matched);
@@ -84,7 +85,7 @@ bool AVXSearch::search_quoted()
         else
         {
             uint32 len = writ->wc;
-            for (w = 0; w < book.writ_cnt; w += len, writ += len)
+            for (w = 0; w < book->writ_cnt; w += len, writ += len)
             {
                 std::map<uint32, std::tuple<const char*, const char*>> matched;
                 bool found = this->segments[0]->compare(*writ, matched);
@@ -128,8 +129,11 @@ bool AVXSearch::search_quoted()
 }
 bool AVXSearch::search_unquoted()
 {
+    auto books = AVXBookIndex::index;
+    auto chapters = AVXChapterIndex::index;
+
     uint32 seg_cnt = 0;
-    if (this->segments == nullptr)
+    if (this->segments = nullptr)
         return false;
     for (/**/; this->segments[seg_cnt]; seg_cnt++)
         ;
@@ -142,21 +146,21 @@ bool AVXSearch::search_unquoted()
     {
         uint32 hit_cnt = 0;
 
-        auto book = AVXBook::GetBook(b);
-        auto chap = book.chapters;
-        auto writ = book.getWrit();
+        auto book = books + b;
+        auto chap = chapters + book->chapter_idx;
+        AVXWritten::AVXWrit* writ = const_cast<AVXWritten::AVXWrit*>(AVXWritten::getWrit(b));
         uint8 c = 1;
         uint8 v = 1;
 
-        for (uint32 w = 0; w < book.writ_cnt; w++)
+        for (uint32 w = 0; w < book->writ_cnt; w++)
         {
             auto spanwrit = writ;
             uint32 cnt = 0;
             for (uint32 i = 0; i < seg_cnt; i++)
                 hits[i] = false;
             uint32 until = w + this->settings.span > 0 ? this->settings.span - 1 : writ->wc - 1;
-            if (until > book.writ_cnt - 1)
-                until = book.writ_cnt - 1;
+            if (until > book->writ_cnt - 1)
+                until = book->writ_cnt - 1;
             for (uint32 wi = w; wi <= until; wi++, spanwrit++)
             {
                 std::map<uint32, std::tuple<const char*, const char*>> matched;
@@ -210,7 +214,7 @@ void AVXSearch::add_scope(const AVXScope* scope)
     this->scopes.push_back(scope);
 }
 
-AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& settings):
+AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& xsettings):
     spec(xsearch->search()->c_str()),
     negate(this->xsearch->negate()),
     quoted(this->xsearch->quoted()),
@@ -255,8 +259,8 @@ static void SayHello_defunct(const char* const command)
     builder.Finish(request_offset);*/
 }
 
-// Do we need header defines for these?
-extern "C" const uint8* const avx_create_search(const char* const request)
+// For use with LoadLibrary/GetProcAdress ... no header file required
+extern "C" __declspec(dllexport) const uint8* const avx_create_search(const char* const request)
 {/*
     AVXBlueprint search(request);
     search.execute();
@@ -268,7 +272,7 @@ extern "C" const uint8* const avx_create_search(const char* const request)
 	return results;*/
     return nullptr;
 }
-extern "C" bool avx_delete_search(const uint8* const* results)
+extern "C" __declspec(dllexport) bool avx_delete_search(const uint8* const* results)
 {/*
 	auto entry = reinterpret_cast<uintptr_t>(results);
 	auto memory = reinterpret_cast<char*>(entry);

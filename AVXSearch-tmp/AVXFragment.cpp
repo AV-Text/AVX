@@ -22,7 +22,7 @@ static AVXComparator* create_feature(const XFeature* feature)
     {
         auto rule = feature->rule()->c_str();
 
-        if (std::strncmp(rule, "word", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
+        if (std::strncmp(rule, "text", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
         {
             return new AVXWordComparator(feature);
         }
@@ -73,7 +73,7 @@ AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragm
     }
 }
 
-bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
+bool AVXFragment::compare(AVXWritten::AVXWrit& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
 {
     if (this->features != nullptr) // features are OR conditions (|)
     {

@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <fileapi.h>
 
-#include "AVXBlueprint.h"
+#include <AVXBlueprint.h>
 #include <unordered_set>
 #include <unordered_set>
 #include <vector>
@@ -49,44 +49,84 @@ int main()
 		{
 			auto msg = line.c_str();
 
+			int64 time = 0;
 			uint32 len = (uint32)strlen(msg);
 
 			if (WriteFile(hPipe,
-				&len,
-				sizeof(uint32),
+				&time,
+				sizeof(int64),
 				&dwWritten,
 				NULL))
 			{
 				if (WriteFile(hPipe,
-					msg,
-					len,
+					&len,
+					sizeof(uint32),
 					&dwWritten,
 					NULL))
 				{
-					if (ReadFile(hPipe,
-						&len,
-						sizeof(uint32),
+					if (WriteFile(hPipe,
+						msg,
+						len,
 						&dwWritten,
 						NULL))
 					{
-						auto buffer = (uint8*)std::malloc(len);
-
-						auto ok = ReadFile(hPipe,
-							buffer,
-							len,
+						if (ReadFile(hPipe,
+							&time,
+							sizeof(int64),
 							&dwWritten,
-							NULL);
-						printf("Received %d bytes\n", dwWritten);
+							NULL))
+						{
+							if (ReadFile(hPipe,
+								&len,
+								sizeof(uint32),
+								&dwWritten,
+								NULL))
+							{
+								auto buffer = (uint8*)std::malloc(len);
 
-						if (ok)
-						{
-							AVXBlueprint search(buffer);
-							search.execute();
-							auto results = search.build();
-						}
-						if (buffer != defaultBuffer)
-						{
-							free((void*)buffer);
+								auto ok = ReadFile(hPipe,
+									buffer,
+									len,
+									&dwWritten,
+									NULL);
+								printf("Received %d bytes\n", dwWritten);
+
+								if (ok)
+								{
+									AVXBlueprint search(buffer);
+									search.execute();
+									auto results = search.build();
+
+									if (WriteFile(hPipe,
+										&time,
+										sizeof(int64),
+										&dwWritten,
+										NULL))
+									{
+										char simulation[] = { "Found 0 matching verses in zero books" };
+										len = (uint32)Strnlen(simulation, 64);
+										if (WriteFile(hPipe,
+											&len,
+											sizeof(uint32),
+											&dwWritten,
+											NULL))
+										{
+											if (WriteFile(hPipe,
+												simulation,
+												len,
+												&dwWritten,
+												NULL))
+											{
+												;
+											}
+										}
+									}
+								}
+								if (buffer != defaultBuffer)
+								{
+									free((void*)buffer);
+								}
+							}
 						}
 					}
 				}

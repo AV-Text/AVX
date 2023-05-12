@@ -3,11 +3,13 @@
 #include <vector>
 
 class AVXFind;
+class AVXSettings;
 
 class AVXBlueprint
 {
 private:
     void* request;
+    AVXSettings* settings;
 public:
     AVXBlueprint(const uint8* const data);
     bool execute();
@@ -15,8 +17,5 @@ public:
     std::vector<AVXFind*> searches;
     const uint8* const build();
 
-    ~AVXBlueprint()
-    {
-        ;
-    }
+    ~AVXBlueprint();
 };
