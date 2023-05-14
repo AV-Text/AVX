@@ -37,8 +37,7 @@ bool AVXSegment::compare(const WrittenContent& writ, std::map<uint32, std::tuple
     {
         for (int i = 0; this->fragments[i] != nullptr; i++) // fragments are AND conditions (&)
             if (this->fragments[i]->compare(writ, matched))
-                return false;
-        return true;
+                return true;
     }
     return false;
 }

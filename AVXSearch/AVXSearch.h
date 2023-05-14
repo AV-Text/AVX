@@ -59,12 +59,12 @@ private:
     XSegment* xsegments;
 
 public:
-    bool search_quoted();
-    bool search_unquoted();
+    bool search_quoted(vector<AVXScope*>& scopes);
+    bool search_unquoted(vector<AVXScope*>& scopes);
 
-    inline const AVXFind& search()
+    inline const AVXFind& find(vector<AVXScope*>& scopes)
     {
-        bool found = this->quoted ? search_quoted() : search_unquoted();
+        bool found = this->quoted ? search_quoted(scopes) : search_unquoted(scopes);
         return this->results;
     }
 

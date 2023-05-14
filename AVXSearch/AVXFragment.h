@@ -11,7 +11,7 @@ using namespace XBlueprintBlue;
 class AVXFragment
 {
 public:
-	bool fragment;
+	const char* fragment;
 	AVXComparator** features;
 
 	AVXFragment(const XFragment* xfragments);

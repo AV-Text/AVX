@@ -26,53 +26,76 @@ bool AVXBlueprint::execute()
 {
     const XBlueprint* req = reinterpret_cast<const XBlueprint*>(this->request);
 
-    for (uint8 b = 1; b <= 66; b++)
+    if (req->status() == XStatusEnum_ERROR)
     {
-        auto book = AVXBook::GetBook(b);
-        auto chap = book.chapters;
-        auto writ = book.getWrit(1);
-        uint8 c = 1;
-        uint8 v = 1;
-
-        for (uint32 w = 0; w < book.writ_cnt; w++, writ++)
+        ; // report error
+    }
+    else if (req->singleton() != nullptr)
+    {
+        if (req->status() == XStatusEnum_ACTION_REQUIRED)
         {
-            auto xsearch = req->search();
-            if (xsearch != nullptr)
+            ; // take approriate action (like display history or help)
+        }
+    }
+    else if (req->search() != nullptr)
+    {
+        auto xsearch = req->search();
+        if (xsearch != nullptr)
+        {
+            vector<AVXScope*> scopes;
+            auto xscopes = req->scope();
+            if (xscopes != nullptr)
             {
-                int search_size = xsearch->size();
-                for (int r = 0; r < search_size; r++)
+                int xscopes_size = xscopes->size();
+                for (int x = 0; x < xscopes_size; x++)
                 {
-                    auto rxsearch = (*xsearch)[r];
-                    auto find = new AVXFind(rxsearch->negate(), rxsearch->search()->c_str());
-                    this->searches.push_back(find);
-                    AVXSearch search(rxsearch, *find, *this->settings);
-
-                    // This is redundant for multiple searches, but neither time-complexity nor memory bloat is a real concern here
-                    // This makes the search cleaner 9and thiere is often only one anyway most of the time)
-                    auto xscopes = req->scope();
-                    if (xscopes != nullptr)
-                    {
-                        int xscopes_size = xscopes->size();
-                        for (int x = 0; x < xscopes_size; x++)
-                        {
-                            auto xscope = (*xscopes)[x];
-                            auto scope = new AVXScope(xscope);
-                            search.add_scope(scope);
-                        }
-                    }
-                    auto results = search.search();
+                    auto xscope = (*xscopes)[x];
+                    auto scope = new AVXScope(xscope);
+                    scopes.push_back(scope);
                 }
             }
-            if (writ->wc == 1)
+
+            int search_size = xsearch->size();
+            for (int r = 0; r < search_size; r++)
             {
-                v++;
-                if (writ->v == chap->verse_count)
+                auto rxsearch = (*xsearch)[r];
+                auto expression = new AVXFind(rxsearch->negate(), rxsearch->search()->c_str());
+                this->searches.push_back(expression);
+                auto search = new AVXSearch(rxsearch, *expression, *this->settings);
+
+                // This is redundant for multiple searches, but neither time-complexity nor memory bloat is a real concern here
+                // This makes the search cleaner 9and thiere is often only one anyway most of the time)
+                if (xscopes != nullptr)
                 {
-                    c++;
-                    chap++;
+                    int xscopes_size = xscopes->size();
+                    for (int x = 0; x < xscopes_size; x++)
+                    {
+                        auto xscope = (*xscopes)[x];
+                        auto scope = new AVXScope(xscope);
+
+
+                        search->add_scope(scope);
+                    }
                 }
+                search->find(scopes);
+            }
+            if (req->status() == XStatusEnum_FEEDBACK_EXPECTED)
+            {
+                ;
+            }
+            else
+            {
+                ; // this is unexpected
             }
         }
+        else
+        {
+            ; // this is unexpected
+        }
+    }
+    else if (req->status() != XStatusEnum_COMPLETED)
+    {
+        ; // unknown/undefined status
     }
     return false;
 }

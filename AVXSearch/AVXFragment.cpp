@@ -60,6 +60,7 @@ static AVXComparator* create_feature(const XFeature* feature)
 
 AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragment()->c_str()), features(nullptr)
 {
+    this->fragment = xfragment->fragment()->c_str();
     auto xfeatures = xfragment->features();
     if (xfeatures != nullptr)
     {
@@ -67,8 +68,8 @@ AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragm
         this->features = (AVXComparator**)calloc(features_size + 1, sizeof(AVXComparator*));
         for (int f = 0; f < features_size; f++)
         {
-            auto xfragment = (*xfeatures)[f];
-            this->features[f] = create_feature(xfragment);
+            auto xfeature = (*xfeatures)[f];
+            this->features[f] = create_feature(xfeature);
         }
     }
 }
@@ -83,7 +84,8 @@ bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tupl
             if (hit != nullptr)
             {
                 auto coord = WritAsCoordinate(writ);
-                matched[coord] = std::make_tuple((const char*)this->fragment, hit);
+                matched[coord] = std::make_tuple(this->fragment, hit);
+                return true;
             }
         }
         return false;

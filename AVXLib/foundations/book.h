@@ -10,7 +10,7 @@ const uint32 AVXBookIndex_FileLen = 2948;   // from AV-Inventory-Z31.bom
 
 #include <directory.h>
 
-extern bool reset_omega(DirectoryContent* directory, size_t size); // this function resave the omega file (it currently fixes a bug in omega-3.2, and revs the version to omega-3.5
+extern bool reset_omega(DirectoryContent* directory, size_t size); // this function resaves the omega file (it currently fixes a bug in omega-3.2, and revs the version to omega-3.5
 
 class AVXBook {
 private:
