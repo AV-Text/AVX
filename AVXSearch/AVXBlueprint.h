@@ -15,7 +15,7 @@ public:
     bool execute();
 
     std::vector<AVXFind*> searches;
-    const uint8* const build();
+    const uint8* const build(uint32& size);
 
     inline void* getRequest()
     {

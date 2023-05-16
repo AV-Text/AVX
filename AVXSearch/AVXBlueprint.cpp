@@ -63,25 +63,11 @@ bool AVXBlueprint::execute()
                 this->searches.push_back(expression);
                 auto search = new AVXSearch(rxsearch, *expression, *this->settings);
 
-                // This is redundant for multiple searches, but neither time-complexity nor memory bloat is a real concern here
-                // This makes the search cleaner 9and thiere is often only one anyway most of the time)
-                if (xscopes != nullptr)
-                {
-                    int xscopes_size = xscopes->size();
-                    for (int x = 0; x < xscopes_size; x++)
-                    {
-                        auto xscope = (*xscopes)[x];
-                        auto scope = new AVXScope(xscope);
-
-
-                        search->add_scope(scope);
-                    }
-                }
                 search->find(scopes);
             }
             if (req->status() == XStatusEnum_FEEDBACK_EXPECTED)
             {
-                ;
+                ; // return data to pipe
             }
             else
             {
@@ -100,8 +86,9 @@ bool AVXBlueprint::execute()
     return false;
 }
 
-const uint8* const AVXBlueprint::build()
+const uint8* const AVXBlueprint::build(uint32 &size)
 {
+    size = 0;
     std::vector<flatbuffers::Offset<XFind>> collection;
     flatbuffers::FlatBufferBuilder builder;
     XResultsBuilder xresults(builder);
@@ -117,7 +104,7 @@ const uint8* const AVXBlueprint::build()
 
     auto results = xresults.Finish();
 
-    auto size = builder.GetSize();
+    size = (uint32) builder.GetSize();
     auto buffer = new uint8[size];
     builder.PushFlatBuffer(buffer, size);
     return buffer;

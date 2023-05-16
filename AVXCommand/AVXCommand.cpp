@@ -1,6 +1,18 @@
 // PipeTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+// The Named-Pipe communication eventually needs to be moved into AVX-Search
+//
+// extern "C" functions will be defined as follows:
+/*
+	int Execute(ref int summarySize, ref in resultsSize): return value is int64 timestamp [or zero when action is complete]
+	int GetSummary(int timestamp, uint8* buffer, uint32 bufferSize): return value is ftatbuffer-defined enum for status
+	const char* CreateRendering(int timestamp, uint8* buffer, uint32 bufferSize): buffer
+	const char* FreeRendering(int timestamp, uint8* buffer, uint32 bufferSize): buffer
+	int GetHistory(int64 notBefore, int64 notAfter, const char* buffer, uint32 size): returns size required to hold content (or zero when size provided was sufficient)
+	int ExecuteSingleton(char* effect, in effectSize): return value is status
+ */
+
 #include <windows.h>
 #include <fileapi.h>
 
@@ -23,14 +35,14 @@ using namespace XSearchResults;
 
 #include <directory.h>
 
+#include <AVXStatement.h>
+
 #define DEFAULT_BUFFER_MAX 4*1024
 int main()
 {
-	HANDLE hPipe;
-	DWORD dwWritten;
-	uint8 defaultBuffer[DEFAULT_BUFFER_MAX];
+	HANDLE pipe;
 
-	hPipe = CreateFile(PIPE_NAME,
+	pipe = CreateFile(PIPE_NAME,
 		GENERIC_READ | GENERIC_WRITE,
 		0,
 		NULL,
@@ -38,8 +50,10 @@ int main()
 		0,
 		NULL);
 
-	if (hPipe != INVALID_HANDLE_VALUE)
+	if (pipe != INVALID_HANDLE_VALUE)
 	{
+		AVXStatement stmt(pipe);
+
 		directory omega("C:\\src\\AVX\\omega\\AVX-Omega-3507.data");
 
 		std::string line;
@@ -52,109 +66,11 @@ int main()
 		{
 			auto msg = line.c_str();
 
-			int64 time = 0;
-			uint32 len = (uint32)strlen(msg);
+			auto id = stmt.Compile(msg);
 
-			if (WriteFile(hPipe,
-				&time,
-				sizeof(int64),
-				&dwWritten,
-				NULL))
-			{
-				if (WriteFile(hPipe,
-					&len,
-					sizeof(uint32),
-					&dwWritten,
-					NULL))
-				{
-					if (WriteFile(hPipe,
-						msg,
-						len,
-						&dwWritten,
-						NULL))
-					{
-						if (ReadFile(hPipe,
-							&time,
-							sizeof(int64),
-							&dwWritten,
-							NULL))
-						{
-							if (ReadFile(hPipe,
-								&len,
-								sizeof(uint32),
-								&dwWritten,
-								NULL))
-							{
-								auto buffer = len <= DEFAULT_BUFFER_MAX ? defaultBuffer : (uint8*)std::malloc(len);
-
-								auto ok = ReadFile(hPipe,
-									buffer,
-									len,
-									&dwWritten,
-									NULL);
-								printf("Received %d bytes\n", dwWritten);
-
-								if (ok)
-								{
-									AVXBlueprint blueprint(buffer);
-									XBlueprint* xblue = (XBlueprint*)blueprint.getRequest();
-
-									if (xblue->status() == XStatusEnum::XStatusEnum_ACTION_REQUIRED)
-									{
-										blueprint.execute();
-									}
-									else if (xblue->status() == XStatusEnum::XStatusEnum_FEEDBACK_EXPECTED)
-									{
-										blueprint.execute();
-										auto results = blueprint.build();
-
-										if (WriteFile(hPipe,
-											&time,
-											sizeof(int64),
-											&dwWritten,
-											NULL))
-										{
-											char simulation[] = { "Found 0 matching verses in zero books" };
-											len = (uint32)Strnlen(simulation, 64);
-											if (WriteFile(hPipe,
-												&len,
-												sizeof(uint32),
-												&dwWritten,
-												NULL))
-											{
-												if (WriteFile(hPipe,
-													simulation,
-													len,
-													&dwWritten,
-													NULL))
-												{
-													;
-												}
-											}
-										}
-									}
-									else if (xblue->status() == XStatusEnum::XStatusEnum_ERROR)
-									{
-										;
-									}
-									else // XStatusEnum::XStatusEnum_UNKNOWN or anything else
-									{
-										;
-									}
-								}
-								if (buffer != defaultBuffer)
-								{
-									free((void*)buffer);
-								}
-							}
-						}
-					}
-				}
-			}
 			goto restart;
 		}
-		CloseHandle(hPipe);
+		CloseHandle(pipe);
 	}
-
 	return 0;
 }

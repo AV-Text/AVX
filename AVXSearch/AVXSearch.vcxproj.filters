@@ -63,6 +63,12 @@
     <ClCompile Include="AVXWordComparator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuelleResponse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AVXStatement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVXBlueprint.h">
@@ -116,5 +122,14 @@
     <ClInclude Include="AVXWordComparator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QuelleResponse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXStatement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
