@@ -32,7 +32,7 @@ bool AVXBlueprint::execute()
     }
     else if (req->singleton() != nullptr)
     {
-        if (req->status() == XStatusEnum_ACTION_REQUIRED)
+        if (req->status() == XStatusEnum_COMPLETED)
         {
             ; // take approriate action (like display history or help)
         }
@@ -54,12 +54,11 @@ bool AVXBlueprint::execute()
                     scopes.push_back(scope);
                 }
             }
-
             int search_size = xsearch->size();
             for (int r = 0; r < search_size; r++)
             {
                 auto rxsearch = (*xsearch)[r];
-                auto expression = new AVXFind(rxsearch->negate(), rxsearch->search()->c_str());
+                auto expression = new AVXFind(rxsearch->negate(), rxsearch->expression()->c_str());
                 this->searches.push_back(expression);
                 auto search = new AVXSearch(rxsearch, *expression, *this->settings);
 

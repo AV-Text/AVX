@@ -69,7 +69,7 @@ int64 AVXStatement::Compile(const char* const command)
 							AVXBlueprint blueprint(buffer);
 							XBlueprint* xblue = (XBlueprint*)blueprint.getRequest();
 
-							if (xblue->status() == XStatusEnum::XStatusEnum_ACTION_REQUIRED)
+							if (xblue->status() == XStatusEnum::XStatusEnum_COMPLETED)
 							{
 								blueprint.execute();
 								this->statements.add(time, buffer, len, ResultType::BLUEPRINT, zero);
