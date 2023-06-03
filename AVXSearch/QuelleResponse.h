@@ -18,16 +18,6 @@ struct ResultSummaryStruct
 };
 typedef ResultSummaryStruct ResultSummary;
 
-struct QuelleHistoryStruct
-{
-	uint32 id;
-	time_t time;
-	std::string statementRaw;
-	std::string statement;
-	std::string summary;
-};
-typedef QuelleHistoryStruct QuelleHistory;
-
 struct QuelleResponseStruct
 {
 	int64 stmt_id;
@@ -37,8 +27,6 @@ struct QuelleResponseStruct
 	ResultType type;
 	ResultSummary summary;
 	char* rendering;
-	QuelleHistory* history;
-	char* effects;	// result from singleton-command
 };
 typedef QuelleResponseStruct QuelleResponse;
 
@@ -52,9 +40,7 @@ private:
 	time_t obtain_expiration();
 public:
 	bool add(const int64 id, const uint8* const buffer, const uint32 buffer_len, const ResultType type, const ResultSummary& summary);
-	const QuelleResponse* const effect(const int64 id, const char* const effects); // extend lease expiration & add command effects (important for singletons)
 	const QuelleResponse* const extend(const int64 id, const char* const rendering); // extend lease expiration & add rendering
-	const QuelleResponse* const extend(const int64 id, const QuelleHistory* const history); // extend lease expiration & add history
 	const QuelleResponse* const extend(const int64 id); // extend lease expiration
 	void release(const int64 id);
 

@@ -140,18 +140,19 @@ vector<string> AVXStatement::GetWarnings(int64 id)
 
 	return empty;
 }
-
-const char* const AVXStatement::CreateEffect(int64 id)
-{
-	return nullptr;
-}
 const char* const AVXStatement::CreateRendering(int64 id)
 {
 	return nullptr;
 }
-const QuelleHistory* const AVXStatement::CreateHistory(int64 id)
+vector<string> AVXStatement::GetHistory(int64 id)
 {
-	return nullptr;
+	vector<string> empty;
+
+	return empty;
+}
+string AVXStatement::GetEffects(int64 id)
+{
+	return "";
 }
 void AVXStatement::Release(int64 id)
 {

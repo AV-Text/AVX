@@ -43,16 +43,6 @@ bool CommandResponses::add(const int64 id, const uint8* const buffer, const uint
 		free(this->cache[idx].rendering);
 		this->cache[idx].rendering = nullptr;
 	}
-	if (this->cache[idx].history != nullptr)
-	{
-		free(this->cache[idx].history);
-		this->cache[idx].history = nullptr;
-	}
-	if (this->cache[idx].effects != nullptr)
-	{
-		free(this->cache[idx].effects);
-		this->cache[idx].effects = nullptr;
-	}
 	this->cache[idx].stmt_id = id;
 	this->cache[idx].buffer = const_cast<uint8*>(buffer);
 	this->cache[idx].buffer_len = buffer_len;
@@ -99,32 +89,6 @@ uint32 CommandResponses::get_available_slot()
 	return idx;
 }
 
-const QuelleResponse* const CommandResponses::effect(const int64 id, const char* const effects) // extend lease expiration & add effects
-{
-	for (int32 i = 0; i < QUELLE_COMMAND_CACHE_SIZE; i++)
-	{
-		if ((this->cache[i].stmt_id == id) && (this->cache[i].buffer != nullptr || this->cache[i].effects != nullptr))
-		{
-			if (this->cache[i].effects != nullptr)
-			{
-				free(this->cache[i].effects);
-			}
-			this->cache[i].effects = const_cast<char*>(effects);
-			this->cache[i].expiration = this->obtain_expiration();
-			return this->cache + i;
-		}
-	}
-	// We support renderings without metadata
-	// This makes us a better service for REST clients
-	//
-	ResultSummary zero = { 0, 0, 0, 0 };
-	if (this->add(id, nullptr, 0, ResultType::UNKNOWN, zero))	// recursion will only ever be two-deep, never more.
-	{
-		return this->extend(id, effects);
-	}
-	return nullptr;
-}
-
 const QuelleResponse* const CommandResponses::extend(const int64 id, const char* const rendering) // extend lease expiration & add rendering
 {
 	for (int32 i = 0; i < QUELLE_COMMAND_CACHE_SIZE; i++)
@@ -147,32 +111,6 @@ const QuelleResponse* const CommandResponses::extend(const int64 id, const char*
 	if (this->add(id, nullptr, 0, ResultType::UNKNOWN, zero))	// recursion will only ever be two-deep, never more.
 	{
 		return this->extend(id, rendering);
-	}
-	return nullptr;
-}
-
-const QuelleResponse* const CommandResponses::extend(const int64 id, const QuelleHistory* const history) // extend lease expiration & add rendering
-{
-	for (int32 i = 0; i < QUELLE_COMMAND_CACHE_SIZE; i++)
-	{
-		if ((this->cache[i].stmt_id == id) && (this->cache[i].buffer != nullptr || this->cache[i].history != nullptr))
-		{
-			if (this->cache[i].rendering != nullptr)
-			{
-				free(this->cache[i].rendering);
-			}
-			this->cache[i].history = const_cast<QuelleHistory*>(history);
-			this->cache[i].expiration = this->obtain_expiration();
-			return this->cache + i;
-		}
-	}
-	// We support renderings without metadata
-	// This makes us a better service for REST clients
-	//
-	ResultSummary zero = { 0, 0, 0, 0 };
-	if (this->add(id, nullptr, 0, ResultType::UNKNOWN, zero))	// recursion will only ever be two-deep, never more.
-	{
-		return this->extend(id, history);
 	}
 	return nullptr;
 }
@@ -200,8 +138,6 @@ CommandResponses::CommandResponses()
 		this->cache[i].expiration = 0;
 		this->cache[i].type = ResultType::UNKNOWN;
 		this->cache[i].rendering = nullptr;
-		this->cache[i].history = nullptr;
-		this->cache[i].effects = nullptr;
 	}
 }
 
@@ -216,14 +152,6 @@ CommandResponses::~CommandResponses()
 		if (this->cache[i].rendering != nullptr)
 		{
 			free(this->cache[i].rendering);
-		}
-		if (this->cache[i].effects != nullptr)
-		{
-			free(this->cache[i].effects);
-		}
-		if (this->cache[i].history != nullptr)
-		{
-			free(this->cache[i].history);
 		}
 	}
 }

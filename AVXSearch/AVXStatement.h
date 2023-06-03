@@ -21,10 +21,10 @@ public:
 	const QuelleResponse* const Execute(int64 id);
 	vector<string> GetErrors(int64 id);
 	vector<string> GetWarnings(int64 id);
+	vector<string> GetHistory(int64 id);
+	string GetEffects(int64 id);
 
-	const char* const CreateEffect(int64 id);
 	const char* const CreateRendering(int64 id);
-	const QuelleHistory* const CreateHistory(int64 id);
 	void Release(int64 id);
 
 	AVXStatement(HANDLE pipe);
