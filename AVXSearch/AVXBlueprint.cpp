@@ -58,7 +58,7 @@ bool AVXBlueprint::execute()
             for (int r = 0; r < search_size; r++)
             {
                 auto rxsearch = (*xsearch)[r];
-                auto expression = new AVXFind(rxsearch->negate(), rxsearch->expression()->c_str());
+                auto expression = new AVXFind(rxsearch->expression()->c_str());
                 this->searches.push_back(expression);
                 auto search = new AVXSearch(rxsearch, *expression, *this->settings);
 

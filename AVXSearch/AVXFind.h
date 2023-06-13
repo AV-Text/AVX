@@ -14,16 +14,13 @@ class AVXFind
 public:
     std::vector<AVXFound*> founds;
     std::string find;
-    bool negate;
 
     AVXFind()
     {
-        this->negate = false;
         this->find = "";
     }
-    AVXFind(bool negate, const char* search)
+    AVXFind(const char* search)
     {
-        this->negate = negate;
         this->find = search;
     }
     ~AVXFind()

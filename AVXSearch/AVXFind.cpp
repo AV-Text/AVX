@@ -19,7 +19,7 @@ void AVXFind::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuf
     }
     auto vfounds = builder.CreateVector(xfounds);
     auto find = builder.CreateString(this->find.c_str());
-    auto xfind = CreateXFind(builder, find, negate, vfounds);
+    auto xfind = CreateXFind(builder, find, vfounds);
 
     parentCollection.push_back(xfind);
 }

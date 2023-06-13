@@ -210,7 +210,6 @@ void AVXSearch::add_scope(const AVXScope* scope)
 
 AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& settings):
     spec(xsearch->expression()->c_str()),
-    negate(xsearch->negate()),
     quoted(xsearch->quoted()),
     xsearch(xsearch),
     settings(settings),
