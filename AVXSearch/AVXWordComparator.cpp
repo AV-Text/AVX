@@ -1,6 +1,11 @@
 #include "AVXWordComparator.h"
 #include <stdlib.h>
 
+// TODO: TO DO:
+// This needs to handle fuzziness, when settings indicate that type of search:
+// private methods on this class can handle the delegaton to the proper method
+// for match logic
+//
 const char* AVXWordComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;

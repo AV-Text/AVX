@@ -1,6 +1,11 @@
 #include "AVXLemmaComparator.h"
 #include <stdlib.h>
 
+// TODO: TO DO:
+// If lemmata matches handle fuzziness, and settings indicate that type of search,
+// then private methods on this class can handle the delegaton to the proper method
+// for match logic
+//
 const char* AVXLemmaComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
