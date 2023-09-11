@@ -165,6 +165,12 @@
                         bom.hash[0] = 0;
                         bom.hash[1] = this.version;
                         bom.recordCount = (UInt32)(BOM.Phonetics + 1);
+                        bom.length = (UInt32)(bom.recordCount * bom.recordLength);
+                    }
+                    else
+                    {
+                        byte prev = (byte)(idx - 1);
+                        bom.offset = (UInt32) (BOM.Inventory[prev].offset + BOM.Inventory[prev].length);
                     }
                     WriteBOM(bom);
                 }
