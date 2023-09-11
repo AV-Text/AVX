@@ -164,6 +164,7 @@
                     {
                         bom.hash[0] = 0;
                         bom.hash[1] = this.version;
+                        bom.recordCount = (UInt32)(BOM.Phonetics + 1);
                     }
                     WriteBOM(bom);
                 }
