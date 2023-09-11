@@ -55,6 +55,7 @@
             this.recordLength = 0;
         }
         public byte[] label;
+        public UInt32 originalOffset;
         public UInt32 offset;
         public UInt32 length;
         public UInt64[] hash;

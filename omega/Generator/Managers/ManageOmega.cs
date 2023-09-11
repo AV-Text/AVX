@@ -153,7 +153,8 @@
                     bom.hash = new UInt64[2];
 
                     bom.label = this.sdkReader.ReadBytes(16);
-                    bom.offset = this.sdkReader.ReadUInt32();
+                    bom.originalOffset = this.sdkReader.ReadUInt32();
+                    bom.offset = 0;
                     bom.length = this.sdkReader.ReadUInt32();
                     bom.recordLength = this.sdkReader.ReadUInt32();
                     bom.recordCount = this.sdkReader.ReadUInt32();
@@ -184,7 +185,7 @@
             if (this.sdkReader != null && this.newWriter != null)
             {
                 var bom = BOM.Inventory[(byte)order];
-                this.sdkReader.BaseStream.Seek((int)bom.offset, SeekOrigin.Begin);
+                //this.sdkReader.BaseStream.Seek((int)bom.originalOffset, SeekOrigin.Begin);
                 var bytes = this.sdkReader.ReadBytes((int)bom.length);
 
                 this.newWriter.Write(bytes);
