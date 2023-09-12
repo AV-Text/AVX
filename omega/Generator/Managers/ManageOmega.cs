@@ -4,9 +4,12 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Reflection.PortableExecutable;
     using System.Runtime.ExceptionServices;
+    using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading.Channels;
+    using System.Xml.Linq;
     using static System.Net.WebRequestMethods;
 
     public class ManageOmega
@@ -137,11 +140,6 @@
                 this.bomOmega.Write("\n");
             }
         }
-        private void WriteBOM(TOC bom)
-        {
-            WriteBinaryBOM(bom);
-            WriteTextBOM(bom);
-        }
         private void CreateDirectory()
         {
             if (this.sdkReader != null)
@@ -173,11 +171,95 @@
                         byte prev = (byte)(idx - 1);
                         bom.offset = (UInt32) (BOM.Inventory[prev].offset + BOM.Inventory[prev].length);
                     }
-                    WriteBOM(bom);
+                    WriteBinaryBOM(bom);
                 }
                 this.UpdatePhoneticsBOM();
                 bom = BOM.Inventory[BOM.Phonetics];
-                WriteBOM(bom);
+                WriteBinaryBOM(bom);
+            }
+        }
+        private void FixBookArtifact()
+        {
+            if (this.sdkReader != null && this.newWriter != null)
+            {
+                using (var mem = new MemoryStream())
+                {
+                    var mwriter = new BinaryWriter(mem, Encoding.UTF8);
+
+                    (UInt32 idx, UInt16 cnt) previous = (0, 0);
+                    var bom = BOM.Inventory[BOM.Book];
+                    this.sdkReader.BaseStream.Seek((int)bom.originalOffset, SeekOrigin.Begin);
+
+                    for (byte b = 0; b < bom.recordCount; b++)
+                    {
+                        int len = 0;
+                        var bookNum = this.sdkReader.ReadByte(); len++;
+                        var chapterCnt = this.sdkReader.ReadByte(); len++;
+                        var chapterIdx = this.sdkReader.ReadUInt16(); len += 2;
+                        var writCnt = this.sdkReader.ReadUInt16(); len += 2;
+                        var writIdx = this.sdkReader.ReadUInt32(); len += 4;
+
+                        var name = this.sdkReader.ReadBytes(16); len += name.Length;
+                        var abbr = this.sdkReader.ReadBytes(22); len += abbr.Length;
+
+                        if (len != 48)
+                        {
+                            break;
+                        }
+                        if (b == 0)
+                        {
+
+                            writIdx = (UInt32) this.version;
+                            for (int i = 0; i < name.Length; i++) // 3.5.07 => 3.9.11
+                            {
+                                if (name[i] == 0)
+                                    break;
+                                if (name[i] == (byte)'5') // May
+                                    name[i] =  (byte)'9'; // September
+                                else if (name[i] == (byte)'0')
+                                    name[i] = (byte)'1';
+                                else if (name[i] == (byte)'7')
+                                    name[i] = (byte)'1';
+                            }
+                            for (int i = 0; i < abbr.Length; i++) // 35 => 39
+                            {
+                                if (abbr[i] == (byte)'5')  // May
+                                    abbr[i] =  (byte)'9';  // September
+                            }
+                        }
+                        else if (b == 1)
+                        {
+                            previous = (0, writCnt);
+                            writIdx = 0;
+                        }
+                        else
+                        {
+                            writIdx = previous.idx + previous.cnt;
+                            previous = (writIdx, writCnt);
+                        }
+                        mwriter.Write(bookNum);
+                        mwriter.Write(chapterCnt);
+                        mwriter.Write(chapterIdx);
+                        mwriter.Write(writCnt);
+                        mwriter.Write(writIdx);
+                        mwriter.Write(name);
+                        mwriter.Write(abbr);
+                    }
+                    var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
+
+                    mreader.BaseStream.Seek(0, SeekOrigin.Begin);
+                    var bytes = mreader.ReadBytes((int)bom.length);
+                    bom.hash = CalculateMD5(bytes);
+
+                    var position = this.newWriter.BaseStream.Position;
+                    this.newWriter.BaseStream.Seek(0 + (BOM.Book * bom.recordLength) - (2 * sizeof(UInt64)), SeekOrigin.Begin);
+                    this.newWriter.Write(bom.hash[0]);
+                    this.newWriter.Write(bom.hash[1]);
+                    this.newWriter.BaseStream.Seek(position, SeekOrigin.Begin);
+                    this.newWriter.Write(bytes);
+
+                    mreader.Close();
+                }
             }
         }
         private void CreateExistingArtifact(byte order)
@@ -185,7 +267,7 @@
             if (this.sdkReader != null && this.newWriter != null)
             {
                 var bom = BOM.Inventory[(byte)order];
-                //this.sdkReader.BaseStream.Seek((int)bom.originalOffset, SeekOrigin.Begin);
+                this.sdkReader.BaseStream.Seek((int)bom.originalOffset, SeekOrigin.Begin);
                 var bytes = this.sdkReader.ReadBytes((int)bom.length);
 
                 this.newWriter.Write(bytes);
@@ -206,11 +288,20 @@
         {
             this.CreateDirectory();
 
-            for (byte idx = 0; idx < BOM.Phonetics; idx++)
+            for (byte idx = 1; idx < BOM.Phonetics; idx++)
             {
-                this.CreateExistingArtifact(idx);
+                if (idx == BOM.Book)
+                    this.FixBookArtifact();
+                else
+                    this.CreateExistingArtifact(idx);
             }
             this.CreateNewArtifact(BOM.Phonetics, this.phoneticReader);
+
+            for (byte idx = 0; idx <= BOM.Phonetics; idx++)
+            {
+                var bom = BOM.Inventory[idx];
+                this.WriteTextBOM(bom);
+            }
             this.CloseAllButMD5();
 
             if (this.bomOmega_MD5 != null)
