@@ -18,11 +18,11 @@ The latest architecture is highly modularized. Earlier works by me were much mor
 
 How each dependent service and library are interwoven into the AVX Framework is depicted below:
 
-![](AVXSearch/AVXSearch-context.png)
+![](AVXSearch/AVX-Framework.png)
 
 The user facing applications built upon this framework are depicted relative to AVX-Framework in this diagram:
 
-![](AVXSearch/AVXSearch-context.png)
+![](AVXSearch/AVX-Roadmap.png)
 
 The blue boxes above are all in active development with the planned completion identified in the diagram; All of these can be found in this [AVX] repo. The purple boxes are already complete from a developer perspective. However, they still need to be packaged for deployment.  End-user apps are unavailable at this time. They are expected to become available in late 2023 or early in 2024. After that, status will be evaluated and work can commence on the gray boxes.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all user-facing apps. For additional info on the purple boxes and Digital-AV, head on over to  https://github.com/kwonus, and browse the repos there.
 
