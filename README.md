@@ -1,4 +1,4 @@
-# AVX Search
+# AVX Framework
 
 - a fork of https://github/kwonus/Digital-AV
 
