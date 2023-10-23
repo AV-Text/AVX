@@ -18,7 +18,7 @@ The latest architecture is highly modularized. Earlier works were much more mono
 
 AV Text ministries hopes that you find assets here that can assist you in building next-gen, quality applications using the most trustworthy English text that God has yet availed to mankind [The Authorized Version 1769 text, commonly known as the King James Bible]. The Digital-AV license is designed to be as free as the gospel. Use it as you see fit, hopefully to the glory of God.
 
-AVX-Framework has two core modules, five primary dependencies, and and binary file dependencies. It is depicted in Figure-1:
+Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, many publicly available classes are exposed in AVX-Lib-Net and NUPhone. It is expected that consumers of AV-Engine will reach into those two modules, but the other dependencies will be mostly opaque to AVX-Framework consumers. The seven modules that compose AVX-Framework are depicted in Figure-1:
 
 ![](AVXSearch/AVX-Framework.png)
 
@@ -30,7 +30,7 @@ A BETA release of AV-Bible and AV-Console are planned for 2023. The development 
 
 **Figure-2**: Development roadmap for BETA releases in 2023 [revision #3A22]
 
-We plan to harden and update AV-Bible (Windows desktop application) in the Windows Store early in 2024. Aftwerwards, we plan to release additional apps later in 2024. The diagram, depicted in Figure-3, identifies anticipated releases and estimated dates:
+We plan to harden AV-Bible (Windows desktop application) and release it into the Windows Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-3, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
