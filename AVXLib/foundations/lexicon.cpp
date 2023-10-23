@@ -3,7 +3,17 @@
 AVXLexTokenMap LexLookup;
 AVXLexKeyMap   LexMap;
 
-extern "C" bool create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap)
+extern "C" __declspec(dllexport) bool create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap)
+{
+	return AVXLexTokenMap::create_lexicon(lex, count, createLexicalLookupMap);
+}
+
+extern "C" __declspec(dllexport) bool delete_lexicon()
+{
+	return AVXLexTokenMap::delete_lexicon();
+}
+
+bool AVXLexTokenMap::create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap)
 {
 	auto entry = const_cast<LexiconContent*>(lex);
 	auto last = entry + count - 1;
@@ -27,7 +37,7 @@ extern "C" bool create_lexicon(const LexiconContent* const lex, uint32 count, bo
 	return (count > 0);
 }
 
-extern "C" bool delete_lexicon()
+bool AVXLexTokenMap::delete_lexicon()
 {
 	return LexLookup.clear_lexicon();
 }
@@ -40,7 +50,7 @@ bool AVXLexTokenMap::clear_lexicon()
 	return true;
 }
 
-int AVXLexTokenMap::add(const uint16 key, const LexiconContent& const lex)
+int AVXLexTokenMap::add(const uint16 key, const LexiconContent& lex)
 {
 	std::string search(NormalizeDisplay(lex));
 	std::string modern(NormalizeModern(lex));
@@ -52,7 +62,7 @@ int AVXLexTokenMap::add(const uint16 key, const LexiconContent& const lex)
 	auto existing = this->GetExistingModernVector(modern);
 	if (existing != nullptr)
 	{
-		cnt += (existing->size() + 1);
+		cnt += int(existing->size() + 1);
 		existing->push_back(key);
 	}
 	else

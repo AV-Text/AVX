@@ -20,7 +20,7 @@ public:
 	{
 		if (this->len >= 0) {
 			UINT32 previous = 0;
-			for (UINT32 i = 0; i < this->len; i++)
+			for (UINT32 i = 0; i < int(this->len); i++)
 				if (this->input[i] == ' ' || this->input[i] == '\t') {
 					if (previous < i)	// eliminate empty items
 						fragments.push_back(new CSearchFragment(search.fragments[i], *this, previous, i - previous));

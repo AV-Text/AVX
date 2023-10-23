@@ -6,7 +6,7 @@
 // then private methods on this class can handle the delegaton to the proper method
 // for match logic
 //
-const char* AVXLemmaComparator::compare(const WrittenContent& writ)
+uint16 AVXLemmaComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 
@@ -14,24 +14,28 @@ const char* AVXLemmaComparator::compare(const WrittenContent& writ)
 	{
 		for (int i = 0; lemmata[i]; i++)
 			if (positive && (lemmata[i] == writ.lemma))
-				return this->feature;
+				return AVXComparator::FullMatch;
 	}
-	return positive ? nullptr : this->feature;
+	return positive ? 0 : AVXComparator::FullMatch;
 }
 
 AVXLemmaComparator::AVXLemmaComparator(const XFeature* feature) : AVXComparator(feature), lemmata(nullptr)
 {
-	auto comparitor = feature->match_as_text();
-
-	if (comparitor != nullptr)
+	if (feature != nullptr)
 	{
-		auto keys = comparitor->wkeys();
-		if (keys != nullptr)
+		auto comparator = feature->match_as_lemma();
+
+		if (comparator != nullptr)
 		{
-			int len = keys->size();
-			this->lemmata = (uint16*)std::calloc((keys->size() + 1), sizeof(uint16)); // null terminated
-			for (int i = 0; i < len; i++)
-				this->lemmata[i] = (*keys)[i];
+			auto lemmata = comparator->lemmata();
+
+			if (lemmata != nullptr)
+			{
+				int len = lemmata->size();
+				this->lemmata = (uint16*)std::calloc((lemmata->size() + 1), sizeof(uint16)); // null terminated
+				for (int i = 0; i < len; i++)
+					;//this->lemmata[i] = lemmata[i];
+			}
 		}
 	}
 }

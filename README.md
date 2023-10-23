@@ -10,24 +10,34 @@ AVX-Framework represents a radical step forward at the same time as it reaches b
 
 The Digital-AV manifests the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, and other linguistic features into a single compactly formatted binary file. Notwithstanding, it is the KJV Bible at its core. Within this repo can be found the upgraded AVX-Omega-3911 data file that addresses a bug discovered in the previous Digital-AV Omega release. Bundling AVX assets into a dotnet-accessible framework not only streamlines development, but it also produces a fast and efficient search engine. It is fully optimized for searching the sacred text. Even fuzzy string matching is available, for the creation of rich, user-facing applications.
 
-There is only one external dependency of AVX-Framework: that is FlatBuffers. It was selected for its speed, compactness, ubiquity, and its liberal license. It is used for communication with the Blueprint-Blue parser/server.
+There is only one external dependency of AVX-Framework: that is FlatBuffers. It was selected for its speed, compactness, ubiquity, and its liberal license. It is used for communication with the Blueprint-Blue parser/library.
 
-There are internal dependencies: open source projects, produced and maintained by AV Text Ministries [https://github/kwonus]. There was no need to fork these other dependencies [purple boxes below]; these are already complete and readily available. 
+Of course, there are internal dependencies; these are open source projects, produced and maintained by AV Text Ministries, found at [https://github/kwonus] and  [https://github.com/AV-Text/AVX]. 
 
-The latest architecture is highly modularized. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, always difficult to refactor, and exhibit maintenance issues over the long haul. While a microservice architecture is more labor-intensive year-by-year, it's way easier to pivot to better solutions without having to surgically remove gnarly internal dependencies. In other words, it takes longer, but it's way better.
+The latest architecture is highly modularized. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive year-by-year, it's way easier to refactor. Modularity facilitates incremental improvements that that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
 
-AV Text ministries hopes that you find assets here that can assist you in building next-gen, quality applications using the most trustworthy English text that God has yet availed to mankind [The Authorized Version 1769 text, commonly known as the King James Bible]. The license is designed to be as free as the gospel. Use it as you see fit, hopefully to the glory of God.
+AV Text ministries hopes that you find assets here that can assist you in building next-gen, quality applications using the most trustworthy English text that God has yet availed to mankind [The Authorized Version 1769 text, commonly known as the King James Bible]. The Digital-AV license is designed to be as free as the gospel. Use it as you see fit, hopefully to the glory of God.
 
-How each dependent service and library are interwoven into the AVX Framework is depicted below:
+AVX-Framework has two core modules, five primary dependencies, and and binary file dependencies. It is depicted in Figure-1:
 
 ![](AVXSearch/AVX-Framework.png)
 
-The user facing applications built upon this framework are depicted below, relative to the AVX-Framework:
+**Figure-1**: AVX-Framework dependency diagram [revision #3A22]
 
-![](AVXSearch/AVX-Roadmap.png)
+A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-2.
 
-The blue boxes above are all in active development with the planned completion identified in the diagram; All of these can be found in this [AVX] repo. The purple boxes are already complete from a developer perspective. However, they still need to be packaged for deployment.  End-user apps are, as yet, unavailable. Expected availability is late 2023 or early 2024. Afterwards, work can commence on the gray boxes.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all user-facing apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
+![](AVXSearch/AVX-Roadmap-2023.png)
 
-The AV-Bible application name was recently resurrected as a C# WPF application (available at the Windows Store as a free app). The current plan is to revitalize the existing WPF app by augmenting it with fast native C++ library implementations in the forthcoming AVX-Framework.
+**Figure-2**: Development roadmap for BETA releases in 2023 [revision #3A22]
+
+We plan to harden and update AV-Bible (Windows desktop application) in the Windows Store early in 2024. Aftwerwards, we plan to release additional apps later in 2024. The diagram, depicted in Figure-3, identifies anticipated releases and estimated dates:
+
+![](AVXSearch/AVX-Roadmap-2024.png)
+
+**Figure-3**: Roadmap for [user-facing] application releases in 2024 [revision #3A22]
+
+The blue boxes, in the diagram, are being actively developed. Planned completion dates are identified. All source-code for these can be found in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time in after the release of AV-Bible to the Windows Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
+
+The AV-Bible application is currently available at the Windows Store as a free app. The existing app is being refactored to utilized the native C++ library implementations in the forthcoming AVX-Framework.  By incorporating the new framework into AV-Bible, twill be dozens of new capabilities.
 
 **The Lord gave the word: great was the company of those that published it. -- Psalm 68:11**

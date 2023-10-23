@@ -1,6 +1,7 @@
 ﻿#include <book.h>
 #include <md5.h>
 #include <stdio.h>
+#include <string.h>
 #include <inttypes.h>
 
 struct OmegaBookRepair {
@@ -14,9 +15,10 @@ public:
 	const char* abbrAltB;  // Alternate Abbreviation: unknown size
 };
 
+static const char8_t Ω35[] = {u8"Ω35"};
 uint32 OmegaVersion = 0x3507;
 OmegaBookRepair BOOKS[] = {
-	{  0, "Omega 3.5.07", "35", "o35", "Ω35", "", "" },
+	{  0, "Omega 3.5.07", "35", "o35",  { ((const char*)Ω35)[0], ((const char*)Ω35)[1], ((const char*)Ω35)[2], ((const char*)Ω35)[3], '\0' }, "", "", },
 	{  1, "Genesis", "Ge", "Gen", "Gen", "Gn", "",  },
 	{  2, "Exodus", "Ex", "Exo", "Exo", "Exod", "",  },
 	{  3, "Leviticus", "Le", "Lev", "Lev", "Lv", "",  },
@@ -141,11 +143,12 @@ bool reset_omega(DirectoryContent* directory, size_t size)
 		for (int i = len; i < 10; i++)
 			alts[i] = 0;
 	}
-	for (int i = 1; i < directory[0].record_count; i++)
+	for (int i = 1; i < int(directory[0].record_count); i++)
 	{
 		auto hash = md5(root + directory[i].content_offset, directory[i].content_length, directory[i].content_hash[0], directory[i].content_hash[1]);
 		printf("%d:\t%" PRIX64 "\t%" PRIX64 "\n", i, directory[i].content_hash[0], directory[i].content_hash[1]);
 	}
+	#pragma warning (disable : 4996)
 	auto file = fopen("AVX-Omega-3507.data", "wb");
 	fwrite(root, sizeof(uint8), size, file);
 	fclose(file);
@@ -154,6 +157,7 @@ bool reset_omega(DirectoryContent* directory, size_t size)
 	auto hash = md5(root, size, hi, lo);
 	printf("omega:\t%" PRIX64 "\t%" PRIX64 "\n", hi, lo);
 
+	#pragma warning (disable : 4996)
 	file = fopen("AVX-Omega-3507.md5", "w");
 	fprintf(file, "%" PRIX64 "%" PRIX64 "\n", hi, lo);
 	fclose(file);

@@ -15,7 +15,7 @@ extern bool reset_omega(DirectoryContent* directory, size_t size); // this funct
 class AVXBook {
 private:
     static AVXBook* Book[67];
-    static const char const substr_chr(const char* const str, const uint8 substring_idx, const uint8 char_idx, const uint8 maxlen)
+    static const char substr_chr(const char* const str, const uint8 substring_idx, const uint8 char_idx, const uint8 maxlen)
     {
         if (substring_idx == 0)
         {
@@ -48,7 +48,7 @@ private:
         }
         return '\0';
     }
-    static const uint16 const count_verses(const ChapterContent const* chap, uint8 chapter_cnt)
+    static const uint16 count_verses(const ChapterContent* chap, uint8 chapter_cnt)
     {
         if (chapter_cnt == 0 || chap == nullptr)
         {
@@ -79,7 +79,7 @@ public:
     const WrittenContent* writ;
     const ChapterContent* chapters;
 
-    AVXBook(const BookContent& book, const ChapterContent const* chap, const WrittenContent const* writ, const DirectoryContent const* directory) :
+    AVXBook(const BookContent& book, const ChapterContent* chap, const WrittenContent* writ, const DirectoryContent* directory) :
         num(book.num),
         chapter_cnt(book.chapter_count),
         chapter_idx(book.chapter_index),

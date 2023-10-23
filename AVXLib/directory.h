@@ -129,7 +129,7 @@ private:
 public:
 	directory(const char* omega);
 	~directory();
-	const DirectoryContent const * contents;
+	const DirectoryContent * contents;
 	inline bool isOkay()
 	{
 		return this->ok;

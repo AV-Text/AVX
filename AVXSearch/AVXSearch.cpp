@@ -42,7 +42,7 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
                     if (len > book.writ_cnt)
                         len = book.writ_cnt;
                 }
-                std::map<uint32, std::tuple<const char*, const char*>> matched;
+                std::map<uint32, std::tuple<const char*, const uint16>> matched;
                 bool found = this->segments[0]->compare(*writ, matched);
                 if (found)
                 {
@@ -84,7 +84,7 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
             uint32 len = writ->wc;
             for (w = 0; w < book.writ_cnt; w += len, writ += len)
             {
-                std::map<uint32, std::tuple<const char*, const char*>> matched;
+                std::map<uint32, std::tuple<const char*, const uint16>> matched;
                 bool found = this->segments[0]->compare(*writ, matched);
                 if (found)
                 {
@@ -156,7 +156,7 @@ bool AVXSearch::search_unquoted(vector<AVXScope*>& scopes)
 
             for (uint32 wi = 0; wi < span; wi++)
             {
-                std::map<uint32, std::tuple<const char*, const char*>> matched;
+                std::map<uint32, std::tuple<const char*, const uint16>> matched;
                 found = false;
                 for (uint32 s = 0; (!found) && (s < seg_cnt); s++)
                 {

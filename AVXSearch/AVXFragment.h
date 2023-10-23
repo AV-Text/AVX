@@ -18,7 +18,7 @@ public:
 
 	~AVXFragment();
 
-	bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched);
+	bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched);
 
 	inline uint32 WritAsCoordinate(const WrittenContent& writ)
 	{

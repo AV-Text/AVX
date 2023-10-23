@@ -6,6 +6,6 @@ class AVXDeltaComparator : public AVXComparator
 public:
 	bool delta;
 	AVXDeltaComparator(const XFeature* feature);
-	virtual const char* compare(const WrittenContent& writ);
+	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXDeltaComparator();
 };

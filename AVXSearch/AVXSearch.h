@@ -14,7 +14,7 @@ class AVXSettings
 private:
     static byte similarity_from_input(const XSettings* settings)
     {
-        std:string value = settings->similarity()->c_str();
+        std::string value = settings->similarity()->c_str();
         auto len = value.length();
         if (len > 0)
         {
@@ -54,7 +54,7 @@ private:
 
         if (lemma_matching)
         {
-            std:string value = settings->similarity()->c_str();
+            std::string value = settings->similarity()->c_str();
             auto len = value.length();
             if (len > 0)
             {

@@ -12,7 +12,7 @@
       "cmakeCommandArgs": "C:/Users/kevin/source/repos/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "variables": [
         {
-          "name": "CMAKE_INSTALL_PREFIX",
+          "name": "CMAKE_INSTALL_PREFIX_DEBUG",
           "value": "C:/Users/kevin/source/C/AVXLib/out/build/x64-Debug",
           "type": "PATH"
         }
@@ -30,7 +30,7 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "variables": [
         {
-          "name": "CMAKE_INSTALL_PREFIX",
+          "name": "CMAKE_INSTALL_PREFIX_RELEASE",
           "value": "C:/Users/kevin/source/C/AVXLib/out/build/x64-Release",
           "type": "PATH"
         }

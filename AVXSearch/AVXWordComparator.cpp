@@ -6,7 +6,7 @@
 // private methods on this class can handle the delegaton to the proper method
 // for match logic
 //
-const char* AVXWordComparator::compare(const WrittenContent& writ)
+uint16 AVXWordComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 
@@ -14,24 +14,28 @@ const char* AVXWordComparator::compare(const WrittenContent& writ)
 	{
 		for (int i = 0; wkeys[i]; i++)
 			if (wkeys[i] == writ.wkey)
-				return this->feature;
+				return AVXComparator::FullMatch;
 	}
-	return positive ? nullptr : this->feature;
+	return positive ? 0 : this->AVXComparator::FullMatch;
 }
 
 AVXWordComparator::AVXWordComparator(const XFeature* feature) : AVXComparator(feature), wkeys(nullptr)
 {
-	auto comparitor = feature->match_as_text();
-
-	if (comparitor != nullptr)
+	if (feature != nullptr)
 	{
-		auto keys = comparitor->wkeys();
-		if (keys != nullptr)
+		auto comparator = feature->match_as_text();
+
+		if (comparator != nullptr)
 		{
-			int len = keys->size();
-			this->wkeys = (uint16*)std::calloc((keys->size() + 1), sizeof(uint16)); // null terminated
-			for (int i = 0; i < len; i++)
-				this->wkeys[i] = (*keys)[i];
+			auto keys = comparator->lex();
+
+			if (keys != nullptr)
+			{
+				int len = keys->size();
+				this->wkeys = (uint16*)std::calloc((keys->size() + 1), sizeof(uint16)); // null terminated
+				for (int i = 0; i < len; i++)
+					;// this->wkeys[i] = (*keys)[i];
+			}
 		}
 	}
 }

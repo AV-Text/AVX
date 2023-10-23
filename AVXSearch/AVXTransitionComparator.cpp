@@ -1,14 +1,14 @@
 #include "AVXTransitionComparator.h"
 #include <stdlib.h>
 
-const char* AVXTransitionComparator::compare(const WrittenContent& writ)
+uint16 AVXTransitionComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 	uint8 tran = this->tran;
 	uint8 mask = (tran & writ.tran);
 
 	bool match = positive ? (tran == mask) : (tran != mask);
-	return match ? this->feature : nullptr;
+	return match ? AVXComparator::FullMatch : 0;
 }
 
 AVXTransitionComparator::AVXTransitionComparator(const XFeature* feature) : AVXComparator(feature), tran(0)

@@ -20,14 +20,14 @@ uint32 OOV_cnt = 0;
 /*static*/ AVXBook* AVXBook::Book[67] = {nullptr};
 static const uint64 omega_hash[2] = { 0x2043C8DBF46A8777, 0x5FF3238DA7739DD8 };
 
-directory::directory(const char* omega) : contents((const DirectoryContent const*) this->Acquire("AVX-Omega", omega, false, true)),
+directory::directory(const char* omega) : contents((const DirectoryContent*) this->Acquire("AVX-Omega", omega, false, true)),
 	book(nullptr), chapter(nullptr), written(nullptr), lexicon(nullptr), lemmata(nullptr), oov(nullptr), names(nullptr)
 {
 	this->ok = true;
 	bool force_upgrade = false;
 	DIR_cnt = this->contents[0].record_count;
 
-	for (int i = 1; i < DIR_cnt; i++)
+	for (int i = 1; i < int(DIR_cnt); i++)
 	{
 		// There is a bug in the Omega-3.2 content hashes, only the left 64-bits are valid
 		// mitigation is to add || true when setting this->ok =
@@ -97,7 +97,7 @@ directory::directory(const char* omega) : contents((const DirectoryContent const
 	if (this->ok)	// check has of entire contents, if it checks oout, then it's all good
 	{
 		size_t size = 0;
-		for (int i = 0; i < this->contents[0].record_count; i++)
+		for (int i = 0; i < int(this->contents[0].record_count); i++)
 		{
 			size += this->contents[i].content_length;
 		}
@@ -109,7 +109,7 @@ directory::directory(const char* omega) : contents((const DirectoryContent const
 	}
 	if (this->ok)
 	{
-		create_lexicon(this->lexicon, LEX_cnt);
+		AVXLexTokenMap::create_lexicon(this->lexicon, LEX_cnt, false);
 
 		this->version = this->book[0].writ_index;
 		new AVXBook(this->book[0], nullptr, nullptr, this->contents);
@@ -133,7 +133,7 @@ directory::directory(const char* omega) : contents((const DirectoryContent const
 	else if (force_upgrade)
 	{
 		size_t size = 0;
-		for (int i = 0; i < this->contents[0].record_count; i++)
+		for (int i = 0; i < int(this->contents[0].record_count); i++)
 		{
 			size += this->contents[i].content_length;
 		}
@@ -150,7 +150,7 @@ directory::~directory()
 		const AVXBook& bk = AVXBook::GetBook(b);
 		delete& bk;
 	}
-	delete_lexicon();
+	AVXLexTokenMap::delete_lexicon();
 
 	delete ::lemmata_lookup;
 	delete ::lemmata_oov;

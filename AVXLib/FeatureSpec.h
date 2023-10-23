@@ -18,7 +18,7 @@ public:
 	{
 		if (this->len >= 0) {
 			UINT32 previous = 0;
-			for (UINT32 i = 0; i < this->len; i++)
+			for (UINT32 i = 0; i < int(this->len); i++)
 				if (this->input[i] == '|') {
 					if (previous < i)	// eliminate empty items
 						matchAny.push_back(new CFeature(*this, previous, i - previous, char(0)));

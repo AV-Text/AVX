@@ -18,11 +18,14 @@ public:
     const char* feature;
     const char* rule;
     const bool negate;
-    virtual const char* compare(const WrittenContent& writ) = 0;
+
+    virtual uint16 compare(const WrittenContent& writ) = 0;
 
     virtual ~AVXComparator()
     {
         ;
     }
+
+    static const uint16 FullMatch = 1000;  // 100%
 };
 

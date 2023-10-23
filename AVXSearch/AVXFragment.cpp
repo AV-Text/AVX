@@ -74,17 +74,18 @@ AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragm
     }
 }
 
-bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const char*>>& matched)
+bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched)
 {
     if (this->features != nullptr) // features are OR conditions (|)
     {
         for (int i = 0; this->features[i] != nullptr; i++)
         {
             auto hit = this->features[i]->compare(writ);
-            if (hit != nullptr)
+            if (hit > 0)
             {
                 auto coord = WritAsCoordinate(writ);
-                matched[coord] = std::make_tuple(this->fragment, hit);
+                auto result = std::make_tuple(this->fragment, (const uint16)hit);
+                matched.emplace(coord, result);
                 return true;
             }
         }

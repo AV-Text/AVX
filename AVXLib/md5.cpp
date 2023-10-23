@@ -54,7 +54,7 @@ std::string md5(const std::string& filename) {
 }
 #endif
 
-extern bool md5(const uint8 const* content, uint32 size, uint64 &hi, uint64 &lo)
+extern bool md5(const uint8* content, uint32 size, uint64 &hi, uint64 &lo)
 {
     hi = 0;
     lo = 0;
@@ -80,17 +80,17 @@ extern bool md5(const uint8 const* content, uint32 size, uint64 &hi, uint64 &lo)
     if (CryptGetHashParam(hHash, HP_HASHVAL, hash, &hashLen, 0)) {
         std::string result;
         char hex[3];
-        for (int i = 0; i < hashLen; ++i) {
+        for (int i = 0; i < int(hashLen); ++i) {
             sprintf_s(hex, "%02x", hash[i]);
             result += hex;
         }
         uint64 bits = 64 - 8;
-        for (int i = 0; i < hashLen/2; ++i) {
+        for (int i = 0; i < int(hashLen/2); ++i) {
             hi += (((uint64)hash[i]) << bits);
             bits -= 8;
         }
         bits = 64 - 8;
-        for (int i = hashLen / 2; i < hashLen; ++i) {
+        for (int i = hashLen / 2; i < int(hashLen); ++i) {
             lo += (((uint64)hash[i]) << bits);
             bits -= 8;
         }

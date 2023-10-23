@@ -22,9 +22,6 @@ const uint16 Entity_animals       =   0x40;
 const uint16 Entity_gemstones     =   0x80;
 const uint16 Entity_measurements  =  0x100;
 
-extern "C" bool create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap = false);
-extern "C" bool delete_lexicon();
-
 inline const vector<uint32> GetPosVector(const LexiconContent& lex)
 {
     vector<uint32> pos;
@@ -62,6 +59,7 @@ inline std::string NormalizeModern(const LexiconContent& lex)
     std::string normalized(modern);
     std::transform(normalized.begin(), normalized.end(), normalized.begin(), ::tolower);
     std::remove(normalized.begin(), normalized.end(), '-');
+    normalized.erase();
     return normalized;
 }
 
@@ -80,7 +78,7 @@ class AVXLexKeyMap
 private:
     LexiconContent* lexicon[AV_Lexicon_RecordCnt+1];
 public:
-    int add(const uint16 key, const LexiconContent& const record)
+    int add(const uint16 key, const LexiconContent& record)
     {
         if (key <= AV_Lexicon_RecordCnt)
         {
@@ -120,7 +118,10 @@ private:
         return nullptr;
     }
 public:
-    int add(const uint16 key, const LexiconContent& const lex);
+    static bool create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap);
+    static bool delete_lexicon();
+
+    int add(const uint16 key, const LexiconContent& lex);
 
     vector<uint16> LookupModern(const char* const token)
     {
@@ -137,6 +138,7 @@ public:
                 return records;
             }
         }
+        modern.erase();
         return this->mod.at(modern);
     }
     const uint16 LookupOriginal(const char* const token)
@@ -154,6 +156,7 @@ public:
                 return 0;
             }
         }
+        search.erase();
         return this->kjv.at(search);
     }
 

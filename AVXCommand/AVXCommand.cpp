@@ -54,7 +54,7 @@ int main()
 	{
 		AVXStatement stmt(pipe);
 
-		directory omega("C:\\src\\AVX\\omega\\AVX-Omega-3507.data");
+		directory omega("C:\\src\\AVX\\omega\\AVX-Omega-3911.data");
 
 		std::string line;
 

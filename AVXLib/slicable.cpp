@@ -12,7 +12,7 @@ slicable::slicable(const char* raw, UINT32 maxLen)
 }
 
 slicable::slicable(slicable& str, UINT32 start, UINT32 cnt) // substring/slice
-: len{ (str.slice != NULL && start < this->len && start + (int) cnt < this->len + 1) ? (int) cnt : (int) -1 }
+: len{ (str.slice != NULL && start < int(this->len) && start + (int) cnt < int(this->len + 1)) ? (int) cnt : (int) -1 }
 , owner{ false }
 {
 	if (this->len >= 0) {
@@ -32,7 +32,7 @@ std::vector<slicable*> slicable::split(slicable& str, char delimiter) // substri
 
 	if (str.len >= 0) {
 		UINT32 previous = 0;
-		for (UINT32 i = 0; i < str.len; i++)
+		for (UINT32 i = 0; i < int(str.len); i++)
 			if (str.input[i] == delimiter) {
 				if (previous < i)	// eliminate empty items
 					results.push_back(new slicable(str, previous, i - previous));

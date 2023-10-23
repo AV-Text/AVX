@@ -6,7 +6,7 @@ class AVXTransitionComparator : public AVXComparator
 public:
 	uint8 tran;
 	AVXTransitionComparator(const XFeature* feature);
-	virtual const char* compare(const WrittenContent& writ);
+	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXTransitionComparator();
 };
 

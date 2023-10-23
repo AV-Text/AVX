@@ -4,7 +4,7 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(AVXLib CXX)
+project(AVXSearch CXX)
 
 ################################################################################
 # Set target arch type if empty. Visual studio solution generator provides it.
@@ -73,11 +73,14 @@ include(CMake/Utils.cmake)
 
 ################################################################################
 # Additional Global Settings(add specific info there)
-################################################################################ 
+################################################################################
 include(CMake/GlobalSettingsInclude.cmake OPTIONAL)
+include_directories("C:/src/AVX/AVXSearch")
 include_directories("C:/src/AVX/AVXLib")
 include_directories("C:/src/AVX/AVXLib/foundations")
 include_directories("C:/src/AVX/AVXLib/xvmem")
+include_directories("C:/src/blueprint-blue/Blueprint-Blue-Lib")
+include_directories("C:/tool/flatbuffers/include")
 
 ################################################################################
 # Use solution folders feature
@@ -89,59 +92,98 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 ################################################################################
 
 
-set(PROJECT_NAME AVXLib)
+set(PROJECT_NAME AVXSearch)
 
 ################################################################################
 # Source groups
 ################################################################################
 set(Header_Files
-    "directory.h"
-    "Feature.h"
-    "FeatureSpec.h"
-    "fivebitencoding.h"
-    "md5.h"
-    "SearchClause.h"
-    "SearchControls.h"
-    "SearchFragment.h"
-    "SearchRequest.h"
-    "slicable.h"
-    "XBitArray.h"
+    "AVXSearch/AVXBlueprint.h"
+    "AVXSearch/AVXComparator.h"
+    "AVXSearch/AVXDeltaComparator.h"
+    "AVXSearch/AVXFind.h"
+    "AVXSearch/AVXFound.h"
+    "AVXSearch/AVXFragment.h"
+    "AVXSearch/AVXLemmaComparator.h"
+    "AVXSearch/AVXMatch.h"
+    "AVXSearch/AVXPOS16Comparator.h"
+    "AVXSearch/AVXPOS32Comparator.h"
+    "AVXSearch/AVXPuncComparator.h"
+    "AVXSearch/AVXRender.h"
+    "AVXSearch/AVXSearch.h"
+    "AVXSearch/AVXSegment.h"
+    "AVXSearch/AVXStatement.h"
+    "AVXSearch/AVXStrongsComparator.h"
+    "AVXSearch/AVXTransitionComparator.h"
+    "AVXSearch/AVXWordComparator.h"
+    "AVXSearch/QuelleResponse.h"
 
-    "DigitalAV.h"
+    "AVXLib/directory.h"
+    "AVXLib/Feature.h"
+    "AVXLib/FeatureSpec.h"
+    "AVXLib/fivebitencoding.h"
+    "AVXLib/md5.h"
+    "AVXLib/SearchClause.h"
+    "AVXLib/SearchControls.h"
+    "AVXLib/SearchFragment.h"
+    "AVXLib/SearchRequest.h"
+    "AVXLib/slicable.h"
+    "AVXLib/XBitArray.h"
 
-    "foundations/avxgen.h"
-    "foundations/book.h"
-    "foundations/chapter.h"
-    "foundations/framework.h"
-    "foundations/lemmata.h"
-    "foundations/lexicon.h"
-    "foundations/names.h"
-    "foundations/oov_lemmata.h"
-    "foundations/written.h"
+    "AVXLib/DigitalAV.h"
 
-    "xvmem/XVMem.h"
-    "xvmem/XVMem_platform.h"
-    "xvmem/XVMem_windows.h"
+    "AVXLib/foundations/avxgen.h"
+    "AVXLib/foundations/book.h"
+    "AVXLib/foundations/chapter.h"
+    "AVXLib/foundations/framework.h"
+    "AVXLib/foundations/lemmata.h"
+    "AVXLib/foundations/lexicon.h"
+    "AVXLib/foundations/names.h"
+    "AVXLib/foundations/oov_lemmata.h"
+    "AVXLib/foundations/written.h"
+
+    "AVXLib/xvmem/XVMem.h"
+    "AVXLib/xvmem/XVMem_platform.h"
+    "AVXLib/xvmem/XVMem_windows.h"
 )
 source_group("Header Files" FILES ${Header_Files})
 
 set(Source_Files
-    "directory.cpp"
-    "fivebitencoding.cpp"
-    "md5.cpp"
-    "search.cpp"
-    "slicable.cpp"
-    "XBitArray.cpp"
+    "AVXSearch/AVXBlueprint.cpp"
+    "AVXSearch/AVXDeltaComparator.cpp"
+    "AVXSearch/AVXFind.cpp"
+    "AVXSearch/AVXFound.cpp"
+    "AVXSearch/AVXFragment.cpp"
+    "AVXSearch/AVXLemmaComparator.cpp"
+    "AVXSearch/AVXMatch.cpp"
+    "AVXSearch/AVXPOS16Comparator.cpp"
+    "AVXSearch/AVXPOS32Comparator.cpp"
+    "AVXSearch/AVXPuncComparator.cpp"
+    "AVXSearch/AVXRender.cpp"
+    "AVXSearch/AVXSearch.cpp"
+    "AVXSearch/AVXSegment.cpp"
+    "AVXSearch/AVXStatement.cpp"
+    "AVXSearch/AVXStrongsComparator.cpp"
+    "AVXSearch/AVXTransitionComparator.cpp"
+    "AVXSearch/AVXWordComparator.cpp"
+    "AVXSearch/QuelleResponse.cpp"
 
-    "DigitalAV.cpp"
+    "AVXLib/directory.cpp"
+    "AVXLib/fivebitencoding.cpp"
+    "AVXLib/md5.cpp"
+    "AVXLib/search.cpp"
+    "AVXLib/slicable.cpp"
+    "AVXLib/XBitArray.cpp"
 
-    "foundations/book.cpp"
-    "foundations/lemmata.cpp"
-    "foundations/lexicon.cpp"
-    "foundations/names.cpp"
-    "foundations/oov_lemmata.cpp"
+    "AVXLib/DigitalAV.cpp"
 
-    "xvmem/XVMem_windows.cpp"
+    "AVXLib/foundations/book.cpp"
+    "AVXLib/foundations/lemmata.cpp"
+    "AVXLib/foundations/lexicon.cpp"
+    "AVXLib/foundations/names.cpp"
+    "AVXLib/foundations/oov_lemmata.cpp"
+
+    "AVXLib/xvmem/XVMem_windows.cpp"
 )
 source_group("Source Files" FILES ${Source_Files})
 
@@ -155,8 +197,8 @@ set(ALL_FILES
 ################################################################################
 add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
-use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
-set(ROOT_NAMESPACE AVXLib)
+#use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
+set(ROOT_NAMESPACE AVXSearch)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     VS_GLOBAL_KEYWORD "Win32Proj"
@@ -181,7 +223,7 @@ if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
         "$<$<CONFIG:Release>:"
             "NDEBUG"
         ">"
-        "AVXLIB_EXPORTS;"
+        "AVXSEARCH_EXPORTS;"
         "_WINDOWS;"
         "_USRDLL;"
         "UNICODE;"
@@ -196,7 +238,7 @@ elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x86")
             "NDEBUG"
         ">"
         "WIN32;"
-        "AVXLIB_EXPORTS;"
+        "AVXSEARCH_EXPORTS;"
         "_WINDOWS;"
         "_USRDLL;"
         "UNICODE;"
