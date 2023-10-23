@@ -14,7 +14,7 @@ There is only one external dependency of AVX-Framework: that is FlatBuffers. It 
 
 Of course, there are internal dependencies; these are open source projects, produced and maintained by AV Text Ministries, found at [https://github/kwonus] and  [https://github.com/AV-Text/AVX]. 
 
-The latest architecture is highly modularized. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive year-by-year, it's way easier to refactor. Modularity facilitates incremental improvements that that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
+The latest architecture is highly modularized. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive year-by-year, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
 
 AV Text ministries hopes that you find assets here that can assist you in building next-gen, quality applications using the most trustworthy English text that God has yet availed to mankind [The Authorized Version 1769 text, commonly known as the King James Bible]. The Digital-AV license is designed to be as free as the gospel. Use it as you see fit, hopefully to the glory of God.
 
