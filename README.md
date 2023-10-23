@@ -12,7 +12,7 @@ The Digital-AV manifests the entire text of the bible, including Strong's number
 
 There is only one external dependency of AVX-Framework: that is FlatBuffers. It was selected for its speed, compactness, ubiquity, and its liberal license. It is used for communication with the Blueprint-Blue parser/library.
 
-Of course, there are internal dependencies; these are open source projects, produced and maintained by AV Text Ministries, found at https://github/kwonus and https://github.com/AV-Text/AVX . 
+Of course, there are internal dependencies; these are open source projects, produced and maintained by AV Text Ministries, found at https://github.com/kwonus and https://github.com/AV-Text/AVX . 
 
 The latest architecture is highly modularized. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive year-by-year, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
 
