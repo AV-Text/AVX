@@ -18,23 +18,23 @@ The latest architecture is highly modularized. Earlier works were much more mono
 
 AV Text ministries hopes that you find assets here that can assist you in building next-gen, quality applications using the most trustworthy English text that God has yet availed to mankind [The Authorized Version 1769 text, commonly known as the King James Bible]. The Digital-AV license is designed to be as free as the gospel. Use it as you see fit, hopefully to the glory of God.
 
-Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, many publicly available classes are exposed in AVX-Lib-Net and NUPhone. It is expected that consumers of AV-Engine will reach into those two modules, but the other dependencies will be mostly opaque to AVX-Framework consumers. The seven modules that compose AVX-Framework are depicted in Figure-1:
+Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, many publicly available classes are exposed in AVX-Lib-Net and NUPhone. It is expected that consumers of AV-Engine will reach into those two modules, but the other dependencies will be mostly opaque to AVX-Framework consumers. The seven modules that compose the framework are depicted in Figure-1:
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3A22]
+**Figure-1**: AVX-Framework dependency diagram [revision #3A23]
 
 A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-2.
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-2**: Development roadmap for BETA releases in 2023 [revision #3A22]
+**Figure-2**: Development roadmap for BETA releases in 2023 [revision #3A23]
 
 We plan to harden AV-Bible (Windows desktop application) and release it into the Windows Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-3, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-3**: Roadmap for [user-facing] application releases in 2024 [revision #3A22]
+**Figure-3**: Roadmap for [user-facing] application releases in 2024 [revision #3A23]
 
 The blue boxes, in the diagram, are being actively developed. Planned completion dates are identified. All source-code for these can be found in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time after the release of AV-Bible to the Windows Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
 
