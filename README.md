@@ -24,17 +24,39 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 **Figure-1**: AVX-Framework dependency diagram [revision #3A23]
 
-A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-2.
+Implicit in Figure-1, serialization is used for parameters when crossing language-boundaries. Serialization is used for the in-proc invocations of parameter marshalling because it more efficiant than parameter marshalling. method invocations where the language of the consumer is identical to the language of the provider, use POCO. The table in Figure 2 identifies serialization formats used for inputs and outputs, per module.
+
+| **Module**           | **Input**              | **Output**              |
+| -------------------- | ---------------------- | ----------------------- |
+| **AV-Engine**        | Quelle Command (text)  | IAVResult   interface   |
+| **AVX-Lib-Net**      | C# Classes/Methods     | C# Classes/Methods      |
+| **AVX-Search**       | blueprint (flatbuffer) | avx_search (flatbuffer) |
+| **AVX-Lib**          | C++ Classes/Methods    | C++ Classes/Methods     |
+| **Pinshot****-Blue** | null-terminated text   | null-terminated json    |
+| **Blueprint-Blue**   | null-terminated json   | blueprint (flatbuffer)  |
+| **NUPhone**          | C# Classes/Methods     | C# Classes/Methods      |
+
+**Figure-2**: AVX-Framework dependency diagram [revision #3A23]
+
+AV-Engine, as a C# library uses standard C# interfaces for parameters and return type in its single explosed class method, as depicted in Figure 3. The class diagram also depicts details of the inface objects.  Private members of the classes, that implement these interfaces, are instantiated by AV-Engine. In effect, each class manfifests a fascade that encapsulates away all details of the FlatSharp interface from AV-Engine consumers. However, upon close examination of avx_search.fbs, the flatbuffers schema defined in AV-Engine, it is clear that the IAVResults interface is it is a very thin facade over XResults.
+
+![](AVXSearch/Av-Engine-poco.png)
+
+**Figure-3**: Plain Old C# Objects (POCO) are used in the interface to AV-Engine
+
+
+
+A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-4.
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-2**: Development roadmap for BETA releases in 2023 [revision #3A23]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3A23]
 
-We plan to harden AV-Bible (Windows desktop application) and release it into the Windows Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-3, identifies anticipated application releases and estimated release dates:
+We plan to harden AV-Bible (Windows desktop application) and release it into the Windows Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-3**: Roadmap for [user-facing] application releases in 2024 [revision #3A23]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3A23]
 
 The blue boxes, in the diagram, are being actively developed. Planned completion dates are identified. All source-code for these can be found in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time after the release of AV-Bible to the Windows Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
 
