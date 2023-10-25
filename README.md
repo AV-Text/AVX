@@ -26,15 +26,15 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 Implicit in Figure-1, serialization is used for parameters when crossing language-boundaries. Serialization is used for the in-proc invocations of parameter marshalling because it more efficiant than parameter marshalling. method invocations where the language of the consumer is identical to the language of the provider, use POCO. The table in Figure 2 identifies serialization formats used for inputs and outputs, per module.
 
-| **Module**           | **Input**              | **Output**              |
-| -------------------- | ---------------------- | ----------------------- |
-| **AV-Engine**        | Quelle Command (text)  | IAVResult   interface   |
-| **AVX-Lib-Net**      | C# Classes/Methods     | C# Classes/Methods      |
-| **AVX-Search**       | blueprint (flatbuffer) | avx_search (flatbuffer) |
-| **AVX-Lib**          | C++ Classes/Methods    | C++ Classes/Methods     |
-| **Pinshot****-Blue** | null-terminated text   | null-terminated json    |
-| **Blueprint-Blue**   | null-terminated json   | blueprint (flatbuffer)  |
-| **NUPhone**          | C# Classes/Methods     | C# Classes/Methods      |
+| **Module**  *(repository)*<br/>Folder                        | **Input**                              | **Output**                             |
+| ------------------------------------------------------------ | -------------------------------------- | -------------------------------------- |
+| **AV-Engine** *(AVX)*<br/>./AV-Engine                        | Quelle Command (text)                  | IAVResult   interface                  |
+| **AVX-Search** *(AVX)*<br/>./AVX-Search                      | blueprint (schema: blueprint_blue.fbs) | results (schema: avx_search.fbs)       |
+| **AVX-Lib** *(AVX)*<br/>./AVX-Lib                            | C++ Classes/Methods                    | C++ Classes/Methods                    |
+| **AVX-Lib-Net** *(kwonus)*<br/>./Digital-AV/omega/foundations/csharp/AVXLib | C# Classes/Methods                     | C# Classes/Methods                     |
+| **Pinshot-Blue** *(kwonus)*<br/>./pinshot-blue               | null-terminated text                   | null-terminated json -formatted text   |
+| **Blueprint-Blue** *(kwonus)*<br/>./blueprint-blue/Blueprint-Blue-Lib | null-terminated text                   | blueprint (schema: blueprint_blue.fbs) |
+| **NUPhone** *(kwonus)*<br/>./NUPhone                         | C# Classes/Methods                     | C# Classes/Methods                     |
 
 **Figure-2**: AVX-Framework dependency diagram [revision #3A23]
 
