@@ -33,7 +33,7 @@ Implicit in Figure-1, serialization is used for parameters when crossing languag
 | **AVX-Lib** *(github.com/AV-Text/AVX)*<br/>./AVX-Lib         | C++ Classes/Methods                                          | C++ Classes/Methods                                          |
 | **Digital-AV** *(github.com/AV-Text/AVX)*<br/>./omega/AVX-Omega-3911.data | n/a                                                          | *see specification:*<br />[Digital-AV-Ω39.pdf](https://github.com/AV-Text/AVX/blob/master/omega/Digital-AV-Ω39.pdf) |
 | **AVX-Lib-Net** *(github.com/kwonus/Digital-AV)*<br/>./omega/foundations/csharp/AVXLib | C# Classes/Methods                                           | C# Classes/Methods                                           |
-| **Pinshot-Blue** *(github.com/kwonus)*<br/>./src             | null-terminated text                                         | null-terminated json [pinshot]<br/>*(null-terminated text)*  |
+| **Pinshot-Blue** *(github.com/kwonus)*<br/>./src             | null-terminated text                                         | json [pinshot]<br/>*(null-terminated text)*                  |
 | **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>./Blueprint-Blue-Lib | null-terminated text                                         | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* |
 | **NUPhone** *(github.com/kwonus/NUPhone)*<br/>./PhonemeEmbeddings | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
