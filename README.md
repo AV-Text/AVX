@@ -24,7 +24,7 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 **Figure-1**: AVX-Framework dependency diagram [revision #3A24]
 
-Implicit in Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more-granular parameter marshalling, because it both more efficiant and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs, per module.
+Implicit in Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more-granular parameter marshalling, because it both more efficiant and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository information.
 
 | **Module**  *(repository)*<br/>source code folder            | **Input**                                                    | **Output**                                                   |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
