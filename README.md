@@ -22,21 +22,22 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3A23]
+**Figure-1**: AVX-Framework dependency diagram [revision #3A24]
 
 Implicit in Figure-1, serialization is used for parameters when crossing language-boundaries. Serialization is used for the in-proc invocations of parameter marshalling because it more efficiant than parameter marshalling. method invocations where the language of the consumer is identical to the language of the provider, use POCO. The table in Figure 2 identifies serialization formats used for inputs and outputs, per module.
 
-| **Module**  *(repository)*<br/>Folder                        | **Input**                              | **Output**                             |
-| ------------------------------------------------------------ | -------------------------------------- | -------------------------------------- |
-| **AV-Engine** *(AVX)*<br/>./AV-Engine                        | Quelle Command (text)                  | IAVResult   interface                  |
-| **AVX-Search** *(AVX)*<br/>./AVX-Search                      | blueprint (schema: blueprint_blue.fbs) | results (schema: avx_search.fbs)       |
-| **AVX-Lib** *(AVX)*<br/>./AVX-Lib                            | C++ Classes/Methods                    | C++ Classes/Methods                    |
-| **AVX-Lib-Net** *(kwonus)*<br/>./Digital-AV/omega/foundations/csharp/AVXLib | C# Classes/Methods                     | C# Classes/Methods                     |
-| **Pinshot-Blue** *(kwonus)*<br/>./pinshot-blue               | null-terminated text                   | null-terminated json -formatted text   |
-| **Blueprint-Blue** *(kwonus)*<br/>./blueprint-blue/Blueprint-Blue-Lib | null-terminated text                   | blueprint (schema: blueprint_blue.fbs) |
-| **NUPhone** *(kwonus)*<br/>./NUPhone                         | C# Classes/Methods                     | C# Classes/Methods                     |
+| **Module**  *(repository)*<br/>source code folder            | **Input**                                                    | **Output**                                                   |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **AV-Engine** *(github.com/AV-Text/AVX)*<br/>./AV-Engine     | Quelle Command (text)                                        | IAVResult   interface                                        |
+| **AVX-Search** *(github.com/AV-Text/AVX)*<br/>./AVX-Search   | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* | flatbuffers binary [search results]<br/>*(schema: avx_search.fbs)* |
+| **AVX-Lib** *(github.com/AV-Text/AVX)*<br/>./AVX-Lib         | C++ Classes/Methods                                          | C++ Classes/Methods                                          |
+| **Digital-AV** *(github.com/AV-Text/AVX)*<br/>./omega/AVX-Omega-3911.data | n/a                                                          | *see specification:*<br />[Digital-AV-Ω39.pdf](https://github.com/AV-Text/AVX/blob/master/omega/Digital-AV-Ω39.pdf) |
+| **AVX-Lib-Net** *(github.com/kwonus/Digital-AV)*<br/>./omega/foundations/csharp/AVXLib | C# Classes/Methods                                           | C# Classes/Methods                                           |
+| **Pinshot-Blue** *(github.com/kwonus)*<br/>./src             | null-terminated text                                         | null-terminated json [pinshot]<br/>*(null-terminated text)*  |
+| **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>./Blueprint-Blue-Lib | null-terminated text                                         | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* |
+| **NUPhone** *(github.com/kwonus/NUPhone)*<br/>./PhonemeEmbeddings | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
-**Figure-2**: AVX-Framework dependency diagram [revision #3A23]
+**Figure-2**: AVX-Framework input and output definition and repository details [revision #3A24]
 
 AV-Engine, as a C# library uses standard C# interfaces for parameters and return type in its single explosed class method, as depicted in Figure 3. The class diagram also depicts details of the inface objects.  Private members of the classes, that implement these interfaces, are instantiated by AV-Engine. In effect, each class manfifests a fascade that encapsulates away all details of the FlatSharp interface from AV-Engine consumers. However, upon close examination of avx_search.fbs, the flatbuffers schema defined in AV-Engine, it is clear that the IAVResults interface is it is a very thin facade over XResults.
 
@@ -50,15 +51,15 @@ A BETA release of AV-Bible and AV-Console are planned for 2023. The development 
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3A23]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3A24]
 
 We plan to harden AV-Bible (Windows desktop application) and release it into the Windows Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3A23]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3A24]
 
-The blue boxes, in the diagram, are being actively developed. Planned completion dates are identified. All source-code for these can be found in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time after the release of AV-Bible to the Windows Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
+Most of he blue boxes, in the diagram, are being actively developed. Planned completion dates are identified. All source-code for these can be found in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time after the release of AV-Bible to the Windows Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
 
 The AV-Bible application is currently available at the Windows Store as a free app. The existing app is being retrofitted to utilize the native C++ library implementations in the forthcoming AVX-Framework.  By incorporating the new framework into AV-Bible, there will be dozens of new features and capabilities.
 
