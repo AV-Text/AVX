@@ -39,7 +39,7 @@ Implicit in Figure-1, serialization is used for parameters when crossing languag
 
 **Figure-2**: AVX-Framework input and output definition and repository details [revision #3A24]
 
-AV-Engine, as a C# library uses standard C# interfaces for parameters and return type in its single explosed class method, as depicted in Figure 3. The class diagram also depicts details of the interfaces. Private members of the classes, that implement these interfaces, are instantiated by AV-Engine. In effect, each class manfifests a fascade that encapsulates away all details of the FlatSharp interface from AV-Engine consumers. However, upon close examination of avx_search.fbs, the flatbuffers schema defined in AV-Engine, it is clear that the IAVResults interface is it is a very thin facade over XResults.
+As depicted in Figure 3, AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for parameters and return type in its single explosed public class method. The class diagram also depicts dependent interfaces and internal utility-class definitions. Consumers will habe full visibiility across the public interfaces, but the internal utility classes do all the work. In effect, each internal class manfifests a fascade that encapsulates away any remants of the FlatSharp API (with respect to AV-Engine/AVX-Framework consumers). Nevertheless, close examination of avx_search.fbs schema, reveals that the IAVResults interface is a very thin wrapper around the XResults FlatSharp-generated object.
 
 ![](AVXSearch/AV-Engine-poco.png)
 
