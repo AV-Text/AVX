@@ -18,7 +18,7 @@ The latest architecture is highly modularized. Earlier works were much more mono
 
 AV Text ministries hopes that you find assets here that can assist you in building next-gen, quality applications using the most trustworthy English text that God has yet availed to mankind [The Authorized Version 1769 text, commonly known as the King James Bible]. The Digital-AV license is designed to be as free as the gospel. Use it as you see fit, hopefully to the glory of God.
 
-Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, many publicly available classes are exposed in AVX-Lib-Net and NUPhone. It is possible for AV-Engine consumers to reach into those two modules, but the other dependencies are opaque to AVX-Framework consumers. The seven modules that compose the framework are depicted in Figure-1:
+Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, many publicly available classes are exposed in AVX-Lib-Net and NUPhone. It is possible for AV-Engine consumers to reach into those two modules, but the other dependencies are mostly opaque. The seven modules that compose the framework are depicted in Figure-1, also exposing all embedded file dependencies:
 
 ![](AVXSearch/AVX-Framework.png)
 
