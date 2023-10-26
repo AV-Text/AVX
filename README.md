@@ -39,7 +39,7 @@ Implicit in Figure-1, serialization is used for parameters when crossing languag
 
 **Figure-2**: AVX-Framework input and output definition and repository details [revision #3A24]
 
-As depicted in Figure 3, AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for parameters and return type in its single explosed public class method. The class diagram also depicts dependent interfaces and internal utility-class definitions. Consumers will have full visibiility across the public interfaces, but the internal utility classes do all the work. In effect, each internal class manifests a fascade that encapsulates away any remants of the FlatSharp API (with respect to AV-Engine/AVX-Framework consumers). Nevertheless, close examination of avx_search.fbs schema, reveals that the IAVResults interface is a very thin wrapper around the XResults FlatSharp-generated object.
+As depicted in Figure 3, AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for the parameter and the return type in its single explosed public class method. The class diagram also depicts dependent interfaces and internal utility-class definitions. Consumers will have full visibiility across the public interfaces, but the internal utility classes do all the work. In effect, each internal class manifests a fascade that encapsulates away any remants of the FlatSharp API (with respect to AV-Engine/AVX-Framework consumers). Nevertheless, close examination of avx_search.fbs schema, reveals that the IAVResults interface is a very thin wrapper around the XResults FlatSharp-generated object.
 
 ![](AVXSearch/AV-Engine-poco.png)
 
