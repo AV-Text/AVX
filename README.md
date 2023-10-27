@@ -79,7 +79,7 @@ We plan to harden AV-Bible (Windows desktop application) and release it into the
 
 **Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3A24]
 
-### Development Status
+### Implementation Status
 
 Most of the blue boxes, in the diagram, are in active development. Planned completion dates are also identified above. All source-code for these is available in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
 
