@@ -12,13 +12,14 @@ AVX-Framework represents a radical step forward, at the same time as it reaches 
 
 ### Core Functionality
 
-AVX-Framework encodes the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, and other linguistic features into a single compactly formatted, and indexed, binary file. Prior to AVX-Framework, Digital-AV never really had a full reference implementation. AVX-Framework fills that void, with AV-Engine being the central entry-point to the framework. The codebase of AVX-Framework augments AVX-Lib from the baseline Digital-AV implementation in a number of ways:
+AVX-Framework encodes the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, named-entity types, and [NUPhone representation](https://github.com/kwonus/NUPhone/blob/main/NUPhone.md) It packs all of this information a single compact binary file; it is indexed with a fully documented format, and less than 20 megabytes. Prior to AVX-Framework, Digital-AV never really had a seperate and complete reference implementation. AVX-Framework fills that void. AV-Engine is the central entry-point to the framework. The codebase of AVX-Framework augments the pre-existing AVX-Lib from the baseline Digital-AV, but that library is updated as well. AVX-Framework adds new core functionality:
 
 - sounds-alike searching via the NUPhone assembly
-- precise rendering of text, with term high-lighting, and dual-lexicon support 
+- ability to precisely render text, with metadata for term high-lighting
+- complete support for dual lexicons 
 - rich command/search language via the Pinshot-Blue library and its PEG grammar [conforming to the [Quelle specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md)]
 - object-model representations of AVX dialect of the Quelle grammar via the Blueprint-Blue library
-- AV-Engine library glues it all together and augments the skeleton reference implementations found in baseline Digital-AV
+- AV-Engine library glues it all together (also exposing public methods and objects from NUPhone, AVX-Lib-Net, and the Blueprint-Blue object model)
 
 ### Deeper Context
 
