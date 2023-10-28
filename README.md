@@ -82,8 +82,10 @@ We plan to harden AV-Bible (Windows desktop application) and release it into the
 
 ### Implementation Status
 
-Most of the blue boxes, in the diagram, are in active development. Planned completion dates are also identified above. All source-code for these is available in this [AVX] repo. The purple boxes are already complete. Work will commence on the gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps. For additional info on the purple boxes and the Digital-AV SDK, head on over to my other repos at  https://github.com/kwonus.
+Most of the blue boxes, in the diagram, are in active development. Planned completion dates are identified above. The purple boxes are already complete. Work will commence on the gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
 
-The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in the forthcoming AVX-Framework. By incorporating the new framework into AV-Bible, there will be dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an earlier, unfinished version of [Quelle-AVX](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md)).
+All source-code for blue boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the purple boxes can be found in my [companions repos](https://github.com/kwonus) at https://github.com/kwonus.
+
+The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in this forthcoming framework. By incorporating this new framework into AV-Bible, there will be dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an older SDK, and an earlier, v1-alpha release of Quelle.
 
 **The Lord gave the word: great was the company of those that published it. -- Psalm 68:11**
