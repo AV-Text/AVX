@@ -86,7 +86,7 @@ Most of the blue boxes, in the diagram, are in active development. Planned compl
 
 All source-code for the blue boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the purple boxes can be found in my [companions repos](https://github.com/kwonus) at https://github.com/kwonus.
 
-The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in this forthcoming framework. By incorporating this new framework into AV-Bible, there will be dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an older SDK, and an earlier, v1-alpha release of Quelle).
+The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in this forthcoming framework. With this new framework, AV-Bible will expose dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an older SDK, and an earlier, v1-alpha release of Quelle).
 
 Your feedback on this frameowrk is welcome!
 
