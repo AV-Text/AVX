@@ -84,7 +84,7 @@ We plan to harden AV-Bible (Windows desktop application) and release it into the
 
 Most of the blue boxes, in the diagram, are in active development. Planned completion dates are identified above. The purple boxes are already complete. Work will commence on the gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
 
-All source-code for blue boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the purple boxes can be found in my [companions repos](https://github.com/kwonus) at https://github.com/kwonus.
+All source-code for the blue boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the purple boxes can be found in my [companions repos](https://github.com/kwonus) at https://github.com/kwonus.
 
 The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in this forthcoming framework. By incorporating this new framework into AV-Bible, there will be dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an older SDK, and an earlier, v1-alpha release of Quelle.
 
