@@ -19,17 +19,22 @@ public:
     {
         this->start = 0;
         this->until = 0xFFFFFFFF;
+        this->current = nullptr;
     }
     AVXFound(uint32 start, uint32 until)
     {
         this->start = start;
         this->until = until;
+        this->current = nullptr;
     }
     ~AVXFound()
     {
         ;
     }
-    void add(AVXMatch* match);
+    bool add(AVXMatch* match);
     void build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFound>>& parentCollection);
+
+private:
+    AVXMatch* current;
 };
 

@@ -18,16 +18,21 @@ public:
     AVXFind()
     {
         this->find = "";
+        this->current = nullptr;
     }
     AVXFind(const char* search)
     {
         this->find = search;
+        this->current = nullptr;
     }
     ~AVXFind()
     {
         ;
     }
-    void add(AVXFound* found);
+    bool add(AVXFound* found);
     void build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection);
+
+private:
+    AVXFound* current;
 };
     

@@ -1,8 +1,9 @@
 #include "AVXFound.h"
 #include "AVXMatch.h"
 
-void AVXFound::add(AVXMatch* match)
+bool AVXFound::add(AVXMatch* match)
 {
+    this->current = match;
     if (match != nullptr)
     {
         this->matches.push_back(match);
@@ -15,7 +16,9 @@ void AVXFound::add(AVXMatch* match)
         {
             this->until = match->coordinates;
         }
+        return true;
     }
+    return false;
 }
 void AVXFound::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFound>>& parentCollection)
 {

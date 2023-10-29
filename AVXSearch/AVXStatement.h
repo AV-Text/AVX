@@ -2,22 +2,20 @@
 
 #include <xvmem.h>
 #include <avxgen.h>
-#include <fileapi.h>
-#include <QuelleResponse.h>
+#include <avx_search_generated.h>
+#include <AVXBlueprint.h>
+#include <AVResult.h>
 #include <vector>
 #include <string>
-
-// this will be the external public interface into this library
-//
-#define DEFAULT_BUFFER_MAX 4*1024
 
 class AVXStatement
 {
 private:
-	CommandResponses statements;
-	HANDLE pipe;
+	AVXBlueprint* blueprint;
+	AVXResult results;
+	uint64 context;
 public:
-	int64 Compile(const char* const command); // return statement_id
+	bool Compile();
 	const QuelleResponse* const Execute(int64 id);
 	vector<string> GetErrors(int64 id);
 	vector<string> GetWarnings(int64 id);
@@ -27,6 +25,10 @@ public:
 	const char* const CreateRendering(int64 id);
 	void Release(int64 id);
 
-	AVXStatement(HANDLE pipe);
+	AVXStatement(const uint8* const);
+	~AVXStatement()
+	{
+		delete blueprint;
+	}
 };
 

@@ -13,116 +13,72 @@
 using namespace XBlueprintBlue;
 using namespace XSearchResults;
 
-AVXStatement::AVXStatement(HANDLE pipe)
+extern "C" __declspec(dllexport) uint64 create_statement(const uint8* const buffer)
 {
-	this->pipe = pipe;
+	auto statement = new AVXStatement(buffer);
+	return uint64(statement);
 }
 
-int64 AVXStatement::Compile(const char* const command)
+extern "C" __declspec(dllexport) void* exec_statement(uint64 context)
 {
-	int64 time = 0;
-	uint32 len = (uint32)strlen(command);
-	DWORD dwWritten;
-	ResultSummary zero = { 0, 0, 0, 0 };
-
-	if (WriteFile(pipe,
-		&time,
-		sizeof(int64),
-		&dwWritten,
-		NULL))
+	AVXStatement& statement = *((AVXStatement*)context);	// it would be safer to have a running object table for lookup)
+	if (statement.Compile())
 	{
-		if (WriteFile(pipe,
-			&len,
-			sizeof(uint32),
-			&dwWritten,
-			NULL))
+
+	}
+	else
+	{
+		;
+	}
+}
+
+extern "C" __declspec(dllexport) uint64 free_statement(uint64 context)
+{
+	delete (AVXStatement*) context;	// it would be safer to have a running object table for lookup)
+	return 0;
+}
+
+AVXStatement::AVXStatement(const uint8* const buffer)
+{
+	this->blueprint = new AVXBlueprint(buffer);
+}
+
+bool AVXStatement::Compile()
+{
+	if (this->blueprint != nullptr)
+	{
+		XBlueprint* xblue = (XBlueprint*)this->blueprint->getRequest();
+
+		ResultSummary zero = { 0, 0, 0, 0 };
+
+		if (xblue->status() == XStatusEnum::XStatusEnum_COMPLETED)
 		{
-			if (WriteFile(pipe,
-				command,
-				len,
-				&dwWritten,
-				NULL))
-			{
-				if (ReadFile(pipe,
-					&time,
-					sizeof(int64),
-					&dwWritten,
-					NULL))
-				{
-					if (ReadFile(pipe,
-						&len,
-						sizeof(uint32),
-						&dwWritten,
-						NULL))
-					{
-						auto buffer = (uint8*)std::malloc(len);
+			blueprint->execute();
+			this->results.add(time, buffer, len, ResultType::BLUEPRINT, zero);
+			//this->statements.effect(time, xblue->singleton()->response().)
 
-						auto ok = ReadFile(pipe,
-							buffer,
-							len,
-							&dwWritten,
-							NULL);
-						printf("Received %d bytes\n", dwWritten);
+			return true;
+		}
+		else if (xblue->status() == XStatusEnum::XStatusEnum_FEEDBACK_EXPECTED)
+		{
+			blueprint.execute();
+			uint32 size;
+			auto results = blueprint.build(size);
+			ResultSummary summary = { 0, 0, 0, 0 };
+			this->results.add(time, results, size, ResultType::SEARCH_RESULTS, summary);
 
-						if (ok)
-						{
-							AVXBlueprint blueprint(buffer);
-							XBlueprint* xblue = (XBlueprint*)blueprint.getRequest();
-
-							if (xblue->status() == XStatusEnum::XStatusEnum_COMPLETED)
-							{
-								blueprint.execute();
-								this->statements.add(time, buffer, len, ResultType::BLUEPRINT, zero);
-								//this->statements.effect(time, xblue->singleton()->response().)
-							}
-							else if (xblue->status() == XStatusEnum::XStatusEnum_FEEDBACK_EXPECTED)
-							{
-								blueprint.execute();
-								uint32 size;
-								auto results = blueprint.build(size);
-								ResultSummary summary = { 0, 0, 0, 0 };
-								this->statements.add(time, results, size, ResultType::SEARCH_RESULTS, summary);
-
-								if (WriteFile(pipe,
-									&time,
-									sizeof(int64),
-									&dwWritten,
-									NULL))
-								{
-									char simulation[] = { "Found 0 matching verses in zero books" };
-									len = (uint32)Strnlen(simulation, 64);
-									if (WriteFile(pipe,
-										&len,
-										sizeof(uint32),
-										&dwWritten,
-										NULL))
-									{
-										if (WriteFile(pipe,
-											simulation,
-											len,
-											&dwWritten,
-											NULL))
-										{
-											;
-										}
-									}
-								}
-							}
-							else if (xblue->status() == XStatusEnum::XStatusEnum_ERROR)
-							{
-								this->statements.add(time, buffer, len, ResultType::UNKNOWN, zero);
-							}
-							else // XStatusEnum::XStatusEnum_UNKNOWN or anything else
-							{
-								this->statements.add(time, buffer, len, ResultType::UNKNOWN, zero);
-							}
-						}
-					}
-				}
-			}
+			return true;
+		}
+		else if (xblue->status() == XStatusEnum::XStatusEnum_ERROR)
+		{
+			this->results.add(time, buffer, len, ResultType::UNKNOWN, zero);
+		}
+		else // XStatusEnum::XStatusEnum_UNKNOWN or anything else
+		{
+			this->results.add(time, buffer, len, ResultType::UNKNOWN, zero);
 		}
 	}
-	return 0;
+	return false;
 }
 const QuelleResponse* const AVXStatement::Execute(int64 id)
 {
@@ -156,5 +112,5 @@ string AVXStatement::GetEffects(int64 id)
 }
 void AVXStatement::Release(int64 id)
 {
-	this->statements.release(id);
+	this->results.release(id);
 }

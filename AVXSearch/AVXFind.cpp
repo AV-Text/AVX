@@ -2,12 +2,15 @@
 #include "AVXFound.h"
 #include <vector>
 
-void AVXFind::add(AVXFound* found)
+bool AVXFind::add(AVXFound* found)
 {
+    this->current = found;
     if (found != nullptr)
     {
         this->founds.push_back(found);
+        return true;
     }
+    return false;
 }
 void AVXFind::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection)
 {
