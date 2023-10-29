@@ -4,7 +4,7 @@
 #include <avxgen.h>
 #include <avx_search_generated.h>
 #include <AVXBlueprint.h>
-#include <AVResult.h>
+#include <AVXResult.h>
 #include <vector>
 #include <string>
 
@@ -16,7 +16,7 @@ private:
 	uint64 context;
 public:
 	bool Compile();
-	const QuelleResponse* const Execute(int64 id);
+	//const QuelleResponse* const Execute(int64 id);
 	vector<string> GetErrors(int64 id);
 	vector<string> GetWarnings(int64 id);
 	vector<string> GetHistory(int64 id);

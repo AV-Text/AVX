@@ -30,6 +30,7 @@ extern "C" __declspec(dllexport) void* exec_statement(uint64 context)
 	{
 		;
 	}
+	return nullptr;
 }
 
 extern "C" __declspec(dllexport) uint64 free_statement(uint64 context)
@@ -48,7 +49,7 @@ bool AVXStatement::Compile()
 	if (this->blueprint != nullptr)
 	{
 		XBlueprint* xblue = (XBlueprint*)this->blueprint->getRequest();
-
+		/*
 		ResultSummary zero = { 0, 0, 0, 0 };
 
 		if (xblue->status() == XStatusEnum::XStatusEnum_COMPLETED)
@@ -77,13 +78,16 @@ bool AVXStatement::Compile()
 		{
 			this->results.add(time, buffer, len, ResultType::UNKNOWN, zero);
 		}
+		*/
 	}
 	return false;
 }
+/*
 const QuelleResponse* const AVXStatement::Execute(int64 id)
 {
 	return nullptr;
 }
+*/
 vector<string> AVXStatement::GetErrors(int64 id)
 {
 	vector<string> empty;
@@ -112,5 +116,5 @@ string AVXStatement::GetEffects(int64 id)
 }
 void AVXStatement::Release(int64 id)
 {
-	this->results.release(id);
+	// this->results.release(id);
 }

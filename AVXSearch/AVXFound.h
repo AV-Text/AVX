@@ -36,5 +36,10 @@ public:
 
 private:
     AVXMatch* current;
+public:
+    inline AVXMatch* getCurrent()
+    {
+        return this->current;
+    }
 };
 

@@ -32,7 +32,7 @@ public:
     bool add(AVXFound* found);
     bool add(AVXMatch* match);
 
-    //void build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection);
+    bool build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection);
 
 private:
     AVXFind* current;

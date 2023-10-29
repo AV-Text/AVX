@@ -34,5 +34,10 @@ public:
 
 private:
     AVXFound* current;
+public:
+    inline AVXFound* getCurrent()
+    {
+        return this->current;
+    }
 };
     
