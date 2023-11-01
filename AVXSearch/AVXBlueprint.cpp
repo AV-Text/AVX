@@ -32,7 +32,7 @@ bool AVXBlueprint::execute()
     }
     else if (req->singleton() != nullptr)
     {
-        if (req->status() == XStatusEnum_COMPLETED)
+        if (req->status() == XStatusEnum_OKAY)  // THis invocation should have not been made; Caller should service singletons
         {
             ; // take approriate action (like display history or help)
         }
@@ -64,21 +64,13 @@ bool AVXBlueprint::execute()
 
                 search->find(scopes);
             }
-            if (req->status() == XStatusEnum_FEEDBACK_EXPECTED)
-            {
-                ; // return data to pipe
-            }
-            else
-            {
-                ; // this is unexpected
-            }
         }
         else
         {
             ; // this is unexpected
         }
     }
-    else if (req->status() != XStatusEnum_COMPLETED)
+    else
     {
         ; // unknown/undefined status
     }

@@ -46,41 +46,22 @@ AVXStatement::AVXStatement(const uint8* const buffer)
 
 bool AVXStatement::Compile()
 {
+	bool result = false;
+
 	if (this->blueprint != nullptr)
 	{
 		XBlueprint* xblue = (XBlueprint*)this->blueprint->getRequest();
-		/*
-		ResultSummary zero = { 0, 0, 0, 0 };
-
-		if (xblue->status() == XStatusEnum::XStatusEnum_COMPLETED)
+		
+		if (xblue->status() == XStatusEnum::XStatusEnum_OKAY && xblue->search() != nullptr)
 		{
-			blueprint->execute();
-			this->results.add(time, buffer, len, ResultType::BLUEPRINT, zero);
-			//this->statements.effect(time, xblue->singleton()->response().)
-
-			return true;
-		}
-		else if (xblue->status() == XStatusEnum::XStatusEnum_FEEDBACK_EXPECTED)
-		{
-			blueprint.execute();
-			uint32 size;
-			auto results = blueprint.build(size);
-			ResultSummary summary = { 0, 0, 0, 0 };
-			this->results.add(time, results, size, ResultType::SEARCH_RESULTS, summary);
-
-			return true;
-		}
-		else if (xblue->status() == XStatusEnum::XStatusEnum_ERROR)
-		{
-			this->results.add(time, buffer, len, ResultType::UNKNOWN, zero);
+			result = blueprint->execute();
 		}
 		else // XStatusEnum::XStatusEnum_UNKNOWN or anything else
 		{
-			this->results.add(time, buffer, len, ResultType::UNKNOWN, zero);
+			result = false;
 		}
-		*/
 	}
-	return false;
+	return result;
 }
 /*
 const QuelleResponse* const AVXStatement::Execute(int64 id)
