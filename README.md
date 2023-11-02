@@ -14,7 +14,7 @@ AVX-Framework represents a radical step forward, at the same time as it reaches 
 
 AVX-Framework encodes the entire text of the bible, including Strong's numbers, Lemmatizations, Part-of-Speech tags, named-entity types, and [NUPhone representation](https://github.com/kwonus/NUPhone/blob/main/NUPhone.md). The updated Digital-AV Omega release packs all of this information into a compact binary file, indexed, with a fully documented format. Prior to AVX-Framework, Digital-AV never really had a seperate and complete reference implementation. AVX-Framework fills that void: AV-Engine is the entry-point to the framework. The codebase of AVX-Framework augments AVX-Lib from the baseline repo, but even that library has updated features. AVX-Framework adds new core functionality:
 
-- sounds-alike searching via the NUPhone representation and its campanion dotnet assembly
+- sounds-alike searching via the NUPhone Representation and the campanion NUPhone dotnet assembly
 - ability to precisely render text, with metadata from search for matches to accommodate term-highlighting
 - complete support for dual lexicons 
 - rich command/search language via the Pinshot-Blue library and its PEG grammar, conforming to the [Quelle specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
