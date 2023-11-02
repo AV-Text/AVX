@@ -33,7 +33,7 @@ extern "C" __declspec(dllexport) void* exec_statement(uint64 context)
 	return nullptr;
 }
 
-extern "C" __declspec(dllexport) uint64 free_statement(uint64 context)
+extern "C" __declspec(dllexport) int32 free_statement(uint64 context)
 {
 	delete (AVXStatement*) context;	// it would be safer to have a running object table for lookup)
 	return 0;

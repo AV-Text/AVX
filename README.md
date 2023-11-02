@@ -39,7 +39,7 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3A24]
+**Figure-1**: AVX-Framework dependency diagram [revision #3B01]
 
 Evidenced by Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more granular parameter-marshalling, because it is both more efficient and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository references.
 
@@ -54,7 +54,7 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 | **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>[./Blueprint-Blue-Lib](https://github.com/kwonus/blueprint-blue/tree/main/Blueprint-Blue-Lib) | null-terminated text                                         | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* |
 | **NUPhone** *(github.com/kwonus/NUPhone)*<br/>[./PhonemeEmbeddings](https://github.com/kwonus/NUPhone) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
-**Figure-2**: AVX-Framework input and output definition and repository details [revision #3A24]
+**Figure-2**: AVX-Framework input and output definition and repository details [revision #3B01]
 
 ### AV-Engine Internals
 
@@ -72,19 +72,19 @@ A BETA release of AV-Bible and AV-Console are planned for 2023. The development 
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3A24]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B01]
 
 We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3A24]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B01]
 
 ### Implementation Status
 
-Most of the blue boxes, in the diagram, are in active development. Planned completion dates are identified above. The purple boxes are already complete. Work will commence on the gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
+Most of the green boxes, in the diagram, are in active development. Planned completion dates are identified above. Any box with a checkmark is already complete. Work will commence on the dark-gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
 
-All source-code for the blue boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the purple boxes can be found in my [companions repos](https://github.com/kwonus) at https://github.com/kwonus.
+All source-code for the green boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the blue boxes can be found in my [companion repos](https://github.com/kwonus) at https://github.com/kwonus.
 
 The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in this forthcoming framework. With this new framework, AV-Bible will expose dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an older SDK, and an earlier, v1-alpha release of Quelle).
 
