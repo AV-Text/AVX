@@ -39,7 +39,7 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3B01]
+**Figure-1**: AVX-Framework dependency diagram [revision #3B02]
 
 Evidenced by Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more granular parameter-marshalling, because it is both more efficient and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository references.
 
@@ -47,14 +47,14 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **AV-Engine** *(github.com/AV-Text/AVX)*<br/>[./AV-Engine](https://github.com/AV-Text/AVX/tree/master/AV-Engine) | Quelle Command (text)                                        | IAVResult   interface                                        |
 | **AVX-Search** *(github.com/AV-Text/AVX)*<br/>[./AVXSearch](https://github.com/AV-Text/AVX/tree/master/AVXSearch) | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* | flatbuffers binary [search results]<br/>*(schema: avx_search.fbs)* |
-| **AVX-Lib** *(github.com/AV-Text/AVX)*<br/>[./AVXLib](https://github.com/AV-Text/AVX/tree/master/AVXLib) | C++ Classes/Methods                                          | C++ Classes/Methods                                          |
+| **AVX-CLib** *(github.com/AV-Text/AVX)*<br/>[./AVXLib](https://github.com/AV-Text/AVX/tree/master/AVXLib) | C++ Classes/Methods                                          | C++ Classes/Methods                                          |
 | **Digital-AV** *(github.com/AV-Text/AVX)*<br/>[./omega](https://github.com/AV-Text/AVX/tree/master/omega)/AVX-Omega-3911.data | n/a                                                          | *see specification:*<br />[Digital-AV-Ω39.pdf](https://github.com/AV-Text/AVX/blob/master/omega/Digital-AV-Ω39.pdf) |
-| **AVX-Lib-Net** *(github.com/kwonus/Digital-AV)*<br/>[./omega/foundations/csharp/AVXLib](https://github.com/kwonus/Digital-AV/tree/master/omega/foundations/csharp/AVXLib) | C# Classes/Methods                                           | C# Classes/Methods                                           |
+| **AVX-Lib** *(github.com/kwonus/Digital-AV)*<br/>[./omega/foundations/csharp/AVXLib](https://github.com/kwonus/Digital-AV/tree/master/omega/foundations/csharp/AVXLib) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 | **Pinshot-Blue** *(github.com/kwonus/pinshot-blue)*<br/>[./src](https://github.com/kwonus/pinshot-blue/tree/main/src) | null-terminated text                                         | json-formatted text [pinshot]<br/>*(null-terminated text)*   |
 | **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>[./Blueprint-Blue-Lib](https://github.com/kwonus/blueprint-blue/tree/main/Blueprint-Blue-Lib) | null-terminated text                                         | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* |
 | **NUPhone** *(github.com/kwonus/NUPhone)*<br/>[./PhonemeEmbeddings](https://github.com/kwonus/NUPhone) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
-**Figure-2**: AVX-Framework input and output definition and repository details [revision #3B01]
+**Figure-2**: AVX-Framework input and output definition and repository details [revision #3B02]
 
 ### AV-Engine Internals
 
@@ -72,13 +72,13 @@ A BETA release of AV-Bible and AV-Console are planned for 2023. The development 
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B01]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B02]
 
 We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B01]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B02]
 
 ### Implementation Status
 
