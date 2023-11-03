@@ -82,7 +82,7 @@ We plan to harden AV-Bible (Windows desktop application) and release it into the
 
 ### Implementation Status
 
-Most of the green boxes, in the diagram, are in active development. Planned completion dates are identified above. Any box with a checkmark is already complete. Work will commence on the dark-gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
+Most of the green boxes, in the diagram, are being actively developed. Planned completion dates are identified above. Any box with a checkmark is already complete. Work will commence on the dark-gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
 
 All source-code for the green boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the blue boxes can be found in my [companion repos](https://github.com/kwonus) at https://github.com/kwonus.
 
