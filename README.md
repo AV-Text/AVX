@@ -19,7 +19,7 @@ AVX-Framework encodes the entire text of the bible, including Strong's numbers, 
 - complete support for dual lexicons 
 - rich command/search language via the Pinshot-Blue library and its PEG grammar, conforming to the [Quelle specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
 - object-model representations of AVX dialect of the Quelle grammar via the Blueprint-Blue library
-- AV-Engine library glues it all together (also exposing public methods and objects from NUPhone, AVX-Lib-Net, and the Blueprint-Blue object model)
+- AV-Engine library glues it all together, while also exposing public methods of dependent dotnet assemblies
 
 ### Deeper Context
 
