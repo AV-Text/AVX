@@ -35,7 +35,7 @@ There are three external dependencies of AVX-Framework: DotNet, FlatBuffers, and
 
 The latest architecture is highly modular. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive initially, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
 
-Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, additional publicly available classes are exposed in AVX-Lib-Net and NUPhone, and AV-Engine consumers can reach into those two modules. The other dependencies are mostly opaque. The seven modules that compose the framework, along with file dependencies, are depicted in Figure-1 below:
+Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, additional publicly available classes are exposed in AVX-Lib-Net and NUPhone. Consequently, AV-Engine consumers can reach into public methods in those assemblies. The other dependencies are mostly opaque. The seven modules that compose the framework, along with file dependencies, are depicted in Figure-1 below:
 
 ![](AVXSearch/AVX-Framework.png)
 
