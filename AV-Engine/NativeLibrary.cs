@@ -10,13 +10,13 @@ namespace AVXFramework
 {
     internal class NativeLibrary
     {
-        [DllImport("nativelib.dll")]
-        private static extern UInt64 create_statement(byte[] buffer);
+        [DllImport("AVXSearch.dll")]
+        public static extern UInt64 create_statement(byte[] buffer);
 
-        [DllImport("nativelib.dll")]
-        private static extern IntPtr exec_statement(UInt64 address);
+        [DllImport("AVXSearch.dll")]
+        public static extern IntPtr exec_statement(UInt64 address);
 
-        [DllImport("nativelib.dll")]
-        private static extern Int32 free_statement(UInt64 address);
+        [DllImport("AVXSearch.dll")]
+        public static extern Int32 free_statement(UInt64 address);
     }
 }
