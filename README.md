@@ -4,11 +4,11 @@
 
 ### Introduction
 
-It's been a quarter century since the first release of AV-Bible for Windows. In its day, it was the world's first <u>free</u> bible software with a graphical user interface that ran on Microsoft Windows. It was originally released as: AV-1995, AV-1996, ... , until the final releases as AV-2008 & AV-2011. A companion software development kit (SDK) emerged along side AV-2008 and AV-2011. The SDK was renamed "Digital-AV" not long after its initial debut. Over the years, I developed a few freeware products on top of it. None were ever as significant as AV-Bible. The AV-Bible application name was resurrected in 2021 as a WPF application using the Z-Series edition of the Digital-AV SDK. It is, has been, and always will be: free. 
+It's been a quarter century since the first release of AV-Bible for Windows. In its day, it was the world's first <u>free</u> bible software with a graphical user interface that ran on Microsoft Windows. It was originally released as: AV-1995, AV-1996, ... , until the final releases as AV-2008 & AV-2011. A companion software development kit (SDK) emerged along side AV-2008 and AV-2011. The SDK was renamed "Digital-AV" not long after its initial debut. Over the years, I developed a few freeware products on top of it. None were ever as significant as AV-Bible. The AV-Bible application name was resurrected in 2021 as a WPF application, built with the Digital-AV SDK. It is, has been, and always will be: free. 
 
 With respect to the Digital-AV, you can rely on its foundation. With countless deployments and extensive text validation, Digital-AV has travelled the world and back with feedback from Christian missionaries, pastors, and lay people. They used it in their ministries. In return, I received treasured quality-control feedback. By 2008, all of the textual bugs were ironed out. Not coincidentally, 2008 was the first release of the SDK. Never making a dime, and pouring a healthy chunk of my life into this effort: it has been a labor of love.
 
-AVX-Framework represents a radical step forward, at the same time as it reaches back to its roots. It began in the nineties as a fast & lean KJV search tool for Windows.  This modern framework, forked from Digital-AV, is still fast & lean. They say, "The more things change, the more things stay the same." This cliche applies here. In its first incarnation, AV-Bible GUI was walled off from an in-memory database in a C++ library named "AV-Engine". AV-Engine is back! While AV-Engine itself is now C#, the remaining framework is once again C++ (because it is fast and lean). As before, AV-Engine walls-off the AV-Bible GUI, hearkening back to days gone by. The return to C++ is the most substantial refactoring that has occurred in Digital-AV [and its family of products], for well over a decade. The magnitude of that effort was what led to the forking of the Digital-AV repo.  
+AVX-Framework represents a radical step forward, at the same time as it reaches back to its roots. It began in the nineties as a fast & lean KJV search tool for Windows.  This modern framework, forked from Digital-AV, is still fast & lean. They say, "The more things change, the more things stay the same." This cliche applies here. In its first incarnation, AV-Bible GUI was walled off from an in-memory database in a C++ library named "AV-Engine". AV-Engine is back! Once again, it walls-off the GUI apps from the processing engine itself. While the engine is now Dotnet, most of the framework is C++. The return to C++, and the formalization of AVX-Framework, is the most substantial refactoring of Digital-AV since its original inception. The magnitude of that effort was what led to the forking of the Digital-AV repo.  
 
 ### Core Functionality
 
@@ -39,7 +39,7 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3B02]
+**Figure-1**: AVX-Framework dependency diagram [revision #3B07]
 
 Evidenced by Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more granular parameter-marshalling, because it is both more efficient and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository references.
 
@@ -47,14 +47,14 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **AV-Engine** *(github.com/AV-Text/AVX)*<br/>[./AV-Engine](https://github.com/AV-Text/AVX/tree/master/AV-Engine) | Quelle Command (text)                                        | IAVResult   interface                                        |
 | **AVX-Search** *(github.com/AV-Text/AVX)*<br/>[./AVXSearch](https://github.com/AV-Text/AVX/tree/master/AVXSearch) | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* | flatbuffers binary [search results]<br/>*(schema: avx_search.fbs)* |
-| **AVX-CLib** *(github.com/AV-Text/AVX)*<br/>[./AVXLib](https://github.com/AV-Text/AVX/tree/master/AVXLib) | C++ Classes/Methods                                          | C++ Classes/Methods                                          |
+| **AVX-Text** *(github.com/AV-Text/AVX)*<br/>[./AVXText](https://github.com/AV-Text/AVX/tree/master/AVXText) | C++ Classes/Methodsls                                        | C++ Classes/Methods                                          |
 | **Digital-AV** *(github.com/AV-Text/AVX)*<br/>[./omega](https://github.com/AV-Text/AVX/tree/master/omega)/AVX-Omega-3911.data | n/a                                                          | *see specification:*<br />[Digital-AV-Ω39.pdf](https://github.com/AV-Text/AVX/blob/master/omega/Digital-AV-Ω39.pdf) |
 | **AVX-Lib** *(github.com/kwonus/Digital-AV)*<br/>[./omega/foundations/csharp/AVXLib](https://github.com/kwonus/Digital-AV/tree/master/omega/foundations/csharp/AVXLib) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 | **Pinshot-Blue** *(github.com/kwonus/pinshot-blue)*<br/>[./src](https://github.com/kwonus/pinshot-blue/tree/main/src) | null-terminated text                                         | json-formatted text [pinshot]<br/>*(null-terminated text)*   |
 | **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>[./Blueprint-Blue-Lib](https://github.com/kwonus/blueprint-blue/tree/main/Blueprint-Blue-Lib) | null-terminated text                                         | flatbuffers binary [blueprint]<br/>*(schema: blueprint_blue.fbs)* |
 | **NUPhone** *(github.com/kwonus/NUPhone)*<br/>[./PhonemeEmbeddings](https://github.com/kwonus/NUPhone) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
-**Figure-2**: AVX-Framework input and output definition and repository details [revision #3B02]
+**Figure-2**: AVX-Framework input and output definition and repository details [revision #3B07]
 
 ### AV-Engine Internals
 
@@ -72,21 +72,23 @@ A BETA release of AV-Bible and AV-Console are planned for 2023. The development 
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B02]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B07]
 
 We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B02]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B07]
 
 ### Implementation Status
 
 Most of the green boxes, in the diagram, are being actively developed. Planned completion dates are identified above. Any box with a checkmark is already complete. Work will commence on the dark-gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
 
-All source-code for the green boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the blue boxes can be found in my [companion repos](https://github.com/kwonus) at https://github.com/kwonus.
+All source-code for the green boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the blue boxes can be found in my [companion repos](https://github.com/kwonus) at https://github.com/kwonus. 
 
 The AV-Bible application is [currently available](https://apps.microsoft.com/detail/9NN9X59QTZ3J?gl=US&hl=en-us) in the Microsoft Store. The existing app is being retrofitted to utilize the native C++ library implementations in this forthcoming framework. With this new framework, AV-Bible will expose dozens of new features and capabilities. And to be honest, the feature set of the existing app is a bit limited (as it sports an older SDK, and an earlier, v1-alpha release of Quelle).
+
+Not on the roadmap above, nevertheless planned for 2024, is a new release of Digital-AV that adds NUPhone-pronunciations for the Elizabethan-English lexicon (currently, NUPhone-pronunciations are only available for the Modern-English lexicon).
 
 Your feedback on this framework is welcome!
 

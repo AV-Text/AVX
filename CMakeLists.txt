@@ -76,9 +76,9 @@ include(CMake/Utils.cmake)
 ################################################################################
 include(CMake/GlobalSettingsInclude.cmake OPTIONAL)
 include_directories("C:/src/AVX/AVXSearch")
-include_directories("C:/src/AVX/AVXLib")
-include_directories("C:/src/AVX/AVXLib/foundations")
-include_directories("C:/src/AVX/AVXLib/xvmem")
+include_directories("C:/src/AVX/AVXText")
+include_directories("C:/src/AVX/AVXText/foundations")
+include_directories("C:/src/AVX/AVXText/xvmem")
 include_directories("C:/src/blueprint-blue/Blueprint-Blue-Lib")
 include_directories("C:/tool/flatbuffers/include")
 
@@ -117,33 +117,33 @@ set(Header_Files
     "AVXSearch/AVXTransitionComparator.h"
     "AVXSearch/AVXWordComparator.h"
 
-    "AVXLib/directory.h"
-    "AVXLib/Feature.h"
-    "AVXLib/FeatureSpec.h"
-    "AVXLib/fivebitencoding.h"
-    "AVXLib/md5.h"
-    "AVXLib/SearchClause.h"
-    "AVXLib/SearchControls.h"
-    "AVXLib/SearchFragment.h"
-    "AVXLib/SearchRequest.h"
-    "AVXLib/slicable.h"
-    "AVXLib/XBitArray.h"
+    "AVXText/directory.h"
+    "AVXText/Feature.h"
+    "AVXText/FeatureSpec.h"
+    "AVXText/fivebitencoding.h"
+    "AVXText/md5.h"
+    "AVXText/SearchClause.h"
+    "AVXText/SearchControls.h"
+    "AVXText/SearchFragment.h"
+    "AVXText/SearchRequest.h"
+    "AVXText/slicable.h"
+    "AVXText/XBitArray.h"
 
-    "AVXLib/DigitalAV.h"
+    "AVXText/DigitalAV.h"
 
-    "AVXLib/foundations/avxgen.h"
-    "AVXLib/foundations/book.h"
-    "AVXLib/foundations/chapter.h"
-    "AVXLib/foundations/framework.h"
-    "AVXLib/foundations/lemmata.h"
-    "AVXLib/foundations/lexicon.h"
-    "AVXLib/foundations/names.h"
-    "AVXLib/foundations/oov_lemmata.h"
-    "AVXLib/foundations/written.h"
+    "AVXText/foundations/avxgen.h"
+    "AVXText/foundations/book.h"
+    "AVXText/foundations/chapter.h"
+    "AVXText/foundations/framework.h"
+    "AVXText/foundations/lemmata.h"
+    "AVXText/foundations/lexicon.h"
+    "AVXText/foundations/names.h"
+    "AVXText/foundations/oov_lemmata.h"
+    "AVXText/foundations/written.h"
 
-    "AVXLib/xvmem/XVMem.h"
-    "AVXLib/xvmem/XVMem_platform.h"
-    "AVXLib/xvmem/XVMem_windows.h"
+    "AVXText/xvmem/XVMem.h"
+    "AVXText/xvmem/XVMem_platform.h"
+    "AVXText/xvmem/XVMem_windows.h"
 )
 source_group("Header Files" FILES ${Header_Files})
 
@@ -166,22 +166,22 @@ set(Source_Files
     "AVXSearch/AVXTransitionComparator.cpp"
     "AVXSearch/AVXWordComparator.cpp"
 
-    "AVXLib/directory.cpp"
-    "AVXLib/fivebitencoding.cpp"
-    "AVXLib/md5.cpp"
-    "AVXLib/search.cpp"
-    "AVXLib/slicable.cpp"
-    "AVXLib/XBitArray.cpp"
+    "AVXText/directory.cpp"
+    "AVXText/fivebitencoding.cpp"
+    "AVXText/md5.cpp"
+    "AVXText/search.cpp"
+    "AVXText/slicable.cpp"
+    "AVXText/XBitArray.cpp"
 
-    "AVXLib/DigitalAV.cpp"
+    "AVXText/DigitalAV.cpp"
 
-    "AVXLib/foundations/book.cpp"
-    "AVXLib/foundations/lemmata.cpp"
-    "AVXLib/foundations/lexicon.cpp"
-    "AVXLib/foundations/names.cpp"
-    "AVXLib/foundations/oov_lemmata.cpp"
+    "AVXText/foundations/book.cpp"
+    "AVXText/foundations/lemmata.cpp"
+    "AVXText/foundations/lexicon.cpp"
+    "AVXText/foundations/names.cpp"
+    "AVXText/foundations/oov_lemmata.cpp"
 
-    "AVXLib/xvmem/XVMem_windows.cpp"
+    "AVXText/xvmem/XVMem_windows.cpp"
 )
 source_group("Source Files" FILES ${Source_Files})
 
