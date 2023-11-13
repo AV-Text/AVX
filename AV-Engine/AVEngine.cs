@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Blueprint.Blue;
+using System.Text;
 
 namespace AVXFramework
 {
@@ -12,7 +13,7 @@ namespace AVXFramework
             this.BlueprintLib = new();
             this.PinshotLib = new();
         }
-        public (UInt64 cursor, string error, string result) Execute(string command)
+        public (QStatement? stmt, UInt64 cursor, string error, string result) Execute(string command)
         {
             var pinshot = this.PinshotLib.Parse(command);
             if (pinshot.root != null)
@@ -28,16 +29,16 @@ namespace AVXFramework
                             if (blueprint.Singleton != null)
                             {
                                 ; // process singleton command
-                                return (0, "", "Pretend that this is the result of an executed Quelle command");
+                                return (blueprint, 0, "", "Pretend that this is the result of an executed Quelle command");
                             }
                             else if (blueprint.Commands != null)
                             {
-                                UInt64 cursor = AVXFramework.NativeLibrary.create_statement(Blueprint.Blue.QStatement.Serialize(blueprint.Blueprint));
-                                return (cursor, "", "");
+                                UInt64 cursor = AVXFramework.NativeLibrary.create_statement(QStatement.Serialize(blueprint.Blueprint));
+                                return (blueprint, cursor, "", "");
                             }
                             else
                             {
-                                return (0, "Internal Error: Unexpected blueprint encountered.", "");
+                                return (blueprint, 0, "Internal Error: Unexpected blueprint encountered.", "");
                             }
                         }
                         else
@@ -45,25 +46,25 @@ namespace AVXFramework
                             if (blueprint.Errors.Count > 0)
                             {
                                 var errors = string.Join("; ", blueprint.Errors);
-                                return (0, errors, "");
+                                return (blueprint, 0, errors, "");
                             }
                             else
                             {
-                                return (0, "Blueprint was invalid, but the error list was empty.", "");
+                                return (blueprint, 0, "Blueprint was invalid, but the error list was empty.", "");
                             }
                         }
                     }
                     else
                     {
-                        return (0, "Blueprint was invalid (unexpected error).", "");
+                        return (blueprint, 0, "Blueprint was invalid (unexpected error).", "");
                     }
                 }
                 else
                 {
-                    return (0, pinshot.root.error, "");
+                    return (null, 0, pinshot.root.error, "");
                 }
             }
-            return (0, "Unable to parse the statement.", "");
+            return (null, 0, "Unable to parse the statement.", "");
         }
     }
 }
