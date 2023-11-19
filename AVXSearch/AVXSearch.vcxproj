@@ -30,14 +30,12 @@
     <ClCompile Include="AVXPOS16Comparator.cpp" />
     <ClCompile Include="AVXPOS32Comparator.cpp" />
     <ClCompile Include="AVXPuncComparator.cpp" />
-    <ClCompile Include="AVXRender.cpp" />
     <ClCompile Include="AVXSearch.cpp" />
     <ClCompile Include="AVXSegment.cpp" />
     <ClCompile Include="AVXStatement.cpp" />
     <ClCompile Include="AVXStrongsComparator.cpp" />
     <ClCompile Include="AVXTransitionComparator.cpp" />
     <ClCompile Include="AVXWordComparator.cpp" />
-    <ClCompile Include="QuelleResponse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVXBlueprint.h" />
@@ -51,22 +49,20 @@
     <ClInclude Include="AVXPOS16Comparator.h" />
     <ClInclude Include="AVXPOS32Comparator.h" />
     <ClInclude Include="AVXPuncComparator.h" />
-    <ClInclude Include="AVXRender.h" />
     <ClInclude Include="AVXSearch.h" />
     <ClInclude Include="AVXSegment.h" />
     <ClInclude Include="AVXStatement.h" />
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
-    <ClInclude Include="QuelleResponse.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AVXLib\AVXLib.vcxproj">
-      <Project>{d78af99d-ff38-4162-aa4d-4efad666a291}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AVXText\AVXText.vcxproj">
+      <Project>{0e846560-2ed1-3599-9552-b0fd66f09400}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -77,28 +73,28 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -120,6 +116,49 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <TargetExt>.dll</TargetExt>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <TargetExt>.dll</TargetExt>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <TargetExt>.dll</TargetExt>
+    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <TargetExt>.dll</TargetExt>
+    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -130,13 +169,23 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -150,7 +199,8 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,7 +208,16 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -170,13 +229,23 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -190,7 +259,8 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -198,7 +268,16 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

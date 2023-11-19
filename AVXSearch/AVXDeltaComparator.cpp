@@ -1,10 +1,19 @@
 #include "AVXDeltaComparator.h"
 #include <stdlib.h>
 #include <directory.h>
+#include <lexicon.h>
 
 uint16 AVXDeltaComparator::compare(const WrittenContent& writ)
 {
-	return 0; // TODO: I need to load the lexicon for this one
+	if (directory::GLOBAL != nullptr && directory::GLOBAL->isOkay())
+	{
+		auto entry = LexMap.get(writ.wkey);
+		if (entry != nullptr)
+		{
+			return CanBeModernized(*entry);
+		}
+	}
+	return false;
 }
 
 AVXDeltaComparator::AVXDeltaComparator(const XFeature* feature) : AVXComparator(feature), delta(false)

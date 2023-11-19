@@ -64,4 +64,6 @@ bool AVXResult::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatb
     auto vresult = builder.CreateVector(xfinds);
     //auto xresult = CreateXResult(builder, find, vresult);
     //parentCollection.push_back(xfind);
+
+    return false;
 }

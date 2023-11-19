@@ -17,10 +17,12 @@ namespace AVConsole
             {
                 bool error = false;
                 Console.Write("> ");
-                string input = Console.ReadLine().Trim();
+                string? input = Console.ReadLine();
 
-                if (!string.IsNullOrEmpty(input))
+                if (!string.IsNullOrWhiteSpace(input))
                 {
+                    input = input.Trim();
+
                     var tuple = engine.Execute(input);
 
                     error = !string.IsNullOrWhiteSpace(tuple.error);
@@ -85,6 +87,7 @@ namespace AVConsole
                                     Console.WriteLine(line);
                                 }
                             }
+                            var stmt = new NativeStatement(tuple.stmt.Blueprint);
                         }
                     }
                 }

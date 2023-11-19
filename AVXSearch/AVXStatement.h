@@ -7,6 +7,8 @@
 #include <AVXResult.h>
 #include <vector>
 #include <string>
+#include <directory.h>
+#include <lexicon.h>
 
 class AVXStatement
 {

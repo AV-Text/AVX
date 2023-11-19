@@ -45,9 +45,6 @@
     <ClCompile Include="AVXPuncComparator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AVXRender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AVXSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AVXWordComparator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QuelleResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AVXStatement.cpp">
@@ -104,9 +98,6 @@
     <ClInclude Include="AVXPuncComparator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AVXRender.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AVXSearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,9 +111,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXWordComparator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QuelleResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXStatement.h">

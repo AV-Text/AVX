@@ -3,16 +3,6 @@
 AVXLexTokenMap LexLookup;
 AVXLexKeyMap   LexMap;
 
-extern "C" __declspec(dllexport) bool create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap)
-{
-	return AVXLexTokenMap::create_lexicon(lex, count, createLexicalLookupMap);
-}
-
-extern "C" __declspec(dllexport) bool delete_lexicon()
-{
-	return AVXLexTokenMap::delete_lexicon();
-}
-
 bool AVXLexTokenMap::create_lexicon(const LexiconContent* const lex, uint32 count, bool createLexicalLookupMap)
 {
 	auto entry = const_cast<LexiconContent*>(lex);

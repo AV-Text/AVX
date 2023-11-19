@@ -53,6 +53,15 @@ inline const char* GetModern(const LexiconContent& lex)
     return modern[0] != 0 ? modern : display[0] != 0 ? display : token;
 }
 
+inline bool CanBeModernized(const LexiconContent& lex)
+{
+    const char* const token = GetToken(lex);
+    const char* const display = token + Strnlen(token, 24) + 1;
+    const char* const modern = display + Strnlen(display, 24) + 1;
+
+    return modern[0] != 0;
+}
+
 inline std::string NormalizeModern(const LexiconContent& lex)
 {
     const char* const modern = GetModern(lex);

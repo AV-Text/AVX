@@ -92,7 +92,7 @@ struct LexiconContentStruct // variable length
 {
 	uint16 entities;
 	uint16 size;
-	uint32 pos; // followed by char*search, char*display, char*modern [this is an array of pos]
+	uint32 pos; // [this is an array of pos] followed by char*search, char*display, char*modern
 };
 typedef struct LexiconContentStruct LexiconContent;
 
@@ -141,6 +141,8 @@ public:
 	inline explicit operator const LemmataContent* ()	const { return this->ok ? this->lemmata : nullptr; }
 	inline explicit operator const OOVContent* ()		const { return this->ok ? this->oov :     nullptr; }
 	inline explicit operator const NamesContent* ()		const { return this->ok ? this->names :   nullptr; }
+
+	static directory    * GLOBAL;
 
 private:
 	WrittenContent		* written;

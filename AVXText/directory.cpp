@@ -8,6 +8,30 @@
 #include <string.h> // for memcpy
 #include <md5.h>
 
+directory* directory::GLOBAL = nullptr;
+
+extern "C" __declspec(dllexport) uint64 create_avxtext(const char* data)
+{
+	if (data != nullptr)
+	{
+		directory::GLOBAL = new directory(data); // e.g. "C:\\src\\AVX\\omega\\AVX-Omega-3911.data"
+		auto lex = (LexiconContent*)(directory::GLOBAL);
+		AVXLexTokenMap::create_lexicon(lex, lex->pos + 1, true);
+		return uint64(directory::GLOBAL);
+	}
+	return 0;
+}
+
+extern "C" __declspec(dllexport) void free_avxtext(uint64 data)
+{
+	if (data == uint64(directory::GLOBAL) && data != 0)
+	{
+		AVXLexTokenMap::delete_lexicon();
+		delete directory::GLOBAL;
+		directory::GLOBAL = nullptr;
+	}
+}
+
 uint32 DIR_cnt = 0;
 uint32 WRIT_cnt = 0;
 uint32 BOOK_cnt = 0;

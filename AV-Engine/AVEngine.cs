@@ -1,4 +1,5 @@
 ﻿using Blueprint.Blue;
+using FlatSharp.Internal;
 using System.Text;
 
 namespace AVXFramework
@@ -7,11 +8,15 @@ namespace AVXFramework
     {
         private Blueprint.Blue.Blueprint BlueprintLib;
         private Pinshot.Blue.PinshotLib PinshotLib;
+        private const string SDK = "C:/src/AVX/omega/AVX-Omega-3911.data";
+        private static readonly byte[] SDK_utf8 = Encoding.UTF8.GetBytes(SDK);
 
         public AVEngine()
         {
             this.BlueprintLib = new();
             this.PinshotLib = new();
+
+            new NativeText(SDK_utf8);
         }
         public (QStatement? stmt, UInt64 cursor, string error, string result) Execute(string command)
         {
@@ -33,7 +38,10 @@ namespace AVXFramework
                             }
                             else if (blueprint.Commands != null)
                             {
-                                UInt64 cursor = AVXFramework.NativeLibrary.create_statement(QStatement.Serialize(blueprint.Blueprint));
+                                UInt64 cursor = NativeLibrary.create_statement(QStatement.Serialize(blueprint.Blueprint));
+                                var result = NativeLibrary.exec_statement(cursor);
+                                var status = NativeLibrary.free_statement(cursor);
+
                                 return (blueprint, cursor, "", "");
                             }
                             else
