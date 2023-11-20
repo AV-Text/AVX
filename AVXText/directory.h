@@ -105,6 +105,14 @@ struct NamesContentStruct
 typedef struct NamesContentStruct NamesContent;
 
 #pragma pack(1)
+struct PhoneticContentStruct
+{
+	uint16 wkey;
+	char   variants; // slash-delimited + null-terminated [this is an array of char]
+};
+typedef struct PhoneticContentStruct PhoneticContent;
+
+#pragma pack(1)
 struct BookContent3201Struct	// Older Omega format
 {
 	uint8  num;
@@ -134,15 +142,18 @@ public:
 	{
 		return this->ok;
 	}
-	inline explicit operator const BookContent* ()		const { return this->ok ? this->book :    nullptr; }
+	inline explicit operator const BookContent* ()		const { return this->ok ? this->book    : nullptr; }
 	inline explicit operator const ChapterContent* ()	const { return this->ok ? this->chapter : nullptr; }
 	inline explicit operator const WrittenContent* ()	const { return this->ok ? this->written : nullptr; }
 	inline explicit operator const LexiconContent* ()	const { return this->ok ? this->lexicon : nullptr; }
 	inline explicit operator const LemmataContent* ()	const { return this->ok ? this->lemmata : nullptr; }
-	inline explicit operator const OOVContent* ()		const { return this->ok ? this->oov :     nullptr; }
-	inline explicit operator const NamesContent* ()		const { return this->ok ? this->names :   nullptr; }
+	inline explicit operator const OOVContent* ()		const { return this->ok ? this->oov     : nullptr; }
+	inline explicit operator const NamesContent* ()		const { return this->ok ? this->names   : nullptr; }
+	inline explicit operator const PhoneticContent* ()  const { return this->ok ? this->phonetics:nullptr; }
 
 	static directory    * GLOBAL;
+	static const uint16   ExpectedPlateRevision;
+	static const uint16   LibraryRevision;
 
 private:
 	WrittenContent		* written;
@@ -152,6 +163,7 @@ private:
 	LemmataContent		* lemmata;
 	OOVContent			* oov;
 	NamesContent		* names;
+	PhoneticContent     * phonetics;
 	bool                  ok;
 };
 

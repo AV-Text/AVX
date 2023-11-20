@@ -54,7 +54,7 @@ namespace AVXFramework
     public class NativeText
     {
         private UInt64 address;
-        public NativeText(byte[] path)
+        public NativeText(byte[] path) 
         {
             this.address = NativeLibrary.create_avxtext(path);
         }

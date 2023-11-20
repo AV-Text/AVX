@@ -121,26 +121,30 @@
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
-    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
-    <CustomBuildAfterTargets>CopyFileToFolders</CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -184,7 +188,7 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+      <Command>Copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -216,7 +220,7 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+      <Command>Copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -244,7 +248,7 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+      <Command>Copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -276,7 +280,7 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <RootFolder>$(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</RootFolder>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
+      <Command>Copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)\AV-Console\bin\$(Configuration)\net8.0</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

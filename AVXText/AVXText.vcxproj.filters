@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\src\AVX\AVXText\directory.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\fivebitencoding.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\md5.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\search.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\slicable.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\XBitArray.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\DigitalAV.cpp" />
+    <ClCompile Include="C:\src\AVX\AVXText\foundations\book.cpp">
+      <Filter>foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\src\AVX\AVXText\foundations\lemmata.cpp">
+      <Filter>foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\src\AVX\AVXText\foundations\lexicon.cpp">
+      <Filter>foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\src\AVX\AVXText\xvmem\XVMem_windows.cpp">
+      <Filter>xvmem</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\src\AVX\AVXText\foundations\oov_lemmata.cpp">
+      <Filter>foundations</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\src\AVX\AVXText\foundations\names.cpp">
+      <Filter>foundations</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\src\AVX\AVXText\directory.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\Feature.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\FeatureSpec.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\fivebitencoding.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\md5.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\SearchClause.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\SearchControls.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\SearchFragment.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\SearchRequest.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\slicable.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\XBitArray.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\DigitalAV.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\framework.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\written.h" />
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\avxgen.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\book.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\chapter.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\lemmata.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\lexicon.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\xvmem\XVMem.h">
+      <Filter>xvmem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\xvmem\XVMem_platform.h">
+      <Filter>xvmem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\xvmem\XVMem_windows.h">
+      <Filter>xvmem</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\oov_lemmata.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\src\AVX\AVXText\foundations\names.h">
+      <Filter>foundations</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="foundations">
+      <UniqueIdentifier>{b70e4232-407c-4805-8e93-22d4c9f2dc9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xvmem">
+      <UniqueIdentifier>{864a92ef-f0c3-43e8-8fe8-289d8597342d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="foundations\README.txt">
+      <Filter>foundations</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

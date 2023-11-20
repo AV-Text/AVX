@@ -14,9 +14,9 @@
  */
 
 #include <windows.h>
-#include <fileapi.h>
+//#include <fileapi.h>
 
-#include <AVXBlueprint.h>
+//#include <AVXBlueprint.h>
 #include <unordered_set>
 #include <unordered_set>
 #include <vector>
@@ -28,49 +28,33 @@
 using namespace XBlueprintBlue;
 using namespace XSearchResults;
 
-#define PIPE_NAME "\\\\.\\pipe\\Blueprint-Blue-Service"
-
 #include <iostream>
 #include <string>
 
-#include <directory.h>
+//#include <directory.h>
 
-#include <AVXStatement.h>
+//#include <AVXStatement.h>
 
 #define DEFAULT_BUFFER_MAX 4*1024
+
+extern "C" __declspec(dllimport) uint64_t create_avxtext(const char* data);
+//extern "C" __declspec(dllimport) void free_avxtext(uint64_t data);
+
 int main()
 {
-	HANDLE pipe;
+	auto sdk = create_avxtext("C:/src/AVX/omega/AVX-Omega-3911.data");
+	std::string line;
 
-	pipe = CreateFile(PIPE_NAME,
-		GENERIC_READ | GENERIC_WRITE,
-		0,
-		NULL,
-		OPEN_EXISTING,
-		0,
-		NULL);
+restart:
+	std::printf("> ");
+	std::getline(std::cin, line);
 
-	if (pipe != INVALID_HANDLE_VALUE)
+	if (!line.empty())
 	{
-		AVXStatement stmt(pipe);
+//		auto id = stmt.Compile(msg);
 
-		directory omega("C:\\src\\AVX\\omega\\AVX-Omega-3911.data");
-
-		std::string line;
-
-	restart:
-		std::printf("> ");
-		std::getline(std::cin, line);
-
-		if (!line.empty())
-		{
-			auto msg = line.c_str();
-
-			auto id = stmt.Compile(msg);
-
-			goto restart;
-		}
-		CloseHandle(pipe);
+		goto restart;
 	}
+//	free_avxtext(sdk);
 	return 0;
 }

@@ -10,13 +10,24 @@ namespace AVXFramework
         private Pinshot.Blue.PinshotLib PinshotLib;
         private const string SDK = "C:/src/AVX/omega/AVX-Omega-3911.data";
         private static readonly byte[] SDK_utf8 = Encoding.UTF8.GetBytes(SDK);
+        private NativeText? Runtime;
 
         public AVEngine()
         {
             this.BlueprintLib = new();
             this.PinshotLib = new();
 
-            new NativeText(SDK_utf8);
+            this.Runtime = new NativeText(SDK_utf8);
+        }
+        public void Free()
+        {
+            if (this.Runtime != null)
+                this.Runtime.Free();
+            this.Runtime = null;
+        }
+        ~AVEngine()
+        {
+            this.Free();
         }
         public (QStatement? stmt, UInt64 cursor, string error, string result) Execute(string command)
         {

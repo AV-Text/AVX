@@ -9,14 +9,16 @@
 #include <md5.h>
 
 directory* directory::GLOBAL = nullptr;
+const uint16 directory::ExpectedPlateRevision = 3911;
+const uint16 directory::LibraryRevision = 3980; // 3930 + 31 [oct] + 19 [nov] // should have been hex :-|
 
 extern "C" __declspec(dllexport) uint64 create_avxtext(const char* data)
 {
 	if (data != nullptr)
 	{
 		directory::GLOBAL = new directory(data); // e.g. "C:\\src\\AVX\\omega\\AVX-Omega-3911.data"
-		auto lex = (LexiconContent*)(directory::GLOBAL);
-		AVXLexTokenMap::create_lexicon(lex, lex->pos + 1, true);
+//		auto lex = (LexiconContent*)(directory::GLOBAL);
+//		AVXLexTokenMap::create_lexicon(lex, lex->pos + 1, true);
 		return uint64(directory::GLOBAL);
 	}
 	return 0;
@@ -40,9 +42,10 @@ uint32 LEMMA_cnt = 0;
 uint32 LEX_cnt = 0;
 uint32 NAME_cnt = 0;
 uint32 OOV_cnt = 0;
+uint32 PHONE_cnt = 0;
 
 /*static*/ AVXBook* AVXBook::Book[67] = {nullptr};
-static const uint64 omega_hash[2] = { 0x2043C8DBF46A8777, 0x5FF3238DA7739DD8 };
+static const uint64 omega_hash[2] = { 0x90B73F90B8AED72C, 0xEF0325411C00C4FE };
 
 directory::directory(const char* omega) : contents((const DirectoryContent*) this->Acquire("AVX-Omega", omega, false, true)),
 	book(nullptr), chapter(nullptr), written(nullptr), lexicon(nullptr), lemmata(nullptr), oov(nullptr), names(nullptr)
@@ -110,7 +113,13 @@ directory::directory(const char* omega) : contents((const DirectoryContent*) thi
 									this->names = nullptr;
 								 NAME_cnt = this->contents[i].record_count;
 								 break;
-
+		case 0x78A31E514E3292EA: this->ok = (contents[i].content_hash[1] == 0xF0C7ED99D199CDFF); // names hash
+								 if (this->ok)
+									this->phonetics = (PhoneticContent*)(((uint8*)this->contents) + contents[i].content_offset);
+								 else
+									this->phonetics = nullptr;
+								 PHONE_cnt = this->contents[i].record_count;
+								 break;
 		default:                 this->ok = false;
 		}
 		if (!this->ok)
