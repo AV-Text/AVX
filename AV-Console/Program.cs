@@ -1,5 +1,6 @@
 ﻿using AVXFramework;
 using Blueprint.Blue;
+using System.Text.Json;
 
 namespace AVConsole
 {
@@ -10,6 +11,12 @@ namespace AVConsole
             var singletons = new LocalStatementProcessor();
             var engine = new AVEngine();
 
+            (UInt32 expected, bool okay) version = Pinshot.Blue.Pinshot_RustFFI.LibraryVersion;
+
+            if (!version.okay)
+            {
+                Console.WriteLine("Unexpected library version encountered ...\n");
+            }
             Console.WriteLine("Hello AV-Console!\n");
 
             bool done = false;

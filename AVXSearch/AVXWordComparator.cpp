@@ -13,8 +13,11 @@ uint16 AVXWordComparator::compare(const WrittenContent& writ)
 	if (this->wkeys != nullptr)
 	{
 		for (int i = 0; wkeys[i]; i++)
-			if (wkeys[i] == writ.wkey)
-				return AVXComparator::FullMatch;
+			if (wkeys[i] == (writ.wkey & 0x3FF))
+				return positive ? AVXComparator::FullMatch : 0;
+
+		// TO DO: (TODO)
+		// Fuzzy match
 	}
 	return positive ? 0 : this->AVXComparator::FullMatch;
 }
