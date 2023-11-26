@@ -1,5 +1,5 @@
 #include "AVXSearch.h"
-#include "AVXSegment.h"
+#include "AVXFragment.h"
 #include "AVXBlueprint.h"
 #include "AVXFind.h"
 #include "AVXFound.h"
@@ -15,9 +15,9 @@ static std::unordered_set<uintptr_t> MemoryTable;
 bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
 {
     uint32 seg_cnt = 0;
-    if (this->segments = nullptr)
+    if (this->requirements = nullptr)
         return false;
-    for (/**/; this->segments[seg_cnt]; seg_cnt++)
+    for (/**/; this->requirements[seg_cnt]; seg_cnt++)
         ;
     if (seg_cnt == 0)
         return false;
@@ -43,7 +43,7 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
                         len = book.writ_cnt;
                 }
                 std::map<uint32, std::tuple<const char*, const uint16>> matched;
-                bool found = this->segments[0]->compare(*writ, matched);
+                bool found = this->requirements[0]->compare(*writ, matched);
                 if (found)
                 {
                     uint32 wi = w;
@@ -51,9 +51,9 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
 
                     auto spanwrit = writ + 1;
 
-                    for (uint32 seg_idx = 1; this->segments[seg_idx]; seg_idx++)
+                    for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
                     {
-                        for (auto& segment = *(this->segments[seg_idx]); wi < len; wi++, spanwrit++)
+                        for (auto& segment = *(this->requirements[seg_idx]); wi < len; wi++, spanwrit++)
                         {
                             if (!segment.compare(*spanwrit, matched))
                             {
@@ -85,7 +85,7 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
             for (w = 0; w < book.writ_cnt; w += len, writ += len)
             {
                 std::map<uint32, std::tuple<const char*, const uint16>> matched;
-                bool found = this->segments[0]->compare(*writ, matched);
+                bool found = this->requirements[0]->compare(*writ, matched);
                 if (found)
                 {
                     uint32 wi = w;
@@ -93,9 +93,9 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
 
                     auto spanwrit = writ + 1;
 
-                    for (uint32 seg_idx = 1; this->segments[seg_idx]; seg_idx++)
+                    for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
                     { 
-                        for (auto& segment = *(this->segments[seg_idx]); wi < wi_len; wi++, spanwrit++)
+                        for (auto& segment = *(this->requirements[seg_idx]); wi < wi_len; wi++, spanwrit++)
                         {
                             if (!segment.compare(*spanwrit, matched))
                             {
@@ -127,9 +127,9 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
 bool AVXSearch::search_unquoted(vector<AVXScope*>& scopes)
 {
     uint32 seg_cnt = 0;
-    if (this->segments == nullptr)
+    if (this->requirements == nullptr)
         return false;
-    for (/**/; this->segments[seg_cnt]; seg_cnt++)
+    for (/**/; this->requirements[seg_cnt]; seg_cnt++)
         ;
     if (seg_cnt == 0)
         return false;
@@ -160,7 +160,7 @@ bool AVXSearch::search_unquoted(vector<AVXScope*>& scopes)
                 found = false;
                 for (uint32 s = 0; (!found) && (s < seg_cnt); s++)
                 {
-                    bool hit  = this->segments[s]->compare(writ[wi], matched);
+                    bool hit  = this->requirements[s]->compare(writ[wi], matched);
                     if (hit)
                     {
                         cnt++;
@@ -214,33 +214,33 @@ AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings
     xsearch(xsearch),
     settings(settings),
     results(results),
-    segments(nullptr)
+    requirements(nullptr)
 {
-    auto xsegments = this->xsearch->segments();
+    auto xsegments = this->xsearch->fragments();
 
     if (xsegments != nullptr)
     {
         int segments_size = xsegments->size();
-        this->segments = (AVXSegment**) (std::calloc(segments_size + 1, sizeof(AVXSegment*)));
+        this->requirements = (AVXFragment**) (std::calloc(segments_size + 1, sizeof(AVXFragment*)));
         for (int s = 0; s < segments_size; s++)
         {
             auto xsegment = (*xsegments)[s];
             if (xsegment != nullptr)
             {
-                this->segments[s] = new AVXSegment(xsegment);
+                this->requirements[s] = new AVXFragment(xsegment);
             }
         }
     }
 }
 AVXSearch::~AVXSearch()
 {
-    if (this->segments != nullptr)
+    if (this->requirements != nullptr)
     {
-        for (int i = 0; this->segments[i] != nullptr; i++)
+        for (int i = 0; this->requirements[i] != nullptr; i++)
         {
-            std::free((void*)this->segments[i]);
+            std::free((void*)this->requirements[i]);
         }
-        std::free(this->segments);
+        std::free(this->requirements);
     }
 }
 

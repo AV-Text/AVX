@@ -27,7 +27,7 @@
     <ClCompile Include="AVXFound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AVXFragment.cpp">
+    <ClCompile Include="AVXMatchAny.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AVXLemmaComparator.cpp">
@@ -48,7 +48,7 @@
     <ClCompile Include="AVXSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AVXSegment.cpp">
+    <ClCompile Include="AVXFragment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AVXStrongsComparator.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="AVXFound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AVXFragment.h">
+    <ClInclude Include="AVXMatchAny.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXLemmaComparator.h">
@@ -101,7 +101,7 @@
     <ClInclude Include="AVXSearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AVXSegment.h">
+    <ClInclude Include="AVXFragment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXStrongsComparator.h">

@@ -1,107 +1,43 @@
 #include "AVXFragment.h"
-
-#include "AVXWordComparator.h"
-#include "AVXLemmaComparator.h"
-#include "AVXPOS16Comparator.h"
-#include "AVXPOS32Comparator.h"
-#include "AVXDeltaComparator.h"
-#include "AVXPuncComparator.h"
-#include "AVXTransitionComparator.h"
-#include "AVXStrongsComparator.h"
-
-#include <blueprint_blue_generated.h>
-#include <flatbuffers/flatbuffers.h>
-
-#include <written.h>
+#include "AVXMatchAny.h"
+#include <directory.h>
 
 using namespace XBlueprintBlue;
 
-static AVXComparator* create_feature(const XFeature* feature)
+AVXFragment::AVXFragment(const XFragment* xfragments): fragment(xfragments->fragment()->c_str()), anchored(xfragments->anchored()), requirements(nullptr)
 {
-    if (feature != nullptr)
+    auto xrequirements = xfragments->require();
+    if (xfragments != nullptr)
     {
-        auto rule = feature->rule()->c_str();
-
-        if (std::strncmp(rule, "word", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
+        int fragments_size = xrequirements->size();
+        this->requirements = (AVXMatchAny**)calloc(fragments_size + 1, sizeof(AVXMatchAny*));
+        for (int xreq = 0; xreq < fragments_size; xreq++)
         {
-            return new AVXWordComparator(feature);
-        }
-        if (std::strncmp(rule, "pnpos", 4) == 0)
-        {
-            return new AVXPOS16Comparator(feature);
-        }
-        if (std::strncmp(rule, "pos32", 8) == 0)
-        {
-            return new AVXPOS32Comparator(feature);
-        }
-        if (std::strncmp(rule, "lemma", 8) == 0)
-        {
-            return new AVXLemmaComparator(feature);
-        }
-        if (std::strncmp(rule, "delta", 8) == 0)
-        {
-            return new AVXDeltaComparator(feature);
-        }
-        if (std::strncmp(rule, "punctuation", 11) || std::strncmp(rule, "decoration", 10) == 0)
-        {
-            return new AVXPuncComparator(feature);
-        }
-        if (std::strncmp(rule, "strongs", 8) == 0)
-        {
-            return new AVXStrongsComparator(feature);
-        }
-        if (std::strncmp(rule, "transition", 8) == 0)
-        {
-            return new AVXTransitionComparator(feature);
+            auto xopt = (*xrequirements)[xreq];
+            this->requirements[xreq] = new AVXMatchAny(xopt);
         }
     }
-    return nullptr;
 }
 
-AVXFragment::AVXFragment(const XFragment* xfragment) : fragment(xfragment->fragment()->c_str()), features(nullptr)
+AVXFragment::~AVXFragment()
 {
-    this->fragment = xfragment->fragment()->c_str();
-    auto xfeatures = xfragment->features();
-    if (xfeatures != nullptr)
+    if (this->requirements != nullptr)
     {
-        int features_size = xfeatures->size();
-        this->features = (AVXComparator**)calloc(features_size + 1, sizeof(AVXComparator*));
-        for (int f = 0; f < features_size; f++)
+        for (int i = 0; this->requirements[i] != nullptr; i++)
         {
-            auto xfeature = (*xfeatures)[f];
-            this->features[f] = create_feature(xfeature);
+            std::free((void*)this->requirements[i]);
         }
+        std::free(this->requirements);
     }
 }
 
 bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched)
 {
-    if (this->features != nullptr) // features are OR conditions (|)
+    if (this->requirements != nullptr)
     {
-        for (int i = 0; this->features[i] != nullptr; i++)
-        {
-            auto hit = this->features[i]->compare(writ);
-            if (hit > 0)
-            {
-                auto coord = WritAsCoordinate(writ);
-                auto result = std::make_tuple(this->fragment, (const uint16)hit);
-                matched.emplace(coord, result);
+        for (int i = 0; this->requirements[i] != nullptr; i++) // fragments are AND conditions (&)
+            if (this->requirements[i]->compare(writ, matched) > 0)
                 return true;
-            }
-        }
-        return false;
     }
     return false;
-}
-
-AVXFragment::~AVXFragment()
-{
-    if (this->features != nullptr)
-    {
-        for (int i = 0; this->features[i] != nullptr; i++)
-        {
-            std::free((void*)this->features[i]);
-        }
-        std::free(this->features);
-    }
 }

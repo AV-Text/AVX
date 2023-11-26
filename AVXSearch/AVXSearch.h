@@ -125,7 +125,7 @@ public:
     }
 };
 
-class AVXSegment;
+class AVXFragment;
 class AVXSearch
 {
 private:
@@ -135,10 +135,8 @@ private:
     std::vector<const AVXScope*> scopes;
 
     const char* spec;
-    bool negate;
     bool quoted;
-    AVXSegment** segments;
-    XSegment* xsegments;
+    AVXFragment** requirements;
 
 public:
     bool search_quoted(vector<AVXScope*>& scopes);

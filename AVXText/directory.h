@@ -12,7 +12,7 @@ extern "C" uint32 NAME_cnt;
 extern "C" uint32 OOV_cnt;
 
 
-#pragma pack(4)
+#pragma pack(push, 4)
 struct DirectoryContentStruct
 {
 	char   content_label[16];
@@ -23,8 +23,9 @@ struct DirectoryContentStruct
 	uint64 content_hash[2];
 };
 typedef struct DirectoryContentStruct DirectoryContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push, 1)
 struct WrittenContentStruct
 {
 	uint16 strongs[4];
@@ -40,8 +41,9 @@ struct WrittenContentStruct
 	uint16 lemma;
 };
 typedef struct WrittenContentStruct WrittenContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push, 1)
 struct BookContentStruct
 {
 	uint8  num;
@@ -57,8 +59,9 @@ struct BookContentStruct
 	//char   abbr_alt[10];
 };
 typedef struct BookContentStruct BookContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push, 1)
 struct ChapterContentStruct
 {
 	uint16 writ_index;
@@ -67,8 +70,9 @@ struct ChapterContentStruct
 	uint8  verse_count;
 };
 typedef struct ChapterContentStruct ChapterContent;
+#pragma pack(pop)
 
-#pragma pack(2)
+#pragma pack(push, 2)
 struct LemmataContentStruct
 {
 	uint32 pos32;
@@ -78,16 +82,18 @@ struct LemmataContentStruct
 	uint16 lemmata; // [this is an array of uint16]
 };
 typedef struct LemmataContentStruct LemmataContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push, 1)
 struct OOVContentStruct
 {
 	uint16 oov_key;
 	char   oov_word; // [this is an array of char]
 };
 typedef struct OOVContentStruct OOVContent;
+#pragma pack(pop)
 
-#pragma pack(2)
+#pragma pack(push, 2)
 struct LexiconContentStruct // variable length
 {
 	uint16 entities;
@@ -95,24 +101,27 @@ struct LexiconContentStruct // variable length
 	uint32 pos; // [this is an array of pos] followed by char*search, char*display, char*modern
 };
 typedef struct LexiconContentStruct LexiconContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push, 1)
 struct NamesContentStruct
 {
 	uint16 wkey;
 	char   meanings; // pipe-delimited + null-terminated [this is an array of char]
 };
 typedef struct NamesContentStruct NamesContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push,1)
 struct PhoneticContentStruct
 {
 	uint16 wkey;
 	char   variants; // slash-delimited + null-terminated [this is an array of char]
 };
 typedef struct PhoneticContentStruct PhoneticContent;
+#pragma pack(pop)
 
-#pragma pack(1)
+#pragma pack(push, 1)
 struct BookContent3201Struct	// Older Omega format
 {
 	uint8  num;
@@ -129,6 +138,7 @@ struct BookContent3201Struct	// Older Omega format
 	//char   abbr_alt[9];
 };
 typedef struct BookContent3201Struct BookContent3201;
+#pragma pack(pop)
 
 class directory: private XVMem<const uint8>
 {
