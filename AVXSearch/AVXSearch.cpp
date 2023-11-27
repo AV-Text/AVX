@@ -15,7 +15,7 @@ static std::unordered_set<uintptr_t> MemoryTable;
 bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
 {
     uint32 seg_cnt = 0;
-    if (this->requirements = nullptr)
+    if (this->requirements == nullptr)
         return false;
     for (/**/; this->requirements[seg_cnt]; seg_cnt++)
         ;
@@ -26,7 +26,6 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
     for (uint8 b = 1; b <= 66; b++)
     {
         auto book = AVXBook::GetBook(b);
-        auto chap = book.chapters;
         auto writ = book.getWrit();
 
         uint32 w;
@@ -47,8 +46,6 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
                 if (found)
                 {
                     uint32 wi = w;
-                    uint32 wi_len = wi + len;
-
                     auto spanwrit = writ + 1;
 
                     for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
@@ -141,7 +138,6 @@ bool AVXSearch::search_unquoted(vector<AVXScope*>& scopes)
         uint32 hit_cnt = 0;
 
         auto book = AVXBook::GetBook(b);
-        auto chap = book.chapters;
         auto writ = book.getWrit();
         auto until = writ + book.writ_cnt - 1;
 
@@ -207,13 +203,22 @@ void AVXSearch::add_scope(const AVXScope* scope)
 {
     this->scopes.push_back(scope);
 }
+/*
+    const XSearch* xsearch;
+    AVXFind& results;
+    const AVXSettings& settings;
+    std::vector<const AVXScope*> scopes;
 
+    const char* spec;
+    bool quoted;
+    AVXFragment** requirements;
+    */
 AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& settings):
+    xsearch(xsearch),
+    results(results),
+    settings(settings), 
     spec(xsearch->expression()->c_str()),
     quoted(xsearch->quoted()),
-    xsearch(xsearch),
-    settings(settings),
-    results(results),
     requirements(nullptr)
 {
     auto xsegments = this->xsearch->fragments();

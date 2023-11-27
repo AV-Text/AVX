@@ -15,7 +15,6 @@ class AVXStatement
 private:
 	AVXBlueprint* blueprint;
 	AVXResult results;
-	uint64 context;
 public:
 	bool Compile();
 	//const QuelleResponse* const Execute(int64 id);
