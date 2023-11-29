@@ -58,13 +58,13 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 
 ### AV-Engine Internals
 
-As depicted in Figure 3, AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for the parameter and the return type in its single exposed public class method. The diagram depicts dependent interfaces and internal utility-class definitions. Consumers will have full visibility across these public interfaces, but the underlying internal utility classes do all the work. In effect, each internal class manifests a facade that encapsulates away any remnants of the YAML-based C++ API (with respect to AV-Engine/AVX-Framework consumers).
+As depicted in Figure 3, AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for the parameter and the return type in its single exposed public class method. The diagram depicts dependent interfaces and internal utility-class definitions. Consumers will have full visibility across these public interfaces, but the underlying internal utility classes do all the work. In effect, each internal class manifests a facade that encapsulates away any remnants of the YAML-based C++ API (with respect to AV-Engine/AVX-Framework consumers).  It is important to note that AV_Engine always delegates command parsing and model generation to blueprint-blue (C#) + pinshot-blue (Rust).  Once the blueprint object model is generated, all explicit commands are executed directly AV-Engine. Implicit variable settings are also invoked locally by AV-Engine. Only QFind objects are passed into the AVXSearch (C++) library [via P/Invoke].
 
 ![](AVXSearch/AV-Engine-poco.png)
 
-**Figure-3**: Plain Old C# Objects (POCO) are used in the interface to AV-Engine
+**Figure-3**: Plain Old C# Objects (POCO) are used in the interface to AV-Engine (FIGURE IS OBSOLETE AND NEEDS TO BE UPDATED)
 
-As depicted in Figure 4, the class diagram intuitively reveals the two-phased approach to fetching results as YAML (C# obtaining data from C++).
+As depicted in Figure 4, the class diagram intuitively reveals the two-phased approach to fetching results as YAML (C# obtaining data from C++). The gray box is not serialized; it effectively represents the instantiated C++ object table. Summary information, represented by the golden objects are a serialization for the requested TSearchSummary. query_id is the address of the TSearchSummary object, as instantiated in the results map (query_check must be passed as a safety-net to mitigate hijacking). The purple objects are the serialization of map<byte, TChapter>: these details are fetched per book [1 .. 66]. All requests to the C++ TResultManager require both a query_id and a query_check. The key to the map is the query_id. query_check assures that the caller supplied the appropriate check value. Of course, without an appropriate query object, AVXSearch would not have an object model for the search query. That object model [aka blueprint] is defined the AVX-Quelle specification.
 
 ![](AVXSearch/AVX-Results.png)
 
