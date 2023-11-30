@@ -58,33 +58,29 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 
 ### AV-Engine Internals
 
-As depicted in Figure 3, AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for the parameter and the return type in its single exposed public class method. The diagram depicts dependent interfaces and internal utility-class definitions. Consumers will have full visibility across these public interfaces, but the underlying internal utility classes do all the work. In effect, each internal class manifests a facade that encapsulates away any remnants of the YAML-based C++ API (with respect to AV-Engine/AVX-Framework consumers).  It is important to note that AV_Engine always delegates command parsing and model generation to blueprint-blue (C#) + pinshot-blue (Rust).  Once the blueprint object model is generated, all explicit commands are executed directly AV-Engine. Implicit variable settings are also invoked locally by AV-Engine. Only QFind objects are passed into the AVXSearch (C++) library [via P/Invoke].
+AV-Engine is called in-proc by its consumers. It uses standard C# interfaces for parameters and the return types. However, the AV-Engine assembly also obfuscates and simplifies the calls to native C++ and Rust libraries as shown in Figure 1. Once a blueprint is obtained for the search, AV-Engine serializes it to YAML and passes the YAML representation to AVX-Search to obtain YAML representations of TQuery and TChapter hierarchies. All calls to native libraries are in-process via P/Invoke.
 
-![](AVXSearch/AV-Engine-poco.png)
-
-**Figure-3**: Plain Old C# Objects (POCO) are used in the interface to AV-Engine (FIGURE IS OBSOLETE AND NEEDS TO BE UPDATED)
-
-As depicted in Figure 4, the class diagram intuitively reveals the two-phased approach to fetching results as YAML (C# obtaining data from C++). The gray box is not serialized; it effectively represents the instantiated C++ object table. Summary information, represented by the golden objects are a serialization for the requested TSearchSummary. query_id is the address of the TSearchSummary object, as instantiated in the results map (query_check must be passed as a safety-net to mitigate hijacking). The purple objects are the serialization of map<byte, TChapter>: these details are fetched per book [1 .. 66]. All requests to the C++ TResultManager require both a query_id and a query_check. The key to the map is the query_id. query_check assures that the caller supplied the appropriate check value. Of course, without an appropriate query object, AVXSearch would not have an object model for the search query. That object model [aka blueprint] is defined the AVX-Quelle specification.
+The UML class diagram, depicted in Figure 3, reveals the two-phased approach of fetching YAML results. The gray boxes are not serialized; instead, they manage access to instantiated C++ objects. The query summary is represented by the TQuery (golden class) hierarchy in Figure 3. It should be noted that query_id is a (uint64*) cast of the address of the TQuery object. The purple objects are the serialization of map<byte, TChapter>: these details are fetched per book [1 .. 66]. All requests to the C++ TClientManager require both a query_id and a client_guid (to mitigate the possibility of object hijacking). The query specification, aka "blueprint", is defined the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
 
 ![](AVXSearch/AVX-Results.png)
 
-**Figure-4**: Two-Phased fetching from C# into C++ using YAML serialization
+**Figure-3**: Two-Phased fetching from C# into C++ using YAML serialization
 
 
 
 ### Development Roadmap
 
-A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-5.
+A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-4.
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-5**: Development roadmap for BETA releases in 2023 [revision #3B27]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B27]
 
-We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-6, identifies anticipated application releases and estimated release dates:
+We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-6**: Roadmap for [user-facing] application releases in 2024 [revision #3B27]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B27]
 
 ### Implementation Status
 
