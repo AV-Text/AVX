@@ -11,14 +11,16 @@ uint16 AVXPOS16Comparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXPOS16Comparator::AVXPOS16Comparator(const XFeature* feature) : AVXComparator(feature), pos16(0)
+AVXPOS16Comparator::AVXPOS16Comparator(ryml::ConstNodeRef feature) : AVXComparator(feature), pos16(0)
 {
+	/*
 	auto comparitor = feature->match_as_pos16();
 
 	if (comparitor != nullptr)
 	{
 		this->pos16 = comparitor->pnpos();
 	}
+	*/
 }
 
 AVXPOS16Comparator::~AVXPOS16Comparator()

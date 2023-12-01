@@ -2,10 +2,10 @@
 #include "AVXMatchAny.h"
 #include <directory.h>
 
-using namespace XBlueprintBlue;
-
-AVXFragment::AVXFragment(const XFragment* xfragments): fragment(xfragments->fragment()->c_str()), anchored(xfragments->anchored()), requirements(nullptr)
+AVXFragment::AVXFragment(ryml::ConstNodeRef fragments) : fragment(""), anchored(true), requirements(nullptr)
+    //: fragment(xfragments->fragment()->c_str()), anchored(xfragments->anchored()), requirements(nullptr)
 {
+    /*
     auto xrequirements = xfragments->require();
     if (xfragments != nullptr)
     {
@@ -17,6 +17,7 @@ AVXFragment::AVXFragment(const XFragment* xfragments): fragment(xfragments->frag
             this->requirements[xreq] = new AVXMatchAny(xopt);
         }
     }
+    */
 }
 
 AVXFragment::~AVXFragment()

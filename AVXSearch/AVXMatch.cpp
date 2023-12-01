@@ -1,5 +1,6 @@
 #include "AVXMatch.h"
 
+/*
 void AVXMatch::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XMatch>>& parentCollection)
 {
     auto fragment = builder.CreateString(this->fragment.c_str());
@@ -8,3 +9,4 @@ void AVXMatch::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbu
 
     parentCollection.push_back(match);
 }
+*/

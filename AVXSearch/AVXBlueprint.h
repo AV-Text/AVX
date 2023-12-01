@@ -2,25 +2,24 @@
 #include <avxgen.h>
 #include <vector>
 
+#include <ryml.hpp>
+
 class AVXFind;
 class AVXSettings;
 
 class AVXBlueprint
 {
 private:
-    void* request;
+    ryml::Tree tree;
     AVXSettings* settings;
 public:
-    AVXBlueprint(const uint8* const data);
+    AVXBlueprint(char data[], uint16 span=0, byte lex=1, byte similarity=100, bool auto_lemma_matching=false);
     bool execute();
 
     std::vector<AVXFind*> searches;
-    const uint8* const build(uint32& size);
+    bool build();
 
-    inline void* getRequest()
-    {
-        return this->request;
-    }
+    ryml::ConstNodeRef request;
 
     ~AVXBlueprint();
 };

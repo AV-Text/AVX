@@ -9,6 +9,16 @@
 #define    ImportLib    __declspec( dllimport ) 
 #define    ExportLib    __declspec( dllexport )
 
+// min() and max macros break the c4core library ... disable them
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
+
 inline char* Strncpy(char* destination, const char* name, uint32_t len) {
 #pragma warning(suppress : 4996)
     return strncpy(destination, name, len);

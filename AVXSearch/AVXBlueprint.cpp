@@ -1,21 +1,19 @@
 #include "AVXBlueprint.h"
 #include "AVXSearch.h"
 #include "AVXFind.h"
-#include <blueprint_blue_generated.h>
-#include <avx_search_generated.h>
-#include <flatbuffers/flatbuffers.h>
-
-using namespace XBlueprintBlue;
-using namespace XSearchResults;
 
 #include <book.h>
 
-AVXBlueprint::AVXBlueprint(const uint8* const data)
+AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching)
 {
-    const XBlueprint* req = GetXBlueprint(data);
-    this->settings = new AVXSettings(req->settings());
+    c4::substr str;
+    if (ryml::from_chars(str, data))
+    {
+        this->tree = ryml::parse_in_place(str);
+        this->request = tree.crootref();
+        this->settings = new AVXSettings(span, lex, similarity, auto_lemma_matching);
+    }
 
-    this->request = (void*)req;
 }
 AVXBlueprint::~AVXBlueprint()
 {
@@ -24,79 +22,36 @@ AVXBlueprint::~AVXBlueprint()
 }
 bool AVXBlueprint::execute()
 {
-    const XBlueprint* req = reinterpret_cast<const XBlueprint*>(this->request);
+    int search_size = searches.size();
+    for (auto search : searches)
+    {
+        /*
+        auto expression = new AVXFind(search);
+        this->searches.push_back(expression);
+        auto search = new AVXSearch(rxsearch, *expression, *this->settings);
 
-    if (req->status() == XStatusEnum_ERROR)
-    {
-        ; // report error
+        search->find();
+        */
     }
-    else if (req->singleton() != nullptr)
-    {
-        if (req->status() == XStatusEnum_OKAY)  // THis invocation should have not been made; Caller should service singletons
-        {
-            ; // take approriate action (like display history or help)
-        }
-    }
-    else if (req->search() != nullptr)
-    {
-        auto xsearch = req->search();
-        if (xsearch != nullptr)
-        {
-            vector<AVXScope*> scopes;
-            auto xscopes = req->scope();
-            if (xscopes != nullptr)
-            {
-                int xscopes_size = xscopes->size();
-                for (int x = 0; x < xscopes_size; x++)
-                {
-                    auto xscope = (*xscopes)[x];
-                    auto scope = new AVXScope(xscope);
-                    scopes.push_back(scope);
-                }
-            }
-            int search_size = xsearch->size();
-            for (int r = 0; r < search_size; r++)
-            {
-                auto rxsearch = (*xsearch)[r];
-                auto expression = new AVXFind(rxsearch->expression()->c_str());
-                this->searches.push_back(expression);
-                auto search = new AVXSearch(rxsearch, *expression, *this->settings);
-
-                search->find(scopes);
-            }
-        }
-        else
-        {
-            ; // this is unexpected
-        }
-    }
-    else
-    {
-        ; // unknown/undefined status
-    }
-    return false;
 }
 
-const uint8* const AVXBlueprint::build(uint32 &size)
+bool AVXBlueprint::build()
 {
-    size = 0;
-    std::vector<flatbuffers::Offset<XFind>> collection;
-    flatbuffers::FlatBufferBuilder builder;
-    XResultsBuilder xresults(builder);
-
     for (AVXFind* search : this->searches)
     {
-        search->build(builder, collection);
+        ; // search->build(builder, collection);
     }
+/*
     auto vcollection = builder.CreateVector(collection);
     xresults.add_results(vcollection);
 
     std::vector<flatbuffers::Offset<uint32>> empty_scope;
 
     auto results = xresults.Finish();
-
     size = (uint32) builder.GetSize();
     auto buffer = new uint8[size];
     builder.PushFlatBuffer(buffer, size);
     return buffer;
+*/
+    return false;
 }

@@ -5,7 +5,7 @@ class AVXTransitionComparator : public AVXComparator
 {
 public:
 	uint8 tran;
-	AVXTransitionComparator(const XFeature* feature);
+	AVXTransitionComparator(ryml::ConstNodeRef feature);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXTransitionComparator();
 };

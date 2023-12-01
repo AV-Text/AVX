@@ -3,9 +3,9 @@
 
 uint16 AVXStrongsComparator::compare(const WrittenContent& writ)
 {
-	if (writ.b <= 39 && this->lang != XLangEnum_H)
+	if (writ.b <= 39 && this->lang != 'H')
 		return 0;
-	if (writ.b  > 39 && this->lang == XLangEnum_G)
+	if (writ.b  > 39 && this->lang == 'G')
 		return 0;
 
 	bool positive = !this->negate;
@@ -19,8 +19,9 @@ uint16 AVXStrongsComparator::compare(const WrittenContent& writ)
 	return positive ? 0 : AVXComparator::FullMatch;
 }
 
-AVXStrongsComparator::AVXStrongsComparator(const XFeature* feature) : AVXComparator(feature), number(0), lang(XLangEnum_MIN)
+AVXStrongsComparator::AVXStrongsComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), number(0), lang('X')
 {
+	/*
 	auto comparitor = feature->match_as_strongs();
 
 	if (comparitor != nullptr)
@@ -28,6 +29,7 @@ AVXStrongsComparator::AVXStrongsComparator(const XFeature* feature) : AVXCompara
 		this->number = comparitor->number();
 		this->lang = comparitor->lang();
 	}
+	*/
 }
 AVXStrongsComparator::~AVXStrongsComparator()
 {

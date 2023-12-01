@@ -11,14 +11,16 @@ uint16 AVXPuncComparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXPuncComparator::AVXPuncComparator(const XFeature* feature) : AVXComparator(feature), punc(0)
+AVXPuncComparator::AVXPuncComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), punc(0)
 {
+	/*
 	auto comparitor = feature->match_as_punctuation();
 
 	if (comparitor != nullptr)
 	{
 		this->punc = comparitor->bits();
 	}
+	*/
 }
 
 AVXPuncComparator::~AVXPuncComparator()

@@ -16,14 +16,16 @@ uint16 AVXDeltaComparator::compare(const WrittenContent& writ)
 	return false;
 }
 
-AVXDeltaComparator::AVXDeltaComparator(const XFeature* feature) : AVXComparator(feature), delta(false)
+AVXDeltaComparator::AVXDeltaComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), delta(false)
 {
+	/*
 	auto comparitor = feature->match_as_delta();
 
 	if (comparitor != nullptr)
 	{
 		this->delta = comparitor->differs();
 	}
+	*/
 }
 
 AVXDeltaComparator::~AVXDeltaComparator()

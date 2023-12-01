@@ -36,6 +36,16 @@
     <ClCompile Include="AVXStrongsComparator.cpp" />
     <ClCompile Include="AVXTransitionComparator.cpp" />
     <ClCompile Include="AVXWordComparator.cpp" />
+    <ClCompile Include="yaml\TBook.cpp" />
+    <ClCompile Include="yaml\TChapter.cpp" />
+    <ClCompile Include="yaml\TClientManager.cpp" />
+    <ClCompile Include="yaml\TExpression.cpp" />
+    <ClCompile Include="yaml\TFound.cpp" />
+    <ClCompile Include="yaml\TFragment.cpp" />
+    <ClCompile Include="yaml\TMatch.cpp" />
+    <ClCompile Include="yaml\TQuery.cpp" />
+    <ClCompile Include="yaml\TQueryManager.cpp" />
+    <ClCompile Include="yaml\TSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVXBlueprint.h" />
@@ -55,6 +65,16 @@
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
+    <ClInclude Include="yaml\TBook.h" />
+    <ClInclude Include="yaml\TChapter.h" />
+    <ClInclude Include="yaml\TClientManager.h" />
+    <ClInclude Include="yaml\TExpression.h" />
+    <ClInclude Include="yaml\TFound.h" />
+    <ClInclude Include="yaml\TFragment.h" />
+    <ClInclude Include="yaml\TMatch.h" />
+    <ClInclude Include="yaml\TQuery.h" />
+    <ClInclude Include="yaml\TQueryManager.h" />
+    <ClInclude Include="yaml\TSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -117,34 +137,38 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
+    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
+    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
+    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
+    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -181,7 +205,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
@@ -213,7 +237,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
@@ -241,7 +265,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
@@ -273,7 +297,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>

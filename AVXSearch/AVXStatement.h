@@ -2,7 +2,6 @@
 
 #include <xvmem.h>
 #include <avxgen.h>
-#include <avx_search_generated.h>
 #include <AVXBlueprint.h>
 #include <AVXResult.h>
 #include <vector>
@@ -18,15 +17,15 @@ private:
 public:
 	bool Compile();
 	//const QuelleResponse* const Execute(int64 id);
-	vector<string> GetErrors(int64 id);
-	vector<string> GetWarnings(int64 id);
-	vector<string> GetHistory(int64 id);
-	string GetEffects(int64 id);
+	std::vector<std::string> GetErrors(int64 id);
+	std::vector<std::string> GetWarnings(int64 id);
+	std::vector<std::string> GetHistory(int64 id);
+	std::string GetEffects(int64 id);
 
 	const char* const CreateRendering(int64 id);
 	void Release(int64 id);
 
-	AVXStatement(const uint8* const);
+	AVXStatement(char data[]);
 	~AVXStatement()
 	{
 		delete blueprint;

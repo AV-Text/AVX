@@ -22,9 +22,9 @@ const uint16 Entity_animals       =   0x40;
 const uint16 Entity_gemstones     =   0x80;
 const uint16 Entity_measurements  =  0x100;
 
-inline const vector<uint32> GetPosVector(const LexiconContent& lex)
+inline const std::vector<uint32> GetPosVector(const LexiconContent& lex)
 {
-    vector<uint32> pos;
+    std::vector<uint32> pos;
     for (int p = 0; p < lex.size; p++)
         pos.push_back((&(lex.pos))[p]);
     return pos;
@@ -116,9 +116,9 @@ class AVXLexTokenMap
 {
 private:
     std::unordered_map<std::string, uint16> kjv;
-    std::unordered_map<std::string, vector<uint16>> mod;
+    std::unordered_map<std::string, std::vector<uint16>> mod;
 
-    vector<uint16>* const GetExistingModernVector(const std::string &modern)
+    std::vector<uint16>* const GetExistingModernVector(const std::string &modern)
     {
         if (this->mod.find(const_cast<std::string&>(modern)) != this->mod.end())
         {
@@ -132,7 +132,7 @@ public:
 
     int add(const uint16 key, const LexiconContent& lex);
 
-    vector<uint16> LookupModern(const char* const token)
+    std::vector<uint16> LookupModern(const char* const token)
     {
         std::vector<uint16> records;
         auto modern = std::string(token);
@@ -169,9 +169,9 @@ public:
         return this->kjv.at(search);
     }
 
-    vector<uint16> LookupEither(const char* const token)
+    std::vector<uint16> LookupEither(const char* const token)
     {
-        vector<uint16> results;
+        std::vector<uint16> results;
 
         auto av = this->LookupOriginal(token);
         auto avx = this->LookupModern(token);

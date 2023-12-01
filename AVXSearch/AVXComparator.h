@@ -1,16 +1,15 @@
 #pragma once
 #include <avxgen.h>
-#include <blueprint_blue_generated.h>
-#include <flatbuffers/flatbuffers.h>
 #include <stdlib.h>
 #include <directory.h>
 
-using namespace XBlueprintBlue;
+#include <ryml.hpp>
 
 class AVXComparator
 {
 protected:
-    AVXComparator(const XFeature* feature) : feature(feature->feature()->c_str()), negate(feature->negate()), rule(feature->rule()->c_str())
+    AVXComparator(ryml::ConstNodeRef feature) : feature("foo"), negate(false), rule("foo-rule")
+        // : feature(feature->feature()->c_str()), negate(feature->negate()), rule(feature->rule()->c_str())
     {
         ;
     }

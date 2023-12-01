@@ -1,16 +1,14 @@
 #pragma once
-#include <blueprint_blue_generated.h>
-#include <flatbuffers/flatbuffers.h>
 #include <map>
 
-using namespace XBlueprintBlue;
-
 #include <directory.h>
+#include <ryml.hpp>
+
 class AVXMatchAny;
 class AVXFragment
 {
 public:
-	AVXFragment(const XFragment* xfragments);
+	AVXFragment(ryml::ConstNodeRef fragments);
 
 	const char* fragment;
 	const bool anchored;

@@ -2,10 +2,6 @@
 #include <avxgen.h>
 #include <vector>
 #include <string>
-#include <avx_search_generated.h>
-#include <flatbuffers/flatbuffers.h>
-
-using namespace XSearchResults;
 
 class AVXFind;
 class AVXFound;
@@ -32,7 +28,7 @@ public:
     bool add(AVXFound* found);
     bool add(AVXMatch* match);
 
-    bool build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection);
+    //bool build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection);
 
 private:
     AVXFind* current;

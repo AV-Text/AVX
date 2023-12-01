@@ -7,12 +7,10 @@
 #include <map>
 #include <directory.h>
 #include <book.h>
-#include <flatbuffers/flatbuffers.h>
-#include <blueprint_blue_generated.h>
 
 static std::unordered_set<uintptr_t> MemoryTable;
 
-bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
+bool AVXSearch::search_quoted()
 {
     uint32 seg_cnt = 0;
     if (this->requirements == nullptr)
@@ -121,7 +119,7 @@ bool AVXSearch::search_quoted(vector<AVXScope*>& scopes)
     }
     return hit;
 }
-bool AVXSearch::search_unquoted(vector<AVXScope*>& scopes)
+bool AVXSearch::search_unquoted()
 {
     uint32 seg_cnt = 0;
     if (this->requirements == nullptr)
@@ -199,10 +197,7 @@ bool AVXSearch::search_unquoted(vector<AVXScope*>& scopes)
     delete[] hits;
     return found;
 }
-void AVXSearch::add_scope(const AVXScope* scope)
-{
-    this->scopes.push_back(scope);
-}
+
 /*
     const XSearch* xsearch;
     AVXFind& results;
@@ -213,29 +208,31 @@ void AVXSearch::add_scope(const AVXScope* scope)
     bool quoted;
     AVXFragment** requirements;
     */
-AVXSearch::AVXSearch(const XSearch* xsearch, AVXFind& results, const AVXSettings& settings):
-    xsearch(xsearch),
+AVXSearch::AVXSearch(ryml::ConstNodeRef find, AVXFind& results, const AVXSettings& settings):
+    segment(find),
     results(results),
     settings(settings), 
-    spec(xsearch->expression()->c_str()),
-    quoted(xsearch->quoted()),
+    spec("foo-spec"), //spec(xsearch->expression()->c_str()),
+    quoted(false), //quoted(xsearch->quoted()),
     requirements(nullptr)
 {
-    auto xsegments = this->xsearch->fragments();
+    /*
+    auto fragments = this->segment["fragments"];
 
-    if (xsegments != nullptr)
+    if (fragments != nullptr)
     {
-        int segments_size = xsegments->size();
+        int segments_size = fragments->size();
         this->requirements = (AVXFragment**) (std::calloc(segments_size + 1, sizeof(AVXFragment*)));
         for (int s = 0; s < segments_size; s++)
         {
-            auto xsegment = (*xsegments)[s];
-            if (xsegment != nullptr)
+            auto fragment = (*fragments)[s];
+            if (fragment != nullptr)
             {
-                this->requirements[s] = new AVXFragment(xsegment);
+                this->requirements[s] = new AVXFragment(fragment);
             }
         }
     }
+    */
 }
 AVXSearch::~AVXSearch()
 {
@@ -247,14 +244,6 @@ AVXSearch::~AVXSearch()
         }
         std::free(this->requirements);
     }
-}
-
-static void SayHello_defunct(const char* const command)
-{/*
-    flatbuffers::FlatBufferBuilder builder;
-    auto cmd_offset = builder.CreateString(command);
-    auto request_offset = CreateQuelleRequest(builder, cmd_offset);
-    builder.Finish(request_offset);*/
 }
 
 // Do we need header defines for these?

@@ -4,9 +4,9 @@
 class AVXStrongsComparator : public AVXComparator
 {
 public: 
-	XLangEnum lang;
+	char lang;
 	uint16 number;
-	AVXStrongsComparator(const XFeature* feature);
+	AVXStrongsComparator(ryml::ConstNodeRef feature);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXStrongsComparator();
 };

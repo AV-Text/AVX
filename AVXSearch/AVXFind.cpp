@@ -12,6 +12,7 @@ bool AVXFind::add(AVXFound* found)
     }
     return false;
 }
+/*
 void AVXFind::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuffers::Offset<XFind>>& parentCollection)
 {
     std::vector<flatbuffers::Offset<XFound>> xfounds;
@@ -26,3 +27,4 @@ void AVXFind::build(flatbuffers::FlatBufferBuilder& builder, std::vector<flatbuf
 
     parentCollection.push_back(xfind);
 }
+*/

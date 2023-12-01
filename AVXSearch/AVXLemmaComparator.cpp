@@ -19,14 +19,15 @@ uint16 AVXLemmaComparator::compare(const WrittenContent& writ)
 	return positive ? 0 : AVXComparator::FullMatch;
 }
 
-AVXLemmaComparator::AVXLemmaComparator(const XFeature* feature) : AVXComparator(feature), lemmata(nullptr)
+AVXLemmaComparator::AVXLemmaComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), lemmata(nullptr)
 {
 	if (feature != nullptr)
 	{
-		auto comparator = feature->match_as_lemma();
+		auto comparator = "foo-lemma"; // feature->match_as_lemma();
 
 		if (comparator != nullptr)
 		{
+			/*
 			auto lemmata = comparator->lemmata();
 
 			if (lemmata != nullptr)
@@ -36,6 +37,7 @@ AVXLemmaComparator::AVXLemmaComparator(const XFeature* feature) : AVXComparator(
 				for (int i = 0; i < len; i++)
 					;//this->lemmata[i] = lemmata[i];
 			}
+			*/
 		}
 	}
 }

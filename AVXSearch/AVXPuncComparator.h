@@ -5,7 +5,7 @@ class AVXPuncComparator : public AVXComparator
 {
 public:
 	uint8 punc;
-	AVXPuncComparator(const XFeature* feature);
+	AVXPuncComparator(ryml::ConstNodeRef feature);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXPuncComparator();
 };

@@ -5,15 +5,9 @@
 #include <unordered_set>
 #include <vector>
 
-#include <blueprint_blue_generated.h>
-#include <avx_search_generated.h>
-#include <flatbuffers/flatbuffers.h>
 #include <XVMem.h>
 
-using namespace XBlueprintBlue;
-using namespace XSearchResults;
-
-extern "C" __declspec(dllexport) uint64 create_statement(const uint8* const buffer)
+extern "C" __declspec(dllexport) uint64 create_statement(char buffer[])
 {
 	auto statement = new AVXStatement(buffer);
 	return uint64(statement);
@@ -39,13 +33,14 @@ extern "C" __declspec(dllexport) int32 free_statement(uint64 context)
 	return 0;
 }
 
-AVXStatement::AVXStatement(const uint8* const buffer)
+AVXStatement::AVXStatement(char buffer[])
 {
 	this->blueprint = new AVXBlueprint(buffer);
 }
 
 bool AVXStatement::Compile()
 {
+	/*
 	bool result = false;
 
 	if (this->blueprint != nullptr)
@@ -62,6 +57,8 @@ bool AVXStatement::Compile()
 		}
 	}
 	return result;
+	*/
+	return false;
 }
 /*
 const QuelleResponse* const AVXStatement::Execute(int64 id)
@@ -69,15 +66,15 @@ const QuelleResponse* const AVXStatement::Execute(int64 id)
 	return nullptr;
 }
 */
-vector<string> AVXStatement::GetErrors(int64 id)
+std::vector<std::string> AVXStatement::GetErrors(int64 id)
 {
-	vector<string> empty;
+	std::vector<std::string> empty;
 
 	return empty;
 }
-vector<string> AVXStatement::GetWarnings(int64 id)
+std::vector<std::string> AVXStatement::GetWarnings(int64 id)
 {
-	vector<string> empty;
+	std::vector<std::string> empty;
 
 	return empty;
 }
@@ -85,13 +82,13 @@ const char* const AVXStatement::CreateRendering(int64 id)
 {
 	return nullptr;
 }
-vector<string> AVXStatement::GetHistory(int64 id)
+std::vector<std::string> AVXStatement::GetHistory(int64 id)
 {
-	vector<string> empty;
+	std::vector<std::string> empty;
 
 	return empty;
 }
-string AVXStatement::GetEffects(int64 id)
+std::string AVXStatement::GetEffects(int64 id)
 {
 	return "";
 }

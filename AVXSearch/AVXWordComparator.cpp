@@ -22,8 +22,9 @@ uint16 AVXWordComparator::compare(const WrittenContent& writ)
 	return positive ? 0 : this->AVXComparator::FullMatch;
 }
 
-AVXWordComparator::AVXWordComparator(const XFeature* feature) : AVXComparator(feature), wkeys(nullptr)
+AVXWordComparator::AVXWordComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), wkeys(nullptr)
 {
+	/*
 	if (feature != nullptr)
 	{
 		auto comparator = feature->match_as_text();
@@ -41,6 +42,7 @@ AVXWordComparator::AVXWordComparator(const XFeature* feature) : AVXComparator(fe
 			}
 		}
 	}
+	*/
 }
 AVXWordComparator::~AVXWordComparator()
 {

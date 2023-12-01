@@ -5,7 +5,7 @@ class AVXLemmaComparator : public AVXComparator
 {
 public:
 	uint16* lemmata;
-	AVXLemmaComparator(const XFeature* feature);
+	AVXLemmaComparator(ryml::ConstNodeRef feature);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXLemmaComparator();
 };

@@ -5,7 +5,7 @@ class AVXDeltaComparator : public AVXComparator
 {
 public:
 	bool delta;
-	AVXDeltaComparator(const XFeature* feature);
+	AVXDeltaComparator(ryml::ConstNodeRef feature);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXDeltaComparator();
 };

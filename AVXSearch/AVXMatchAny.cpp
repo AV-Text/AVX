@@ -9,18 +9,13 @@
 #include "AVXTransitionComparator.h"
 #include "AVXStrongsComparator.h"
 
-#include <blueprint_blue_generated.h>
-#include <flatbuffers/flatbuffers.h>
-
 #include <written.h>
 
-using namespace XBlueprintBlue;
-
-static AVXComparator* create_feature(const XFeature* feature)
+static AVXComparator* create_feature(ryml::ConstNodeRef feature)
 {
     if (feature != nullptr)
     {
-        auto rule = feature->rule()->c_str();
+        auto rule = "foo-rule"; // feature->rule()->c_str();
 
         if (std::strncmp(rule, "word", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
         {
@@ -58,12 +53,14 @@ static AVXComparator* create_feature(const XFeature* feature)
     return nullptr;
 }
 
-AVXMatchAny::AVXMatchAny(const XOption* xoption) : options(xoption->option()->c_str()), features(nullptr)
+AVXMatchAny::AVXMatchAny(ryml::ConstNodeRef options) : options(""), features(nullptr)
+    // : options(xoption->option()->c_str()), features(nullptr)
 {
-    this->options = xoption->option()->c_str();
-    auto xfeatures = xoption->features();
+    this->options = "foo-option"; // xoption->option()->c_str();
+    auto xfeatures = options["features"];
     if (xfeatures != nullptr)
     {
+        /*
         int features_size = xfeatures->size();
         this->features = (AVXComparator**)calloc(features_size + 1, sizeof(AVXComparator*));
         for (int f = 0; f < features_size; f++)
@@ -71,6 +68,7 @@ AVXMatchAny::AVXMatchAny(const XOption* xoption) : options(xoption->option()->c_
             auto xfeature = (*xfeatures)[f];
             this->features[f] = create_feature(xfeature);
         }
+        */
     }
 }
 

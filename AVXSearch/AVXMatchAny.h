@@ -1,12 +1,10 @@
 #pragma once
-#include <blueprint_blue_generated.h>
-#include <flatbuffers/flatbuffers.h>
 #include <directory.h>
 #include <map>
 
 class AVXComparator;
 
-using namespace XBlueprintBlue;
+#include <ryml.hpp>
 
 class AVXMatchAny
 {
@@ -14,7 +12,7 @@ public:
 	const char* options;
 	AVXComparator** features;
 
-	AVXMatchAny(const XOption* xoptions);
+	AVXMatchAny(ryml::ConstNodeRef options);
 
 	~AVXMatchAny();
 

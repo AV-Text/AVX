@@ -11,14 +11,16 @@ uint16 AVXTransitionComparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXTransitionComparator::AVXTransitionComparator(const XFeature* feature) : AVXComparator(feature), tran(0)
+AVXTransitionComparator::AVXTransitionComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), tran(0)
 {
+	/*
 	auto comparitor = feature->match_as_punctuation();
 
 	if (comparitor != nullptr)
 	{
 		this->tran = comparitor->bits();
 	}
+	*/
 }
 
 AVXTransitionComparator::~AVXTransitionComparator()
