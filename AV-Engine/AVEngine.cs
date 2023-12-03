@@ -8,27 +8,24 @@ namespace AVXFramework
         private Blueprint.Blue.Blueprint BlueprintLib;
         private Pinshot.Blue.PinshotLib PinshotLib;
         private const string SDK = "C:/src/AVX/omega/AVX-Omega-3911.data";
-        private static readonly byte[] SDK_utf8 = Encoding.UTF8.GetBytes(SDK);
-        private NativeText? Runtime;
+        private NativeStatement SearchEngine;
 
         public AVEngine()
         {
             this.BlueprintLib = new();
             this.PinshotLib = new();
 
-            this.Runtime = new NativeText(SDK_utf8);
+            this.SearchEngine = new NativeStatement(SDK);
         }
-        public void Free()
+        public void Release()
         {
-            if (this.Runtime != null)
-                this.Runtime.Free();
-            this.Runtime = null;
+            this.SearchEngine.Release();
         }
         ~AVEngine()
         {
-            this.Free();
+            this.Release();
         }
-        public (QStatement? stmt, UInt64 cursor, string error, string result) Execute(string command)
+        public (QStatement? stmt, string error, string result) Execute(string command)
         {
             var pinshot = this.PinshotLib.Parse(command);
             if (pinshot.root != null)
@@ -44,21 +41,25 @@ namespace AVXFramework
                             if (blueprint.Singleton != null)
                             {
                                 ; // process singleton command
-                                return (blueprint, 0, "", "Pretend that this is the result of an executed Quelle command");
+                                return (blueprint, "", "Pretend that this is the result of an executed Quelle command");
                             }
                             else if (blueprint.Commands != null)
                             {
                                 var expression = blueprint.Commands.Searches.ToList();
                                 string yaml = ICommand.YamlSerializerRaw(expression);
-                                UInt64 cursor = NativeLibrary.create_statement(yaml);
-                                var result = NativeLibrary.exec_statement(cursor);
-                                var status = NativeLibrary.free_statement(cursor);
 
-                                return (blueprint, cursor, "", "");
+                                UInt16 span = blueprint.LocalSettings.Span.Value;
+                                byte lexicon = (byte) (blueprint.LocalSettings.Lexicon.Value);
+                                byte similarity = blueprint.LocalSettings.Similarity.Value;
+                                bool fuzzyLemmata = blueprint.LocalSettings.Similarity.AutomaticLemmaMatching;
+
+                                string results = this.SearchEngine.Search(yaml, span, lexicon, similarity, fuzzyLemmata);
+
+                                return (blueprint, "", "");
                             }
                             else
                             {
-                                return (blueprint, 0, "Internal Error: Unexpected blueprint encountered.", "");
+                                return (blueprint, "Internal Error: Unexpected blueprint encountered.", "");
                             }
                         }
                         else
@@ -66,25 +67,25 @@ namespace AVXFramework
                             if (blueprint.Errors.Count > 0)
                             {
                                 var errors = string.Join("; ", blueprint.Errors);
-                                return (blueprint, 0, errors, "");
+                                return (blueprint, errors, "");
                             }
                             else
                             {
-                                return (blueprint, 0, "Blueprint was invalid, but the error list was empty.", "");
+                                return (blueprint, "Blueprint was invalid, but the error list was empty.", "");
                             }
                         }
                     }
                     else
                     {
-                        return (blueprint, 0, "Blueprint was invalid (unexpected error).", "");
+                        return (blueprint, "Blueprint was invalid (unexpected error).", "");
                     }
                 }
                 else
                 {
-                    return (null, 0, pinshot.root.error, "");
+                    return (null, pinshot.root.error, "");
                 }
             }
-            return (null, 0, "Unable to parse the statement.", "");
+            return (null, "Unable to parse the statement.", "");
         }
     }
 }
