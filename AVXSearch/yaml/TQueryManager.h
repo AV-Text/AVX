@@ -13,13 +13,12 @@
 
 class TQueryManager
 {
-
 public:
 	TQueryManager();
 	virtual ~TQueryManager();
-	std::map<uint64, TQuery> queries;
+	std::map<uint64, TQuery*> queries;
 
-	ryml::ConstNodeRef* /* TQuery */ create_query(ryml::ConstNodeRef blueprint);
+	TQuery * create_query(AVXBlueprint* blueprint);
 	ryml::ConstNodeRef* /* map<byte, TChapter> */ fetch_results(byte book);
 
 };

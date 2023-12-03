@@ -246,33 +246,6 @@ AVXSearch::~AVXSearch()
     }
 }
 
-// Do we need header defines for these?
-extern "C" const uint8* const avx_create_search(const char* const request)
-{/*
-    AVXBlueprint search(request);
-    search.execute();
-    auto results = search.build();
-	if (results != nullptr)
-	{
-		MemoryTable.insert(reinterpret_cast<uintptr_t>(results));
-	}
-	return results;*/
-    return nullptr;
-}
-extern "C" bool avx_delete_search(const uint8* const* results)
-{/*
-	auto entry = reinterpret_cast<uintptr_t>(results);
-	auto memory = reinterpret_cast<char*>(entry);
-
-	auto it = MemoryTable.find(entry);
-	if (it != MemoryTable.end()) {
-		MemoryTable.erase(it);
-		free(memory);
-		return true;
-	}*/
-	return false;
-}
-
 
 
 

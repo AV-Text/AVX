@@ -16,11 +16,14 @@ class TClientManager
 public:
 	TClientManager();
 	virtual ~TClientManager();
-	std::map<uint128, TQueryManager> queries;
-	TQueryManager *m_TQueryManager;
+	std::map<uint128, TQueryManager*> clients;
 
-	std::string /* yaml of TQuery */ create_query(uint128 client_guid, std::string yaml_blueprint, uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
-	std::string /* yaml of TQuery::books[book].fetch_results() */ fetch_results(uint128 client_guid, byte book);
+	// returns yaml of TQuery:
+	const char* create_query(uint128 client_guid, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+
+	// returns yaml of TQuery::books[book].fetch_results():
+	const char* fetch_results(uint128 client_guid, byte book);
+
 	void release_client(uint128 client_quid);
 	void release_query(uint128 client_quid, uint64 query_id);
 

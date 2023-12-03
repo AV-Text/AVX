@@ -96,7 +96,7 @@ namespace AVConsole
                                     Console.WriteLine(line);
                                 }
                             }
-                            var stmt = new NativeStatement(tuple.stmt.Blueprint);
+//                          var stmt = new NativeStatement(tuple.stmt.Blueprint);
                         }
                     }
                 }

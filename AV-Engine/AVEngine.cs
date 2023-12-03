@@ -1,5 +1,4 @@
 ﻿using Blueprint.Blue;
-using FlatSharp.Internal;
 using System.Text;
 
 namespace AVXFramework
@@ -49,7 +48,9 @@ namespace AVXFramework
                             }
                             else if (blueprint.Commands != null)
                             {
-                                UInt64 cursor = NativeLibrary.create_statement(QStatement.Serialize(blueprint.Blueprint));
+                                var expression = blueprint.Commands.Searches.ToList();
+                                string yaml = ICommand.YamlSerializerRaw(expression);
+                                UInt64 cursor = NativeLibrary.create_statement(yaml);
                                 var result = NativeLibrary.exec_statement(cursor);
                                 var status = NativeLibrary.free_statement(cursor);
 

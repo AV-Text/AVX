@@ -16,7 +16,7 @@ TBook::~TBook(){
 
 }
 
-std::map<byte,TChapter>* TBook::fetch_results(){
+std::map<byte,TChapter*> TBook::fetch_results(){
 
-	return  nullptr;
+	return this->chapters;
 }

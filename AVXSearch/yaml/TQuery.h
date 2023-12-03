@@ -18,12 +18,15 @@
 #include <map>
 
 #include <ryml.hpp>
+#include <AVXBlueprint.h>
 
 class TQuery
 {
+private:
+	AVXBlueprint* blueprint;
 
 public:
-	TQuery(ryml::ConstNodeRef blueprint, uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+	TQuery(AVXBlueprint* blueprint);
 
 	virtual ~TQuery();
 	byte book_cnt;
@@ -36,9 +39,6 @@ public:
 	TSettings settings;
 	uint64 total_hits;
 	uint64 verse_hits;
-
-private:
-	ryml::ConstNodeRef blueprint;
 
 };
 #endif // !defined(EA_1A9DEEE5_474E_4a0f_BC44_4C27249CBC6A__INCLUDED_)

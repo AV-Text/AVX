@@ -10,7 +10,7 @@
 
 directory* directory::GLOBAL = nullptr;
 const uint16 directory::ExpectedPlateRevision = 3911;
-const uint16 directory::LibraryRevision = 3980; // 3930 + 31 [oct] + 19 [nov] // should have been hex :-|
+const uint16 directory::LibraryRevision = 3993; // 3930 + 31 [oct] + 30 [nov] + 2 [dec] // should have been hex :-| 2.0.3.C02 // B = November (overflow after 8 Dec)
 
 extern "C" __declspec(dllexport) uint64 create_avxtext(const char* data)
 {

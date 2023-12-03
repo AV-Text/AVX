@@ -13,7 +13,6 @@ AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, 
         this->request = tree.crootref();
         this->settings = new AVXSettings(span, lex, similarity, auto_lemma_matching);
     }
-
 }
 AVXBlueprint::~AVXBlueprint()
 {

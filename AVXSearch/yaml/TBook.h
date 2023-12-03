@@ -27,10 +27,10 @@ public:
 	uint64 total_hits;
 	uint64 verse_hits;
 
-	std::map<byte,TChapter>* fetch_results();
+	std::map<byte, TChapter*> fetch_results();
 
 private:
-	std::map<byte,TChapter>* chapters;
+	std::map<byte, TChapter*> chapters;
 
 };
 #endif // !defined(EA_0419B987_84CB_472f_AF4F_C75C5A86A7D3__INCLUDED_)
