@@ -4,53 +4,30 @@
 
 #include <book.h>
 
+#include <ryml.hpp>
+#include <ryml_std.hpp>
+
 AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching)
+    : settings(span, lex, similarity, auto_lemma_matching)
 {
-    c4::substr str;
-    if (ryml::from_chars(str, data))
+    int len = strlen(data);
+    char yaml[32*1024];    // TO DO (TODO): Why does this need to be fixed size on the stack?
+    yaml[len] = '\0';
+    for (int i = 0; i < len; i++)
+        yaml[i] = data[i];
+
+    this->tree = ryml::parse_in_place(yaml);
+    this->okay = false;
+
+    this->request = tree.crootref();
+    auto expression = this->request["searches"];
+    for (auto search : expression)
     {
-        this->tree = ryml::parse_in_place(str);
-        this->request = tree.crootref();
-        this->settings = new AVXSettings(span, lex, similarity, auto_lemma_matching);
+        this->searches.push_back(new AVXFind(search));
+        this->okay = true;
     }
 }
 AVXBlueprint::~AVXBlueprint()
 {
-    if (this->settings != nullptr)
-        delete this->settings;
-}
-bool AVXBlueprint::execute()
-{
-    int search_size = searches.size();
-    for (auto search : searches)
-    {
-        /*
-        auto expression = new AVXFind(search);
-        this->searches.push_back(expression);
-        auto search = new AVXSearch(rxsearch, *expression, *this->settings);
-
-        search->find();
-        */
-    }
-}
-
-bool AVXBlueprint::build()
-{
-    for (AVXFind* search : this->searches)
-    {
-        ; // search->build(builder, collection);
-    }
-/*
-    auto vcollection = builder.CreateVector(collection);
-    xresults.add_results(vcollection);
-
-    std::vector<flatbuffers::Offset<uint32>> empty_scope;
-
-    auto results = xresults.Finish();
-    size = (uint32) builder.GetSize();
-    auto buffer = new uint8[size];
-    builder.PushFlatBuffer(buffer, size);
-    return buffer;
-*/
-    return false;
+    ;
 }

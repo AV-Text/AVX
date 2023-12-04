@@ -61,6 +61,7 @@
     <ClInclude Include="AVXPuncComparator.h" />
     <ClInclude Include="AVXSearch.h" />
     <ClInclude Include="AVXFragment.h" />
+    <ClInclude Include="AVXSettings.h" />
     <ClInclude Include="AVXStatement.h" />
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />

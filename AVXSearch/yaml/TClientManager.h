@@ -10,6 +10,8 @@
 
 #include "TQueryManager.h"
 
+class TQuery;
+
 class TClientManager
 {
 
@@ -18,14 +20,17 @@ public:
 	virtual ~TClientManager();
 	std::map<uint128, TQueryManager*> clients;
 
+	TQuery* initialize(uint128 client_guid, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+	bool add_scope(uint128 client_guid, uint64 query_id, byte book, byte chapter, byte verse);
+
 	// returns yaml of TQuery:
-	const char* create_query(uint128 client_guid, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+	ryml::ConstNodeRef* execute(uint128 client_guid, uint64 query_id);
 
 	// returns yaml of TQuery::books[book].fetch_results():
-	const char* fetch_results(uint128 client_guid, byte book);
+	ryml::ConstNodeRef* fetch_results(uint128 client_guid, uint64 query_id, byte book);
 
-	void release_client(uint128 client_quid);
-	void release_query(uint128 client_quid, uint64 query_id);
+	void release_client(uint128 client_guid);
+	void release_query(uint128 client_guid, uint64 query_id);
 
 };
 #endif // !defined(EA_36732251_A4F4_46b0_B9B8_642CCE3A147B__INCLUDED_)

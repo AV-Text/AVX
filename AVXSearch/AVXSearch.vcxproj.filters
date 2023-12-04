@@ -1,69 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{c5698b89-4474-420a-8706-259f5b8a7c0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Results">
       <UniqueIdentifier>{8b559c81-82f6-4661-abae-b28c476fb844}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AVX">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="AVX\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVXBlueprint.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXDeltaComparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXFind.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXFound.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXMatchAny.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXLemmaComparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXMatch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXPOS16Comparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXPOS32Comparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXPuncComparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXSearch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXFragment.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXStrongsComparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXTransitionComparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXWordComparator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXStatement.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="yaml\TQueryManager.cpp">
       <Filter>Manager</Filter>
@@ -98,55 +98,55 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVXBlueprint.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXDeltaComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXFind.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXFound.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXMatchAny.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXLemmaComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXMatch.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXPOS16Comparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXPOS32Comparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXPuncComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXSearch.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXFragment.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXStrongsComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXTransitionComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXWordComparator.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXStatement.h">
-      <Filter>Header Files</Filter>
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="yaml\TClientManager.h">
       <Filter>Manager</Filter>
@@ -177,6 +177,9 @@
     </ClInclude>
     <ClInclude Include="yaml\TSettings.h">
       <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXSettings.h">
+      <Filter>AVX\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,7 +31,7 @@ public:
 	virtual ~TQuery();
 	byte book_cnt;
 	uint64 book_hits;
-	TBook books[66];
+	TBook* books[66];
 	uint64 chapter_hits;
 	uint32 error_code;
 	TExpression expressions;
@@ -39,6 +39,11 @@ public:
 	TSettings settings;
 	uint64 total_hits;
 	uint64 verse_hits;
+	std::vector<uint32> scope;
 
+	ryml::ConstNodeRef* execute();
+	ryml::ConstNodeRef* fetch(byte book);
+
+	bool add_scope(uint32 spec);
 };
 #endif // !defined(EA_1A9DEEE5_474E_4a0f_BC44_4C27249CBC6A__INCLUDED_)

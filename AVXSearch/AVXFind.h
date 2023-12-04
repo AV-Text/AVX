@@ -13,7 +13,7 @@ public:
     std::vector<AVXFound*> founds;
     std::string find;
 
-    AVXFind()
+    AVXFind(ryml::ConstNodeRef request)
     {
         this->find = "";
         this->current = nullptr;

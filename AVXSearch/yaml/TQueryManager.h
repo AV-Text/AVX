@@ -18,8 +18,10 @@ public:
 	virtual ~TQueryManager();
 	std::map<uint64, TQuery*> queries;
 
-	TQuery * create_query(AVXBlueprint* blueprint);
-	ryml::ConstNodeRef* /* map<byte, TChapter> */ fetch_results(byte book);
+	TQuery* initialize(AVXBlueprint* blueprint);
+	bool add_scope(uint64 query_id, byte book, byte chapter, byte verse);
+	ryml::ConstNodeRef* execute(uint64 query_id);
+	ryml::ConstNodeRef* /* map<byte, TChapter> */ fetch_results(uint64 query_id, byte book);
 
 };
 #endif // !defined(EA_F7AA038A_5EC8_49b5_B290_6D09208EE1A2__INCLUDED_)

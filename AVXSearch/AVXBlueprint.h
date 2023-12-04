@@ -3,21 +3,22 @@
 #include <vector>
 
 #include <ryml.hpp>
+#include <AVXSettings.h>
 
 class AVXFind;
-class AVXSettings;
 
 class AVXBlueprint
 {
 private:
     ryml::Tree tree;
-    AVXSettings* settings;
+    bool okay;
+
 public:
     AVXBlueprint(char data[], uint16 span=0, byte lex=1, byte similarity=100, bool auto_lemma_matching=false);
-    bool execute();
 
+    const AVXSettings settings;
     std::vector<AVXFind*> searches;
-    bool build();
+    inline bool isOkay() { return okay; }
 
     ryml::ConstNodeRef request;
 

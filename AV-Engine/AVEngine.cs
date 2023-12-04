@@ -53,9 +53,14 @@ namespace AVXFramework
                                 byte similarity = blueprint.LocalSettings.Similarity.Value;
                                 bool fuzzyLemmata = blueprint.LocalSettings.Similarity.AutomaticLemmaMatching;
 
-                                string results = this.SearchEngine.Search(yaml, span, lexicon, similarity, fuzzyLemmata);
+                                List<(byte book, byte chapter, byte verse)> scope = new();
 
-                                return (blueprint, "", "");
+                                if (this.SearchEngine.Search(yaml, span, lexicon, similarity, fuzzyLemmata, scope))
+                                {
+                                    return (blueprint, "", this.SearchEngine.Summary);
+                                }
+
+                                return (blueprint, "Search failed for unknown reason", "");
                             }
                             else
                             {

@@ -8,8 +8,11 @@
 #include "TBook.h"
 #include <map>
 
-TBook::TBook(){
+TBook::TBook(byte num)
+{
+	this->book_num = (num >= 1 && num <= 66) ? num : 0;
 
+	// TO DO (TODO): call AVXText to fill other properties
 }
 
 TBook::~TBook(){

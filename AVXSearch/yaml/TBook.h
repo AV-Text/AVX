@@ -17,7 +17,7 @@ class TBook
 {
 
 public:
-	TBook();
+	TBook(byte num);
 	virtual ~TBook();
 	byte book_cnt;
 	byte book_hits;

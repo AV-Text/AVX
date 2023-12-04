@@ -15,17 +15,55 @@ TQueryManager::~TQueryManager(){
 
 }
 
-TQuery * TQueryManager::create_query(AVXBlueprint* blueprint)
+TQuery * TQueryManager::initialize(AVXBlueprint* blueprint)
 {
 	auto query = new TQuery(blueprint);
 	auto query_id = uint64(query);
 	this->queries[query_id] = query; // we don't really need a map for this, but it is the current design
-	
+
 	return query;
 }
 
-ryml::ConstNodeRef* /* map<byte, TChapter> */ TQueryManager::fetch_results(byte book)
+bool TQueryManager::add_scope(uint64 query_id, byte book, byte chapter, byte verse)
 {
+	auto iquery = this->queries.find(query_id);
+	if (iquery != this->queries.end())
+	{
+		TQuery* query = this->queries[query_id];
+		query->scope.push_back(uint32(book) << 16 | uint32(chapter) << 8 | verse);
+		return true;
+	}
+	return false;
+}
 
-	return  nullptr;
+ryml::ConstNodeRef* TQueryManager::execute(uint64 query_id)
+{
+	auto iquery = this->queries.find(query_id);
+	if (iquery != this->queries.end())
+	{
+		TQuery* query = this->queries[query_id];
+		return query->execute();
+	}
+	return nullptr;
+}
+
+// returns tree for map<byte, TChapter>
+ryml::ConstNodeRef* TQueryManager::fetch_results(uint64 query_id, byte book)
+{
+	auto iquery = this->queries.find(query_id);
+	if (iquery != this->queries.end())
+	{
+		TQuery* query = this->queries[query_id];
+		if (book >= 1 && book <= 66 && query->books[book-1] != nullptr)
+		{
+			auto ibook = query->fetch(book);
+
+			if (iquery != this->queries.end())
+			{
+				TQuery* query = this->queries[query_id];
+				return query->fetch(book);
+			}
+		}
+	}
+	return nullptr;
 }

@@ -10,58 +10,62 @@
 
 static TClientManager ClientManager;
 
+static const char* EMPTY = "";
+
 // C API:
-extern "C" const char* create_query(uint64 client_guid_1, uint64 client_guid_2, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+extern "C" __declspec(dllexport) uint64 create_query(uint64 client_id1, uint64 client_id2, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
-	uint128 client_guid(client_guid_1, client_guid_2);
-	return ClientManager.create_query(client_guid, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
+	uint128 client_id(client_id1, client_id2);
+	return uint64(ClientManager.initialize(client_id, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata));
 }
 
-extern "C" const char* fetch_results(uint64 client_guid_1, uint64 client_guid_2, byte book)
+extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 client_id1, uint64 client_id2, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
-	uint128 client_guid(client_guid_1, client_guid_2);
-	return ClientManager.fetch_results(client_guid, book);
+	uint128 client_id(client_id1, client_id2);
+	TQuery* query = ClientManager.initialize(client_id, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
+	auto root = query->execute();
+
+	// TO DO (TODO): Serialize tree into yaml string
+
+	return root != nullptr ? EMPTY : EMPTY;
 }
 
-extern "C" void release_client(uint64 client_guid_1, uint64 client_guid_2)
+extern "C" __declspec(dllexport) byte add_scope(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter, byte verse)
 {
-	uint128 client_guid(client_guid_1, client_guid_2);
-	ClientManager.release_client(client_guid);
+	uint128 client_id(client_id1, client_id2);
+	return ClientManager.add_scope(client_id, query_id, book, chapter, verse) ? byte(1) : byte(2);
 }
 
-extern "C" void release_query(uint64 client_guid_1, uint64 client_guid_2, uint64 query_id)
+extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 client_id2, uint64 query_id)
 {
-	uint128 client_guid(client_guid_1, client_guid_2);
-	ClientManager.fetch_results(client_guid, query_id);
+	uint128 client_id(client_id1, client_id2);
+	auto root = ClientManager.execute(client_id, query_id);
+
+	// TO DO (TODO): Serialize tree into yaml string
+
+	return root != nullptr ? EMPTY : EMPTY;
 }
 
-// OBSOLETE !!!
-extern "C" const char* const avx_create_search(const char* const request)
-{/*
-	AVXBlueprint search(request);
-	search.execute();
-	auto results = search.build();
-	if (results != nullptr)
-	{
-		MemoryTable.insert(reinterpret_cast<uintptr_t>(results));
-	}
-	return results;*/
-	return nullptr;
+extern "C" __declspec(dllexport) const char* fetch_results(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book)
+{
+	uint128 client_id(client_id1, client_id2);
+	auto root = ClientManager.fetch_results(client_id, query_id, book);
+
+	// TO DO (TODO): Serialize tree into yaml string
+
+	return root != nullptr ? EMPTY : EMPTY;
 }
 
-// OBSOLETE !!!
-extern "C" bool avx_delete_search(const char* const* results)
-{/*
-	auto entry = reinterpret_cast<uintptr_t>(results);
-	auto memory = reinterpret_cast<char*>(entry);
+extern "C" __declspec(dllexport) void release_client(uint64 client_id1, uint64 client_id2)
+{
+	uint128 client_id(client_id1, client_id2);
+	ClientManager.release_client(client_id);
+}
 
-	auto it = MemoryTable.find(entry);
-	if (it != MemoryTable.end()) {
-		MemoryTable.erase(it);
-		free(memory);
-		return true;
-	}*/
-	return false;
+extern "C" __declspec(dllexport) void release_query(uint64 client_id1, uint64 client_id2, uint64 query_id)
+{
+	uint128 client_id(client_id1, client_id2);
+	ClientManager.release_query(client_id, query_id);
 }
 
 TClientManager::TClientManager(){
@@ -72,12 +76,12 @@ TClientManager::~TClientManager(){
 
 }
 
-const char* TClientManager::create_query(uint128 client_guid, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+TQuery* TClientManager::initialize(uint128 client_id, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
 	AVXBlueprint* blueprint = new AVXBlueprint(yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
 
 	TQueryManager* qmgr = nullptr;
-	auto candidate = this->clients.find(client_guid);
+	auto candidate = this->clients.find(client_id);
 	if (candidate != this->clients.end())
 	{
 		qmgr = candidate->second;
@@ -85,19 +89,54 @@ const char* TClientManager::create_query(uint128 client_guid, char yaml_blueprin
 	else
 	{
 		qmgr = new TQueryManager();
-		this->clients.insert(std::make_pair(client_guid, qmgr));
+		this->clients.insert(std::make_pair(client_id, qmgr));
 	}
-	TQuery* query = qmgr->create_query(blueprint);
+	TQuery* query = qmgr->initialize(blueprint);
 	/* TO DO: YAML serialization (TODO) */
 	return  nullptr;
 }
 
-const char* TClientManager::fetch_results(uint128 client_guid, byte book)
+bool TClientManager::add_scope(uint128 client_id, uint64 query_id, byte book, byte chapter, byte verse)
 {
-	return  NULL;
+	TQueryManager* qmgr = nullptr;
+	auto candidate = this->clients.find(client_id);
+	if (candidate != this->clients.end())
+	{
+		qmgr = candidate->second;
+
+		return qmgr->add_scope(query_id, book, chapter, verse);
+	}
+	return false;
 }
 
-void TClientManager::release_client(uint128 client_quid)
+ryml::ConstNodeRef* TClientManager::execute(uint128 client_id, uint64 query_id)
+{
+	TQueryManager* qmgr = nullptr;
+	auto candidate = this->clients.find(client_id);
+	if (candidate != this->clients.end())
+	{
+		qmgr = candidate->second;
+
+		return qmgr->execute(query_id);
+	}
+	return nullptr;
+}
+
+
+ryml::ConstNodeRef* TClientManager::fetch_results(uint128 client_id, uint64 query_id, byte book)
+{
+	TQueryManager* qmgr = nullptr;
+	auto candidate = this->clients.find(client_id);
+	if (candidate != this->clients.end())
+	{
+		qmgr = candidate->second;
+
+		return qmgr->fetch_results(query_id, book);
+	}
+	return nullptr;
+}
+
+void TClientManager::release_client(uint128 client_id)
 {
 	;
 }
