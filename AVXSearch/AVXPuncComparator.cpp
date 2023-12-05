@@ -11,7 +11,7 @@ uint16 AVXPuncComparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXPuncComparator::AVXPuncComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), punc(0)
+AVXPuncComparator::AVXPuncComparator(const rapidjson::Value& node) : AVXComparator(node), punc(0)
 {
 	/*
 	auto comparitor = feature->match_as_punctuation();

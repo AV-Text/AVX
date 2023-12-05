@@ -5,7 +5,7 @@ class AVXPuncComparator : public AVXComparator
 {
 public:
 	uint8 punc;
-	AVXPuncComparator(ryml::ConstNodeRef feature);
+	AVXPuncComparator(const rapidjson::Value& node);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXPuncComparator();
 };

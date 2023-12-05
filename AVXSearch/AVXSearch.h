@@ -3,13 +3,13 @@
 #include <unordered_set>
 #include <vector>
 
-#include <ryml.hpp>
+#include <rapidjson/document.h>
 
 class AVXFragment;
 class AVXSearch
 {
 private:
-    ryml::ConstNodeRef segment;
+    const rapidjson::Value& segment;
     AVXFind& results;
     const AVXSettings& settings;
 
@@ -27,6 +27,6 @@ public:
         return this->results;
     }
 
-    AVXSearch(ryml::ConstNodeRef find, AVXFind& results, const AVXSettings& settings);
+    AVXSearch(rapidjson::Value& find, AVXFind& results, const AVXSettings& settings);
     ~AVXSearch();
 };

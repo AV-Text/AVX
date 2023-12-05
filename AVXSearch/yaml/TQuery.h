@@ -17,7 +17,7 @@
 #include <string>
 #include <map>
 
-#include <ryml.hpp>
+#include <rapidjson/document.h>
 #include <AVXBlueprint.h>
 
 class TQuery
@@ -41,8 +41,8 @@ public:
 	uint64 verse_hits;
 	std::vector<uint32> scope;
 
-	ryml::ConstNodeRef* execute();
-	ryml::ConstNodeRef* fetch(byte book);
+	bool execute(rapidjson::Document& doc);
+	bool fetch(rapidjson::Document& doc, byte book);
 
 	bool add_scope(uint32 spec);
 };

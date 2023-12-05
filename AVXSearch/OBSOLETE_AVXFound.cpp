@@ -1,7 +1,7 @@
-#include "AVXFound.h"
+#include "OBSOLETE_AVXFound.h"
 #include "AVXMatch.h"
 
-bool AVXFound::add(AVXMatch* match)
+bool AVXFound::add(AVXMatch* match) // OBSOLETE !!!
 {
     this->current = match;
     if (match != nullptr)

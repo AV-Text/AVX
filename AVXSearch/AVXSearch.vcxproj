@@ -21,9 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVXBlueprint.cpp" />
+    <ClCompile Include="AVXComparator.cpp" />
     <ClCompile Include="AVXDeltaComparator.cpp" />
-    <ClCompile Include="AVXFind.cpp" />
-    <ClCompile Include="AVXFound.cpp" />
+    <ClCompile Include="OBSOLETE_AVXFound.cpp" />
     <ClCompile Include="AVXMatchAny.cpp" />
     <ClCompile Include="AVXLemmaComparator.cpp" />
     <ClCompile Include="AVXMatch.cpp" />
@@ -32,7 +32,6 @@
     <ClCompile Include="AVXPuncComparator.cpp" />
     <ClCompile Include="AVXSearch.cpp" />
     <ClCompile Include="AVXFragment.cpp" />
-    <ClCompile Include="AVXStatement.cpp" />
     <ClCompile Include="AVXStrongsComparator.cpp" />
     <ClCompile Include="AVXTransitionComparator.cpp" />
     <ClCompile Include="AVXWordComparator.cpp" />
@@ -52,7 +51,7 @@
     <ClInclude Include="AVXComparator.h" />
     <ClInclude Include="AVXDeltaComparator.h" />
     <ClInclude Include="AVXFind.h" />
-    <ClInclude Include="AVXFound.h" />
+    <ClInclude Include="OBSOLETE_AVXFound.h" />
     <ClInclude Include="AVXMatchAny.h" />
     <ClInclude Include="AVXLemmaComparator.h" />
     <ClInclude Include="AVXMatch.h" />
@@ -62,7 +61,6 @@
     <ClInclude Include="AVXSearch.h" />
     <ClInclude Include="AVXFragment.h" />
     <ClInclude Include="AVXSettings.h" />
-    <ClInclude Include="AVXStatement.h" />
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
@@ -138,38 +136,38 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(SolutionDir)\..\rapidjson\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(SolutionDir)\..\rapidjson\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(SolutionDir)\..\rapidjson\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(VcpkgRoot)\packages\ryml_x64-windows\include\ryml;$(VcpkgRoot)\packages\ryml_x64-windows\include;$(VcpkgRoot)\packages\c4core_x64-windows\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\AVXText;$(SolutionDir)\AVXText\xvmem;$(SolutionDir)\AVXText\foundations;$(SolutionDir)\..\rapidjson\include;$(IncludePath)</IncludePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <TargetExt>.dll</TargetExt>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <LibraryPath>$(VcpkgRoot)\packages\ryml_x64-windows\$(Configuration)\lib;$(VcpkgRoot)\packages\c4core_x64-windows\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -198,7 +196,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -206,7 +204,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
@@ -228,7 +226,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -238,7 +236,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
@@ -258,7 +256,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -266,7 +264,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>
@@ -288,7 +286,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -298,7 +296,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AVXText.lib;ryml.lib;c4core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AVXText.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName)$(TargetExt)</Outputs>

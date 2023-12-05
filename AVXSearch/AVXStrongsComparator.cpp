@@ -19,7 +19,7 @@ uint16 AVXStrongsComparator::compare(const WrittenContent& writ)
 	return positive ? 0 : AVXComparator::FullMatch;
 }
 
-AVXStrongsComparator::AVXStrongsComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), number(0), lang('X')
+AVXStrongsComparator::AVXStrongsComparator(const rapidjson::Value& node) : AVXComparator(node), number(0), lang('X')
 {
 	/*
 	auto comparitor = feature->match_as_strongs();

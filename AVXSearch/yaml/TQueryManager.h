@@ -20,8 +20,8 @@ public:
 
 	TQuery* initialize(AVXBlueprint* blueprint);
 	bool add_scope(uint64 query_id, byte book, byte chapter, byte verse);
-	ryml::ConstNodeRef* execute(uint64 query_id);
-	ryml::ConstNodeRef* /* map<byte, TChapter> */ fetch_results(uint64 query_id, byte book);
+	bool execute(rapidjson::Document&, uint64 query_id);
+	bool fetch_results(rapidjson::Document&, uint64 query_id, byte book);
 
 };
 #endif // !defined(EA_F7AA038A_5EC8_49b5_B290_6D09208EE1A2__INCLUDED_)

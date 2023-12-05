@@ -3,39 +3,26 @@
 #include <vector>
 #include <string>
 
-#include <ryml.hpp>
+#include <rapidjson/document.h>
 
-class AVXFound;
+//class AVXFound;
 
 class AVXFind
 {
 public:
-    std::vector<AVXFound*> founds;
-    std::string find;
+//    std::vector<AVXFound*> founds;
 
-    AVXFind(ryml::ConstNodeRef request)
+    AVXFind(const rapidjson::Value& find): segment(find)
     {
-        this->find = "";
-        this->current = nullptr;
-    }
-    AVXFind(const char* search)
-    {
-        this->find = search;
-        this->current = nullptr;
+        ;
     }
     ~AVXFind()
     {
         ;
     }
-    bool add(AVXFound* found);
- //   void build(ryml::ConstNodeRef& parentCollection);
+//    bool add(AVXFound* found);
 
 private:
-    AVXFound* current;
-public:
-    inline AVXFound* getCurrent()
-    {
-        return this->current;
-    }
+    const rapidjson::Value& segment;
 };
     

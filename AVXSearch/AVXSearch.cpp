@@ -2,7 +2,7 @@
 #include "AVXFragment.h"
 #include "AVXBlueprint.h"
 #include "AVXFind.h"
-#include "AVXFound.h"
+#include "OBSOLETE_AVXFound.h"
 #include "AVXMatch.h"
 #include <map>
 #include <directory.h>
@@ -68,7 +68,7 @@ bool AVXSearch::search_quoted()
                         auto match = new AVXMatch((uint32) coord, frag, feat);
                         found->add(match);
                     }
-                    this->results.founds.push_back(found);
+                    //this->results.founds.push_back(found);
                 }
             NOT_FOUND_1:
             continue;
@@ -110,7 +110,7 @@ bool AVXSearch::search_quoted()
                         auto match = new AVXMatch((uint32)coord, frag, feat);
                         found->add(match);
                     }
-                    this->results.founds.push_back(found);
+                    //this->results.founds.push_back(found);
                 }
             NOT_FOUND_2:
             continue;
@@ -180,7 +180,7 @@ bool AVXSearch::search_unquoted()
                             auto match = new AVXMatch((uint32)coord, frag, feat);
                             foundMatch->add(match);
                         }
-                        this->results.founds.push_back(foundMatch);
+                        //this->results.founds.push_back(foundMatch);
                     }
                 }
             }
@@ -208,7 +208,7 @@ bool AVXSearch::search_unquoted()
     bool quoted;
     AVXFragment** requirements;
     */
-AVXSearch::AVXSearch(ryml::ConstNodeRef find, AVXFind& results, const AVXSettings& settings):
+AVXSearch::AVXSearch(rapidjson::Value& find, AVXFind& results, const AVXSettings& settings):
     segment(find),
     results(results),
     settings(settings), 

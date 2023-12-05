@@ -24,10 +24,10 @@ public:
 	bool add_scope(uint128 client_guid, uint64 query_id, byte book, byte chapter, byte verse);
 
 	// returns yaml of TQuery:
-	ryml::ConstNodeRef* execute(uint128 client_guid, uint64 query_id);
+	bool execute(rapidjson::Document&, uint128 client_guid, uint64 query_id);
 
 	// returns yaml of TQuery::books[book].fetch_results():
-	ryml::ConstNodeRef* fetch_results(uint128 client_guid, uint64 query_id, byte book);
+	bool fetch_results(rapidjson::Document&, uint128 client_guid, uint64 query_id, byte book);
 
 	void release_client(uint128 client_guid);
 	void release_query(uint128 client_guid, uint64 query_id);

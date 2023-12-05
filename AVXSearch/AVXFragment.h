@@ -2,13 +2,13 @@
 #include <map>
 
 #include <directory.h>
-#include <ryml.hpp>
+#include <rapidjson/document.h>
 
 class AVXMatchAny;
 class AVXFragment
 {
 public:
-	AVXFragment(ryml::ConstNodeRef fragments);
+	AVXFragment(rapidjson::Value& fragments);
 
 	const char* fragment;
 	const bool anchored;

@@ -7,7 +7,8 @@
 
 #include "TExpression.h"
 
-TExpression::TExpression(){
+TExpression::TExpression()
+{
 
 }
 

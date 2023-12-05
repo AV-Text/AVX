@@ -19,9 +19,9 @@ uint16 AVXLemmaComparator::compare(const WrittenContent& writ)
 	return positive ? 0 : AVXComparator::FullMatch;
 }
 
-AVXLemmaComparator::AVXLemmaComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), lemmata(nullptr)
+AVXLemmaComparator::AVXLemmaComparator(const rapidjson::Value& node) : AVXComparator(node), lemmata(nullptr)
 {
-	if (feature != nullptr)
+	if (this->feature != nullptr)
 	{
 		auto comparator = "foo-lemma"; // feature->match_as_lemma();
 

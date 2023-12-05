@@ -3,22 +3,35 @@
 #include <stdlib.h>
 #include <directory.h>
 
-#include <ryml.hpp>
+#include <rapidjson/document.h>
+#include <string>
 
 class AVXComparator
 {
+private:
+    AVXComparator(const rapidjson::Value& node, bool bad) : node(node), type("unknown"), feature(node["feature"].GetString()), negate(false), okay(false)
+    {
+        ;
+    }
 protected:
-    AVXComparator(ryml::ConstNodeRef feature) : feature("foo"), negate(false), rule("foo-rule")
-        // : feature(feature->feature()->c_str()), negate(feature->negate()), rule(feature->rule()->c_str())
+    AVXComparator(const rapidjson::Value& node) : node(node), type(node["type"].GetString()), feature(node["feature"].GetString()), negate(node["negate"].GetString()), okay(true)
     {
         ;
     }
 public:
+    static AVXComparator* Create(const rapidjson::Value& node);
+
+    const rapidjson::Value& node;
     const char* feature;
     const char* rule;
     const bool negate;
+    const bool okay;
+    const bool type;
 
-    virtual uint16 compare(const WrittenContent& writ) = 0;
+    virtual uint16 compare(const WrittenContent& writ)
+    {
+        return 0;
+    }
 
     virtual ~AVXComparator()
     {

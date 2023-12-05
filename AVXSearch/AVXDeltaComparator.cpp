@@ -16,7 +16,7 @@ uint16 AVXDeltaComparator::compare(const WrittenContent& writ)
 	return false;
 }
 
-AVXDeltaComparator::AVXDeltaComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), delta(false)
+AVXDeltaComparator::AVXDeltaComparator(const rapidjson::Value& node) : AVXComparator(node), delta(false)
 {
 	/*
 	auto comparitor = feature->match_as_delta();

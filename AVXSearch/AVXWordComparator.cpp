@@ -22,7 +22,7 @@ uint16 AVXWordComparator::compare(const WrittenContent& writ)
 	return positive ? 0 : this->AVXComparator::FullMatch;
 }
 
-AVXWordComparator::AVXWordComparator(ryml::ConstNodeRef feature) : AVXComparator(feature), wkeys(nullptr)
+AVXWordComparator::AVXWordComparator(const rapidjson::Value& node) : AVXComparator(node), wkeys(nullptr)
 {
 	/*
 	if (feature != nullptr)

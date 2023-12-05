@@ -12,6 +12,8 @@
 #include "TFragment.h"
 #include <string>
 
+#include <rapidjson/document.h>
+
 class TExpression
 {
 

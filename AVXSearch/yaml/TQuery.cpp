@@ -16,12 +16,12 @@ TQuery::TQuery(AVXBlueprint* blueprint)
 	this->blueprint = blueprint;
 }
 
-ryml::ConstNodeRef* TQuery::execute()
+bool TQuery::execute(rapidjson::Document& doc)
 {
-	return nullptr;
+	return false;
 }
 
-ryml::ConstNodeRef* TQuery::fetch(byte book_num)
+bool TQuery::fetch(rapidjson::Document& doc, byte book_num)
 {
 	if (book_num >= 1 && book_num <= 66)
 	{
@@ -34,7 +34,7 @@ ryml::ConstNodeRef* TQuery::fetch(byte book_num)
 			auto results = book.fetch_results();
 		}
 	}
-	return nullptr;
+	return false;
 }
 
 bool TQuery::add_scope(uint32 spec)

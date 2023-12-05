@@ -11,7 +11,7 @@ uint16 AVXPOS32Comparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXPOS32Comparator::AVXPOS32Comparator(ryml::ConstNodeRef feature) : AVXComparator(feature), pos32(0)
+AVXPOS32Comparator::AVXPOS32Comparator(const rapidjson::Value& node) : AVXComparator(node), pos32(0)
 {
 	/*
 	auto comparitor = feature->match_as_pos16();

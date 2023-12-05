@@ -23,10 +23,7 @@
     <ClCompile Include="AVXDeltaComparator.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
-    <ClCompile Include="AVXFind.cpp">
-      <Filter>AVX</Filter>
-    </ClCompile>
-    <ClCompile Include="AVXFound.cpp">
+    <ClCompile Include="OBSOLETE_AVXFound.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXMatchAny.cpp">
@@ -62,9 +59,6 @@
     <ClCompile Include="AVXWordComparator.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
-    <ClCompile Include="AVXStatement.cpp">
-      <Filter>AVX</Filter>
-    </ClCompile>
     <ClCompile Include="yaml\TQueryManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -95,6 +89,9 @@
     <ClCompile Include="yaml\TSettings.cpp">
       <Filter>Results</Filter>
     </ClCompile>
+    <ClCompile Include="AVXComparator.cpp">
+      <Filter>AVX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVXBlueprint.h">
@@ -109,7 +106,7 @@
     <ClInclude Include="AVXFind.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AVXFound.h">
+    <ClInclude Include="OBSOLETE_AVXFound.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXMatchAny.h">
@@ -143,9 +140,6 @@
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXWordComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXStatement.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="yaml\TClientManager.h">

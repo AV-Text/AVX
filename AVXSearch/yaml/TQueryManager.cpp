@@ -36,19 +36,19 @@ bool TQueryManager::add_scope(uint64 query_id, byte book, byte chapter, byte ver
 	return false;
 }
 
-ryml::ConstNodeRef* TQueryManager::execute(uint64 query_id)
+bool TQueryManager::execute(rapidjson::Document& doc, uint64 query_id)
 {
 	auto iquery = this->queries.find(query_id);
 	if (iquery != this->queries.end())
 	{
 		TQuery* query = this->queries[query_id];
-		return query->execute();
+		return query->execute(doc);
 	}
-	return nullptr;
+	return false;
 }
 
 // returns tree for map<byte, TChapter>
-ryml::ConstNodeRef* TQueryManager::fetch_results(uint64 query_id, byte book)
+bool TQueryManager::fetch_results(rapidjson::Document& doc, uint64 query_id, byte book)
 {
 	auto iquery = this->queries.find(query_id);
 	if (iquery != this->queries.end())
@@ -56,14 +56,14 @@ ryml::ConstNodeRef* TQueryManager::fetch_results(uint64 query_id, byte book)
 		TQuery* query = this->queries[query_id];
 		if (book >= 1 && book <= 66 && query->books[book-1] != nullptr)
 		{
-			auto ibook = query->fetch(book);
+			auto ibook = query->fetch(doc, book);
 
 			if (iquery != this->queries.end())
 			{
 				TQuery* query = this->queries[query_id];
-				return query->fetch(book);
+				return query->fetch(doc, book);
 			}
 		}
 	}
-	return nullptr;
+	return false;
 }

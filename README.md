@@ -31,7 +31,7 @@ We at AV-Text Ministries have adopted their objective. Four centuries later, it 
 
 ### Modular Framework with Minimal Dependencies
 
-There are just a few external dependencies of AVX-Framework: DotNet with YamlDotNet, and C++ with Rapid Yaml. DotNet is was chosen as it is open-source and cross-platform. C++ was chosen for its ubiquity and speed. YAML was chosen for its great human readability (YamlDotNet and Rapid YAML were chosen for their maturity and their liberal open source licenses). Together, they facilitate efficient communication between C# and C++ modules, with great debugging ability. Of course, there are internal dependencies; those also are all open source (maintained by AV Text Ministries; located at https://github.com/kwonus and https://github.com/AV-Text/AVX).  
+There are just a few external dependencies of AVX-Framework: DotNet with YamlDotNet, and C++ with Rapid JSON. Dotnet is was chosen as it is open-source and cross-platform. C++ was chosen for its ubiquity and speed. JSON was also chosen for its ubiquity. YAML is chosen for its great human readability. YamlDotNet was chosen for its ability to parse/generate both YAML <u>and</u> JSON. its liberal open source license, and it being the de facto standard YAML library for Dotnet. Rapid JSON were chosen for its maturity and liberal open source licenses. JSON, with P/Invoke is the glue that facilitates efficient communication from C# to C++ and Rust. Of course, there are internal dependencies; those also are all open source (maintained by AV Text Ministries; located at https://github.com/kwonus and https://github.com/AV-Text/AVX).  
 
 The latest architecture is highly modular. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive initially, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
 
@@ -39,26 +39,26 @@ Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-E
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3B27]
+**Figure-1**: AVX-Framework dependency diagram [revision #3C02]
 
 Evidenced by Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more granular parameter-marshalling, because it is both more efficient and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository references.
 
 | **Module**  *(repository)*<br/>source code folder            | **Input**                                                    | **Output**                                                   |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **AV-Engine** *(github.com/AV-Text/AVX)*<br/>[./AV-Engine](https://github.com/AV-Text/AVX/tree/master/AV-Engine) | Quelle Command (text)                                        | IAVResult   interface                                        |
-| **AVX-Search** *(github.com/AV-Text/AVX)*<br/>[./AVXSearch](https://github.com/AV-Text/AVX/tree/master/AVXSearch) | yaml-formatted text [blueprint]<br/>*(null-terminated text)* | yaml-formatted text [results]<br/>*(null-terminated text)*   |
+| **AVX-Search** *(github.com/AV-Text/AVX)*<br/>[./AVXSearch](https://github.com/AV-Text/AVX/tree/master/AVXSearch) | json-formatted text [blueprint]<br/>*(null-terminated text)* | json-formatted text [results]<br/>*(null-terminated text)*   |
 | **AVX-Text** *(github.com/AV-Text/AVX)*<br/>[./AVXText](https://github.com/AV-Text/AVX/tree/master/AVXText) | C++ Classes/Methods                                          | C++ Classes/Methods                                          |
 | **Digital-AV** *(github.com/AV-Text/AVX)*<br/>[./omega](https://github.com/AV-Text/AVX/tree/master/omega)/AVX-Omega-3911.data | n/a                                                          | *see specification:*<br />[Digital-AV-Ω39.pdf](https://github.com/AV-Text/AVX/blob/master/omega/Digital-AV-Ω39.pdf) |
 | **AVX-Lib** *(github.com/kwonus/Digital-AV)*<br/>[./omega/foundations/csharp/AVXLib](https://github.com/kwonus/Digital-AV/tree/master/omega/foundations/csharp/AVXLib) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 | **Pinshot-Blue** *(github.com/kwonus/pinshot-blue)*<br/>[./src](https://github.com/kwonus/pinshot-blue/tree/main/src) | null-terminated text                                         | json-formatted text [pinshot]<br/>*(null-terminated text)*   |
-| **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>[./Blueprint-Blue-Lib](https://github.com/kwonus/blueprint-blue/tree/main/Blueprint-Blue-Lib) | null-terminated text                                         | yaml-formatted text [blueprint]<br/>*(null-terminated text)* |
+| **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>[./Blueprint-Blue-Lib](https://github.com/kwonus/blueprint-blue/tree/main/Blueprint-Blue-Lib) | null-terminated text                                         | json-formatted text [blueprint]<br/>*(null-terminated text)* |
 | **NUPhone** *(github.com/kwonus/NUPhone)*<br/>[./PhonemeEmbeddings](https://github.com/kwonus/NUPhone) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
-**Figure-2**: AVX-Framework input and output definition and repository details [revision #3B27]
+**Figure-2**: AVX-Framework input and output definition and repository details [revision #3C02]
 
 ### AV-Engine Internals
 
-AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ and Rust libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a blueprint is obtained for the search from the Blueprint-Blue library, AV-Engine serializes it to YAML. The YAML representation is passed to AVX-Search as a string. AVX-Search returns YAML representations of TQuery and TChapter hierarchies using a two-phase invocation approach. All calls to native libraries are in-process via P/Invoke.
+AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ and Rust libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a blueprint [JSON text] is obtained for the search from the Blueprint-Blue library, it is passed to AVX-Search. AVX-Search returns JSON representations of TQuery and TChapter hierarchies using a two-phase invocation approach. All calls to native libraries are in-process via P/Invoke and use JSON for exchanging complex object hierarchies.
 
 The UML class diagram, depicted in Figure 3, reveals the two-phase approach. Gray boxes are not serialized; instead, they manage access to instantiated C++ objects. The query summary is represented by the TQuery (golden class) hierarchy in Figure 3. It should be noted that query_id is a (uint64) cast of the address of the instantiated TQuery object. The purple objects are the serialization of map<byte, TChapter>: these details are fetched per book [1 .. 66]. All requests to the C++ TClientManager require the two-part client_guid: this mitigates possible attempts at object hijacking. Incidentally, the query specification, aka "blueprint", is defined in the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
 
@@ -74,13 +74,13 @@ A BETA release of AV-Bible and AV-Console are planned for 2023. The development 
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3B27]
+**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3C02]
 
 We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3B27]
+**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3C02]
 
 ### Implementation Status
 

@@ -2,25 +2,26 @@
 #include <avxgen.h>
 #include <vector>
 
-#include <ryml.hpp>
 #include <AVXSettings.h>
+
+#include <rapidjson/document.h>
 
 class AVXFind;
 
 class AVXBlueprint
 {
 private:
-    ryml::Tree tree;
+    rapidjson::Document root; 
     bool okay;
 
 public:
-    AVXBlueprint(char data[], uint16 span=0, byte lex=1, byte similarity=100, bool auto_lemma_matching=false);
+    AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching);
 
     const AVXSettings settings;
     std::vector<AVXFind*> searches;
     inline bool isOkay() { return okay; }
 
-    ryml::ConstNodeRef request;
+//  rapidjson::Value& request;
 
     ~AVXBlueprint();
 };

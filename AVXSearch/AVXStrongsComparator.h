@@ -6,7 +6,7 @@ class AVXStrongsComparator : public AVXComparator
 public: 
 	char lang;
 	uint16 number;
-	AVXStrongsComparator(ryml::ConstNodeRef feature);
+	AVXStrongsComparator(const rapidjson::Value& node);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXStrongsComparator();
 };

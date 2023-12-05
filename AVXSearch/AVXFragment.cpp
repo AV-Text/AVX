@@ -2,7 +2,7 @@
 #include "AVXMatchAny.h"
 #include <directory.h>
 
-AVXFragment::AVXFragment(ryml::ConstNodeRef fragments) : fragment(""), anchored(true), requirements(nullptr)
+AVXFragment::AVXFragment(rapidjson::Value& fragments) : fragment(""), anchored(true), requirements(nullptr)
     //: fragment(xfragments->fragment()->c_str()), anchored(xfragments->anchored()), requirements(nullptr)
 {
     /*

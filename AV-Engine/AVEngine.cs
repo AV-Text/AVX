@@ -46,8 +46,10 @@ namespace AVXFramework
                             else if (blueprint.Commands != null)
                             {
                                 var expression = blueprint.Commands.Searches.ToList();
-                                string yaml = ICommand.YamlSerializerRaw(expression);
+//                              string yaml = ICommand.YamlSerializerRaw(expression);
+                                string yaml = ICommand.JsonSerializerRaw(expression);
 
+                                // CancellationToken++ code needs to be refactored with RapidJson (delete references to RapidYaml)
                                 UInt16 span = blueprint.LocalSettings.Span.Value;
                                 byte lexicon = (byte) (blueprint.LocalSettings.Lexicon.Value);
                                 byte similarity = blueprint.LocalSettings.Similarity.Value;

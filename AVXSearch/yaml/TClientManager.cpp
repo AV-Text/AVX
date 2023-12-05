@@ -8,6 +8,8 @@
 #include "TClientManager.h"
 #include <AVXBlueprint.h>
 
+#include <rapidjson/document.h>
+
 static TClientManager ClientManager;
 
 static const char* EMPTY = "";
@@ -23,11 +25,16 @@ extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 cli
 {
 	uint128 client_id(client_id1, client_id2);
 	TQuery* query = ClientManager.initialize(client_id, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
-	auto root = query->execute();
+	rapidjson::Document doc;
+
+	if (query->execute(doc))
+	{
+		;
+	}
 
 	// TO DO (TODO): Serialize tree into yaml string
 
-	return root != nullptr ? EMPTY : EMPTY;
+	return EMPTY;
 }
 
 extern "C" __declspec(dllexport) byte add_scope(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter, byte verse)
@@ -39,21 +46,31 @@ extern "C" __declspec(dllexport) byte add_scope(uint64 client_id1, uint64 client
 extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 client_id2, uint64 query_id)
 {
 	uint128 client_id(client_id1, client_id2);
-	auto root = ClientManager.execute(client_id, query_id);
+	rapidjson::Document doc;
+
+	if (ClientManager.execute(doc, client_id, query_id))
+	{
+		;
+	}
 
 	// TO DO (TODO): Serialize tree into yaml string
 
-	return root != nullptr ? EMPTY : EMPTY;
+	return EMPTY;
 }
 
 extern "C" __declspec(dllexport) const char* fetch_results(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book)
 {
 	uint128 client_id(client_id1, client_id2);
-	auto root = ClientManager.fetch_results(client_id, query_id, book);
+	rapidjson::Document doc;
+
+	if (ClientManager.fetch_results(doc, client_id, query_id, book))
+	{
+		;
+	}
 
 	// TO DO (TODO): Serialize tree into yaml string
 
-	return root != nullptr ? EMPTY : EMPTY;
+	return EMPTY;
 }
 
 extern "C" __declspec(dllexport) void release_client(uint64 client_id1, uint64 client_id2)
@@ -109,7 +126,7 @@ bool TClientManager::add_scope(uint128 client_id, uint64 query_id, byte book, by
 	return false;
 }
 
-ryml::ConstNodeRef* TClientManager::execute(uint128 client_id, uint64 query_id)
+bool TClientManager::execute(rapidjson::Document& doc, uint128 client_id, uint64 query_id)
 {
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -117,13 +134,13 @@ ryml::ConstNodeRef* TClientManager::execute(uint128 client_id, uint64 query_id)
 	{
 		qmgr = candidate->second;
 
-		return qmgr->execute(query_id);
+		return qmgr->execute(doc, query_id);
 	}
-	return nullptr;
+	return false;
 }
 
 
-ryml::ConstNodeRef* TClientManager::fetch_results(uint128 client_id, uint64 query_id, byte book)
+bool TClientManager::fetch_results(rapidjson::Document& doc, uint128 client_id, uint64 query_id, byte book)
 {
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -131,9 +148,9 @@ ryml::ConstNodeRef* TClientManager::fetch_results(uint128 client_id, uint64 quer
 	{
 		qmgr = candidate->second;
 
-		return qmgr->fetch_results(query_id, book);
+		return qmgr->fetch_results(doc, query_id, book);
 	}
-	return nullptr;
+	return false;
 }
 
 void TClientManager::release_client(uint128 client_id)

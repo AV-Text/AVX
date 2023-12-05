@@ -4,26 +4,20 @@
 
 #include <book.h>
 
-#include <ryml.hpp>
-#include <ryml_std.hpp>
+#include <rapidjson/document.h>
+
 
 AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching)
     : settings(span, lex, similarity, auto_lemma_matching)
 {
-    int len = strlen(data);
-    char yaml[32*1024];    // TO DO (TODO): Why does this need to be fixed size on the stack?
-    yaml[len] = '\0';
-    for (int i = 0; i < len; i++)
-        yaml[i] = data[i];
+    this->root.Parse(data);
 
-    this->tree = ryml::parse_in_place(yaml);
     this->okay = false;
 
-    this->request = tree.crootref();
-    auto expression = this->request["searches"];
-    for (auto search : expression)
+    for (rapidjson::Value::ConstMemberIterator itr = this->root.MemberBegin(); itr != this->root.MemberEnd(); ++itr)
     {
-        this->searches.push_back(new AVXFind(search));
+        const rapidjson::Value& expression = itr->value;
+        this->searches.push_back(new AVXFind(expression));
         this->okay = true;
     }
 }

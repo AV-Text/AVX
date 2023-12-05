@@ -4,7 +4,7 @@
 
 class AVXComparator;
 
-#include <ryml.hpp>
+#include <rapidjson/document.h>
 
 class AVXMatchAny
 {
@@ -12,7 +12,7 @@ public:
 	const char* options;
 	AVXComparator** features;
 
-	AVXMatchAny(ryml::ConstNodeRef options);
+	AVXMatchAny(rapidjson::Value& options);
 
 	~AVXMatchAny();
 
