@@ -1,6 +1,8 @@
 #pragma once
 #include <directory.h>
 #include <map>
+#include <vector>
+#include <string>
 
 class AVXComparator;
 
@@ -10,9 +12,9 @@ class AVXMatchAny
 {
 public:
 	const char* options;
-	AVXComparator** features;
+	std::vector <AVXComparator*> features;
 
-	AVXMatchAny(rapidjson::Value& options);
+	AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts);
 
 	~AVXMatchAny();
 
@@ -22,4 +24,8 @@ public:
 	{
 		return (((uint32)writ.b) << 24) + (((uint32)writ.c) << 16) + (((uint32)writ.b) << 8) + (uint32)writ.wc;
 	}
+private:
+	rapidjson::GenericObject<true, rapidjson::Value>& matchany;
+	bool okay;
+	std::string error;
 };

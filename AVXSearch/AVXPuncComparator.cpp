@@ -11,16 +11,9 @@ uint16 AVXPuncComparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXPuncComparator::AVXPuncComparator(const rapidjson::Value& node) : AVXComparator(node), punc(0)
+AVXPuncComparator::AVXPuncComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node), punc((byte)node["pos32"].GetUint())
 {
-	/*
-	auto comparitor = feature->match_as_punctuation();
-
-	if (comparitor != nullptr)
-	{
-		this->punc = comparitor->bits();
-	}
-	*/
+	;
 }
 
 AVXPuncComparator::~AVXPuncComparator()

@@ -11,16 +11,9 @@ uint16 AVXTransitionComparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXTransitionComparator::AVXTransitionComparator(const rapidjson::Value& node) : AVXComparator(node), tran(0)
+AVXTransitionComparator::AVXTransitionComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node), tran((byte)node["pos32"].GetUint())
 {
-	/*
-	auto comparitor = feature->match_as_punctuation();
-
-	if (comparitor != nullptr)
-	{
-		this->tran = comparitor->bits();
-	}
-	*/
+	;
 }
 
 AVXTransitionComparator::~AVXTransitionComparator()

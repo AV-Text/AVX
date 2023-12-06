@@ -10,15 +10,27 @@
 AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching)
     : settings(span, lex, similarity, auto_lemma_matching)
 {
-    this->root.Parse(data);
-
     this->okay = false;
-
-    for (rapidjson::Value::ConstMemberIterator itr = this->root.MemberBegin(); itr != this->root.MemberEnd(); ++itr)
+    
+    this->root.Parse(data);
+    if (this->root.IsArray())
     {
-        const rapidjson::Value& expression = itr->value;
-        this->searches.push_back(new AVXFind(expression));
-        this->okay = true;
+        auto array = this->root.GetArray();
+
+        for (auto segment = array.Begin(); segment != array.End(); ++segment)
+        {
+            rapidjson::GenericObject<false, rapidjson::Value> expression = segment->GetObj();
+            this->searches.push_back(new AVXFind(expression));
+            this->okay = true;
+        }
+    }
+    else
+    {
+        error = "Unable to parse search blueprint";
+    }
+    if (this->error.empty() && !this->okay)
+    {
+        error = "Unable to extract any search blueprint";
     }
 }
 AVXBlueprint::~AVXBlueprint()

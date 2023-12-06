@@ -11,16 +11,9 @@ uint16 AVXPOS32Comparator::compare(const WrittenContent& writ)
 	return match ? AVXComparator::FullMatch : 0;
 }
 
-AVXPOS32Comparator::AVXPOS32Comparator(const rapidjson::Value& node) : AVXComparator(node), pos32(0)
+AVXPOS32Comparator::AVXPOS32Comparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node), pos32(node["pos32"].GetUint())
 {
-	/*
-	auto comparitor = feature->match_as_pos16();
-
-	if (comparitor != nullptr)
-	{
-		this->pos32 = comparitor->pnpos();
-	}
-	*/
+	;
 }
 AVXPOS32Comparator::~AVXPOS32Comparator()
 {

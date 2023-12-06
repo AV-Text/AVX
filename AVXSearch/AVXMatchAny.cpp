@@ -2,54 +2,48 @@
 
 #include <written.h>
 #include <AVXComparator.h>
+#include <vector>
 
-AVXMatchAny::AVXMatchAny(rapidjson::Value& options) : options(""), features(nullptr)
-    // : options(xoption->option()->c_str()), features(nullptr)
+AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts) : matchany(opts), options(opts["options"].GetString())
 {
-    this->options = "foo-option"; // xoption->option()->c_str();
-    //auto xfeatures = options["features"];
-    //if (xfeatures != nullptr)
+    this->okay = false;
+
+    if (this->matchany["features"].IsArray())
     {
-        /*
-        int features_size = xfeatures->size();
-        this->features = (AVXComparator**)calloc(features_size + 1, sizeof(AVXComparator*));
-        for (int f = 0; f < features_size; f++)
+        auto array = this->matchany["features"].GetArray();
+
+        for (auto feature = array.Begin(); feature != array.End(); ++feature)
         {
-            auto xfeature = (*xfeatures)[f];
-            this->features[f] = create_feature(xfeature);
+            rapidjson::GenericObject<true, rapidjson::Value> option = feature->GetObj();
+            this->features.push_back(AVXComparator::Create(option));
+            this->okay = true;
         }
-        */
     }
+
+    if (this->error.empty() && !this->okay)
+    {
+        error = "Unable to extract any fragments from the search expression";
+    }
+    this->options = "foo-option"; // xoption->option()->c_str();
 }
 
 bool AVXMatchAny::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched)
 {
-    if (this->features != nullptr) // features are OR conditions (|)
+    for (AVXComparator* feature : this->features)
     {
-        for (int i = 0; this->features[i] != nullptr; i++)
+        auto hit = feature->compare(writ);
+        if (hit > 0)
         {
-            auto hit = this->features[i]->compare(writ);
-            if (hit > 0)
-            {
-                auto coord = WritAsCoordinate(writ);
-                auto result = std::make_tuple(this->options, (const uint16)hit);
-                matched.emplace(coord, result);
-                return true;
-            }
+            auto coord = WritAsCoordinate(writ);
+            auto result = std::make_tuple(this->options, (const uint16)hit);
+            matched.emplace(coord, result);
+            return true;
         }
-        return false;
     }
     return false;
 }
 
 AVXMatchAny::~AVXMatchAny()
 {
-    if (this->features != nullptr)
-    {
-        for (int i = 0; this->features[i] != nullptr; i++)
-        {
-            std::free((void*)this->features[i]);
-        }
-        std::free(this->features);
-    }
+    ;
 }

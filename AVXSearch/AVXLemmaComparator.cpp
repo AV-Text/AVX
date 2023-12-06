@@ -10,43 +10,29 @@ uint16 AVXLemmaComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 
-	if (this->lemmata != nullptr)
-	{
-		for (int i = 0; lemmata[i]; i++)
-			if (positive && (lemmata[i] == writ.lemma))
-				return AVXComparator::FullMatch;
-	}
+	for (auto lemma : this->lemmata)
+		if (positive && (lemma == writ.lemma))
+			return AVXComparator::FullMatch;
+
 	return positive ? 0 : AVXComparator::FullMatch;
 }
 
-AVXLemmaComparator::AVXLemmaComparator(const rapidjson::Value& node) : AVXComparator(node), lemmata(nullptr)
+AVXLemmaComparator::AVXLemmaComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node)
 {
-	if (this->feature != nullptr)
+	if (this->node["lemmata"].IsArray())
 	{
-		auto comparator = "foo-lemma"; // feature->match_as_lemma();
+		auto array = this->node["lemmata"].GetArray();
 
-		if (comparator != nullptr)
+		for (auto lemma = array.Begin(); lemma != array.End(); ++lemma)
 		{
-			/*
-			auto lemmata = comparator->lemmata();
-
-			if (lemmata != nullptr)
-			{
-				int len = lemmata->size();
-				this->lemmata = (uint16*)std::calloc((lemmata->size() + 1), sizeof(uint16)); // null terminated
-				for (int i = 0; i < len; i++)
-					;//this->lemmata[i] = lemmata[i];
-			}
-			*/
+			uint16 num = lemma->GetUint();
+			this->lemmata.push_back(num);
 		}
 	}
 }
 
 AVXLemmaComparator::~AVXLemmaComparator()
 {
-	if (this->lemmata != nullptr)
-	{
-		std::free(this->lemmata);
-	}
+	;
 }
 

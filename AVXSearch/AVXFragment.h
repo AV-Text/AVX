@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
-
+#include <string>
+#include <vector>
 #include <directory.h>
 #include <rapidjson/document.h>
 
@@ -8,14 +9,18 @@ class AVXMatchAny;
 class AVXFragment
 {
 public:
-	AVXFragment(rapidjson::Value& fragments);
+	AVXFragment(rapidjson::GenericObject<true, rapidjson::Value>& fragment);
 
-	const char* fragment;
+	const rapidjson::GenericObject<true, rapidjson::Value>& fragment;
 	const bool anchored;
-	AVXMatchAny** requirements;
+	std::vector <AVXMatchAny*> requirements;
 
 	~AVXFragment();
 
 	bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched);
+
+private:
+	bool okay;
+	std::string error;
 };
 

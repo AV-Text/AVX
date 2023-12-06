@@ -15,16 +15,16 @@ static TClientManager ClientManager;
 static const char* EMPTY = "";
 
 // C API:
-extern "C" __declspec(dllexport) uint64 create_query(uint64 client_id1, uint64 client_id2, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+extern "C" __declspec(dllexport) uint64 create_query(uint64 client_id1, uint64 client_id2, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
 	uint128 client_id(client_id1, client_id2);
-	return uint64(ClientManager.initialize(client_id, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata));
+	return uint64(ClientManager.initialize(client_id, blueprint, span, lexicon, similarity, fuzzy_lemmata));
 }
 
-extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 client_id1, uint64 client_id2, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 client_id1, uint64 client_id2, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
 	uint128 client_id(client_id1, client_id2);
-	TQuery* query = ClientManager.initialize(client_id, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
+	TQuery* query = ClientManager.initialize(client_id, blueprint, span, lexicon, similarity, fuzzy_lemmata);
 	rapidjson::Document doc;
 
 	if (query->execute(doc))
@@ -93,9 +93,9 @@ TClientManager::~TClientManager(){
 
 }
 
-TQuery* TClientManager::initialize(uint128 client_id, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+TQuery* TClientManager::initialize(uint128 client_id, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
-	AVXBlueprint* blueprint = new AVXBlueprint(yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
+	AVXBlueprint* oo_blueprint = new AVXBlueprint(blueprint, span, lexicon, similarity, fuzzy_lemmata);
 
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -108,7 +108,7 @@ TQuery* TClientManager::initialize(uint128 client_id, char yaml_blueprint[], uin
 		qmgr = new TQueryManager();
 		this->clients.insert(std::make_pair(client_id, qmgr));
 	}
-	TQuery* query = qmgr->initialize(blueprint);
+	TQuery* query = qmgr->initialize(oo_blueprint);
 	/* TO DO: YAML serialization (TODO) */
 	return  nullptr;
 }

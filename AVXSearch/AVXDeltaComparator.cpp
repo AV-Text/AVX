@@ -16,16 +16,9 @@ uint16 AVXDeltaComparator::compare(const WrittenContent& writ)
 	return false;
 }
 
-AVXDeltaComparator::AVXDeltaComparator(const rapidjson::Value& node) : AVXComparator(node), delta(false)
+AVXDeltaComparator::AVXDeltaComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node), delta(node["delta"].GetBool())
 {
-	/*
-	auto comparitor = feature->match_as_delta();
-
-	if (comparitor != nullptr)
-	{
-		this->delta = comparitor->differs();
-	}
-	*/
+	;
 }
 
 AVXDeltaComparator::~AVXDeltaComparator()

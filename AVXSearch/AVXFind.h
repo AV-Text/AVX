@@ -4,7 +4,7 @@
 #include <string>
 
 #include <rapidjson/document.h>
-
+#include <AVXFragment.h>
 //class AVXFound;
 
 class AVXFind
@@ -12,17 +12,46 @@ class AVXFind
 public:
 //    std::vector<AVXFound*> founds;
 
-    AVXFind(const rapidjson::Value& find): segment(find)
+    friend class AVXBlueprint;
+
+    AVXFind(const rapidjson::GenericObject<false, rapidjson::Value>& expression): segment(expression), quoted(expression["isQuoted"].GetBool())
     {
-        ;
+        this->okay = false;
+        if (this->segment.IsObject())
+        {
+            if (this->segment["fragments"].IsArray())
+            {
+                auto array = this->segment["fragments"].GetArray();
+
+                for (auto fragment = array.Begin(); fragment != array.End(); ++fragment)
+                {
+                    rapidjson::GenericObject<true, rapidjson::Value> frag = fragment->GetObj();
+                    this->fragments.push_back(new AVXFragment(frag));
+                    this->okay = true;
+                }
+            }
+        }
+        else
+        {
+            error = "Unable to parse search expression";
+        }
+        if (this->error.empty() && !this->okay)
+        {
+            error = "Unable to extract any fragments from the search expression";
+        }
     }
     ~AVXFind()
     {
         ;
     }
+    const bool quoted;
+    std::vector<const AVXFragment*> fragments;
+
 //    bool add(AVXFound* found);
 
 private:
     const rapidjson::Value& segment;
+    std::string error;
+    bool okay;
 };
     

@@ -20,7 +20,7 @@ public:
 	virtual ~TClientManager();
 	std::map<uint128, TQueryManager*> clients;
 
-	TQuery* initialize(uint128 client_guid, char yaml_blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+	TQuery* initialize(uint128 client_guid, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
 	bool add_scope(uint128 client_guid, uint64 query_id, byte book, byte chapter, byte verse);
 
 	// returns yaml of TQuery:

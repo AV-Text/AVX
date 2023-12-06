@@ -9,9 +9,9 @@
     {
         // AVX-Search:
         [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
-        private static extern UInt64 create_query(UInt64 client_id_1, UInt64 client_id_2, string yaml_blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+        private static extern UInt64 create_query(UInt64 client_id_1, UInt64 client_id_2, string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
         [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
-        private static extern string create_query_and_execute(UInt64 client_id_1, UInt64 client_id_2, string yaml_blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+        private static extern string create_query_and_execute(UInt64 client_id_1, UInt64 client_id_2, string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
         [DllImport("AVXSearch.dll")]
         private static extern byte add_scope(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id, byte book, byte chapter, byte verse);
         [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
@@ -58,14 +58,14 @@
         {
             this.ClientId = new Guid();
         }
-        internal UInt64 create_query(string yaml_blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+        internal UInt64 create_query(string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
         {
-            var result = NativeLibrary.create_query(this.ClientId_1, this.ClientId_2, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
+            var result = NativeLibrary.create_query(this.ClientId_1, this.ClientId_2, blueprint, span, lexicon, similarity, fuzzy_lemmata);
             return result;
         }
-        internal string create_query_and_execute(string yaml_blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+        internal string create_query_and_execute(string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
         {
-            var result = NativeLibrary.create_query_and_execute(this.ClientId_1, this.ClientId_2, yaml_blueprint, span, lexicon, similarity, fuzzy_lemmata);
+            var result = NativeLibrary.create_query_and_execute(this.ClientId_1, this.ClientId_2, blueprint, span, lexicon, similarity, fuzzy_lemmata);
             return result;
         }
         internal string fetch_results(UInt64 query_id, byte book)

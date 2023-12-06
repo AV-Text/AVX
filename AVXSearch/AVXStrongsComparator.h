@@ -4,9 +4,9 @@
 class AVXStrongsComparator : public AVXComparator
 {
 public: 
-	char lang;
-	uint16 number;
-	AVXStrongsComparator(const rapidjson::Value& node);
+	std::string lang;
+	const uint16 number;
+	AVXStrongsComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node);
 	virtual uint16 compare(const WrittenContent& writ);
 	virtual ~AVXStrongsComparator();
 };

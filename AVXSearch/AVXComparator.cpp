@@ -8,7 +8,7 @@
 #include "AVXTransitionComparator.h"
 #include "AVXStrongsComparator.h"
 
-AVXComparator* AVXComparator::Create(const rapidjson::Value& node)
+AVXComparator* AVXComparator::Create(const rapidjson::GenericObject<true, rapidjson::Value>& node)
 {
     auto feature = node["feature"].GetString();
 
@@ -48,7 +48,6 @@ AVXComparator* AVXComparator::Create(const rapidjson::Value& node)
         {
             return new AVXTransitionComparator(node);
         }
-        return new AVXComparator(node, false); // comparisons are ALWAYS false; this is a fail-safely error condition
     }
-    return nullptr;
+    return new AVXComparator(node, false); // comparisons are ALWAYS false in the base-class; this is a fail-safely error condition
 }

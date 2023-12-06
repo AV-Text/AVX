@@ -10,45 +10,32 @@ uint16 AVXWordComparator::compare(const WrittenContent& writ)
 {
 	bool positive = !this->negate;
 
-	if (this->wkeys != nullptr)
-	{
-		for (int i = 0; wkeys[i]; i++)
-			if (wkeys[i] == (writ.wkey & 0x3FF))
-				return positive ? AVXComparator::FullMatch : 0;
+	for (auto key : this->wkeys)
+		if (key == (writ.wkey & 0x3FF))
+			return positive ? AVXComparator::FullMatch : 0;
 
-		// TO DO: (TODO)
-		// Fuzzy match
-	}
+	// TO DO: (TODO)
+	// Fuzzy match
+
 	return positive ? 0 : this->AVXComparator::FullMatch;
 }
 
-AVXWordComparator::AVXWordComparator(const rapidjson::Value& node) : AVXComparator(node), wkeys(nullptr)
+AVXWordComparator::AVXWordComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node)
 {
-	/*
-	if (feature != nullptr)
+	if (this->node["wkeys"].IsArray())
 	{
-		auto comparator = feature->match_as_text();
+		auto array = this->node["wkeys"].GetArray();
 
-		if (comparator != nullptr)
+		for (auto word = array.Begin(); word != array.End(); ++word)
 		{
-			auto keys = comparator->lex();
-
-			if (keys != nullptr)
-			{
-				int len = keys->size();
-				this->wkeys = (uint16*)std::calloc((keys->size() + 1), sizeof(uint16)); // null terminated
-				for (int i = 0; i < len; i++)
-					;// this->wkeys[i] = (*keys)[i];
-			}
+			uint16 num = word->GetUint();
+			this->wkeys.push_back(num);
 		}
 	}
-	*/
 }
+
 AVXWordComparator::~AVXWordComparator()
 {
-	if (this->wkeys != nullptr)
-	{
-		std::free(this->wkeys);
-	}
+	;
 }
 

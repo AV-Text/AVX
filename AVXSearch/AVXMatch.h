@@ -1,6 +1,7 @@
 #pragma once
 #include <avxgen.h>
 #include <string>
+#include <vector>
 
 class AVXMatch
 {
