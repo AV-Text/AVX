@@ -2,15 +2,15 @@
 #include "AVXFragment.h"
 #include "AVXBlueprint.h"
 #include "AVXFind.h"
-#include "OBSOLETE_AVXFound.h"
-#include "AVXMatch.h"
+#include <yaml/TMatch.h>
+#include <yaml/TFound.h>
 #include <map>
 #include <directory.h>
 #include <book.h>
 
 static std::unordered_set<uintptr_t> MemoryTable;
 
-bool AVXSearch::search_quoted()
+bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
 {
     uint32 seg_cnt = 0;
     if (this->requirements == nullptr)
@@ -60,12 +60,12 @@ bool AVXSearch::search_quoted()
                         }
                     }
                     hit = true;
-                    auto found = new AVXFound();
+                    auto found = new TFound();
                     for (auto const& [coord, pair] : matched)
                     {
                         const char* frag = std::get<0>(pair);
                         const char* feat = std::get<0>(pair);
-                        auto match = new AVXMatch((uint32) coord, frag, feat);
+                        auto match = new TMatch((uint32) coord, frag, feat);
                         found->add(match);
                     }
                     //this->results.founds.push_back(found);
@@ -119,7 +119,7 @@ bool AVXSearch::search_quoted()
     }
     return hit;
 }
-bool AVXSearch::search_unquoted()
+bool AVXSearch::search_unquoted(TQuery& query, AVXFind& segment)
 {
     uint32 seg_cnt = 0;
     if (this->requirements == nullptr)
@@ -172,12 +172,12 @@ bool AVXSearch::search_unquoted()
                     if (hit_cnt == seg_cnt)
                     {
                         found = true;
-                        auto foundMatch = new AVXFound();
+                        auto foundMatch = new TFound();
                         for (auto const& [coord, pair] : matched)
                         {
                             const char* frag = std::get<0>(pair);
                             const char* feat = std::get<0>(pair);
-                            auto match = new AVXMatch((uint32)coord, frag, feat);
+                            auto match = new TMatch((uint32)coord, frag, feat);
                             foundMatch->add(match);
                         }
                         //this->results.founds.push_back(foundMatch);

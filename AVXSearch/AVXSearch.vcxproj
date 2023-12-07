@@ -23,10 +23,8 @@
     <ClCompile Include="AVXBlueprint.cpp" />
     <ClCompile Include="AVXComparator.cpp" />
     <ClCompile Include="AVXDeltaComparator.cpp" />
-    <ClCompile Include="OBSOLETE_AVXFound.cpp" />
     <ClCompile Include="AVXMatchAny.cpp" />
     <ClCompile Include="AVXLemmaComparator.cpp" />
-    <ClCompile Include="AVXMatch.cpp" />
     <ClCompile Include="AVXPOS16Comparator.cpp" />
     <ClCompile Include="AVXPOS32Comparator.cpp" />
     <ClCompile Include="AVXPuncComparator.cpp" />
@@ -41,7 +39,6 @@
     <ClCompile Include="yaml\TExpression.cpp" />
     <ClCompile Include="yaml\TFound.cpp" />
     <ClCompile Include="yaml\TFragment.cpp" />
-    <ClCompile Include="yaml\TMatch.cpp" />
     <ClCompile Include="yaml\TQuery.cpp" />
     <ClCompile Include="yaml\TQueryManager.cpp" />
     <ClCompile Include="yaml\TSettings.cpp" />
@@ -51,10 +48,8 @@
     <ClInclude Include="AVXComparator.h" />
     <ClInclude Include="AVXDeltaComparator.h" />
     <ClInclude Include="AVXFind.h" />
-    <ClInclude Include="OBSOLETE_AVXFound.h" />
     <ClInclude Include="AVXMatchAny.h" />
     <ClInclude Include="AVXLemmaComparator.h" />
-    <ClInclude Include="AVXMatch.h" />
     <ClInclude Include="AVXPOS16Comparator.h" />
     <ClInclude Include="AVXPOS32Comparator.h" />
     <ClInclude Include="AVXPuncComparator.h" />

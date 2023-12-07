@@ -23,16 +23,10 @@
     <ClCompile Include="AVXDeltaComparator.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
-    <ClCompile Include="OBSOLETE_AVXFound.cpp">
-      <Filter>AVX</Filter>
-    </ClCompile>
     <ClCompile Include="AVXMatchAny.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXLemmaComparator.cpp">
-      <Filter>AVX</Filter>
-    </ClCompile>
-    <ClCompile Include="AVXMatch.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
     <ClCompile Include="AVXPOS16Comparator.cpp">
@@ -80,9 +74,6 @@
     <ClCompile Include="yaml\TFragment.cpp">
       <Filter>Results</Filter>
     </ClCompile>
-    <ClCompile Include="yaml\TMatch.cpp">
-      <Filter>Results</Filter>
-    </ClCompile>
     <ClCompile Include="yaml\TQuery.cpp">
       <Filter>Results</Filter>
     </ClCompile>
@@ -106,16 +97,10 @@
     <ClInclude Include="AVXFind.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBSOLETE_AVXFound.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AVXMatchAny.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXLemmaComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXMatch.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXPOS16Comparator.h">

@@ -10,6 +10,7 @@
 
 #include <avxgen.h>
 #include "TFound.h"
+#include <vector>
 
 class TChapter
 {
@@ -20,7 +21,7 @@ public:
 	byte chapter_num;
 	uint64 total_hits;
 	uint64 verse_hits;
-	TFound *m_TFound;
 
+	std::vector<const TFound*> findings;
 };
 #endif // !defined(EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_)

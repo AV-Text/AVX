@@ -10,21 +10,32 @@
 
 #include <avxgen.h>
 #include "TMatch.h"
+#include "TQuery.h"
+
+#include <AVXFind.h>
 
 #include <string>
+#include <vector>
 
 class TFound
 {
 
 public:
-	TFound();
+	TFound(TQuery& query, AVXFind& segment);
+	TFound(TQuery& query, AVXFind& segment, uint32 start, uint32 until);
 	virtual ~TFound();
-	std::string fragment;
-	uint64 match_cnt;
-	TMatch matches;
+
 	uint32 start;
 	uint32 until;
-	TMatch *m_TMatch;
 
+	bool add(TMatch* match);
+
+	std::vector<const TMatch*> matches;
+
+	TQuery& find();
+
+private:
+	TQuery& query;
+	AVXFind& segment;
 };
 #endif // !defined(EA_E07CC064_DC37_4046_A402_A2744A35A453__INCLUDED_)
