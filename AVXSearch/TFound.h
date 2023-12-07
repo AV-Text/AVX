@@ -9,14 +9,14 @@
 #define EA_E07CC064_DC37_4046_A402_A2744A35A453__INCLUDED_
 
 #include <avxgen.h>
-#include "TMatch.h"
-#include "TQuery.h"
-
-#include <AVXFind.h>
+#include <TMatch.h>
+#include <TQuery.h>
 
 #include <string>
 #include <vector>
 
+class AVXFind;
+class TQuery;
 class TFound
 {
 

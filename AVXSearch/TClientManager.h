@@ -23,10 +23,10 @@ public:
 	TQuery* initialize(uint128 client_guid, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
 	bool add_scope(uint128 client_guid, uint64 query_id, byte book, byte chapter, byte verse);
 
-	// returns yaml of TQuery:
+	// returns json of TQuery:
 	bool execute(rapidjson::Document&, uint128 client_guid, uint64 query_id);
 
-	// returns yaml of TQuery::books[book].fetch_results():
+	// returns json of TQuery::books[book].fetch_results():
 	bool fetch_results(rapidjson::Document&, uint128 client_guid, uint64 query_id, byte book);
 
 	void release_client(uint128 client_guid);

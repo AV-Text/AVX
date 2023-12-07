@@ -33,15 +33,15 @@
     <ClCompile Include="AVXStrongsComparator.cpp" />
     <ClCompile Include="AVXTransitionComparator.cpp" />
     <ClCompile Include="AVXWordComparator.cpp" />
-    <ClCompile Include="yaml\TBook.cpp" />
-    <ClCompile Include="yaml\TChapter.cpp" />
-    <ClCompile Include="yaml\TClientManager.cpp" />
-    <ClCompile Include="yaml\TExpression.cpp" />
-    <ClCompile Include="yaml\TFound.cpp" />
-    <ClCompile Include="yaml\TFragment.cpp" />
-    <ClCompile Include="yaml\TQuery.cpp" />
-    <ClCompile Include="yaml\TQueryManager.cpp" />
-    <ClCompile Include="yaml\TSettings.cpp" />
+    <ClCompile Include="TBook.cpp" />
+    <ClCompile Include="TChapter.cpp" />
+    <ClCompile Include="TClientManager.cpp" />
+    <ClCompile Include="TExpression.cpp" />
+    <ClCompile Include="TFound.cpp" />
+    <ClCompile Include="TFragment.cpp" />
+    <ClCompile Include="TQuery.cpp" />
+    <ClCompile Include="TQueryManager.cpp" />
+    <ClCompile Include="TSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVXBlueprint.h" />
@@ -59,16 +59,16 @@
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
-    <ClInclude Include="yaml\TBook.h" />
-    <ClInclude Include="yaml\TChapter.h" />
-    <ClInclude Include="yaml\TClientManager.h" />
-    <ClInclude Include="yaml\TExpression.h" />
-    <ClInclude Include="yaml\TFound.h" />
-    <ClInclude Include="yaml\TFragment.h" />
-    <ClInclude Include="yaml\TMatch.h" />
-    <ClInclude Include="yaml\TQuery.h" />
-    <ClInclude Include="yaml\TQueryManager.h" />
-    <ClInclude Include="yaml\TSettings.h" />
+    <ClInclude Include="TBook.h" />
+    <ClInclude Include="TChapter.h" />
+    <ClInclude Include="TClientManager.h" />
+    <ClInclude Include="TExpression.h" />
+    <ClInclude Include="TFound.h" />
+    <ClInclude Include="TFragment.h" />
+    <ClInclude Include="TMatch.h" />
+    <ClInclude Include="TQuery.h" />
+    <ClInclude Include="TQueryManager.h" />
+    <ClInclude Include="TSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

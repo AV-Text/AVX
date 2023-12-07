@@ -32,7 +32,7 @@ extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 cli
 		;
 	}
 
-	// TO DO (TODO): Serialize tree into yaml string
+	// TO DO (TODO): Serialize tree into json string
 
 	return EMPTY;
 }
@@ -53,7 +53,7 @@ extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 c
 		;
 	}
 
-	// TO DO (TODO): Serialize tree into yaml string
+	// TO DO (TODO): Serialize tree into json string
 
 	return EMPTY;
 }
@@ -68,7 +68,7 @@ extern "C" __declspec(dllexport) const char* fetch_results(uint64 client_id1, ui
 		;
 	}
 
-	// TO DO (TODO): Serialize tree into yaml string
+	// TO DO (TODO): Serialize tree into json string
 
 	return EMPTY;
 }
@@ -109,7 +109,7 @@ TQuery* TClientManager::initialize(uint128 client_id, char blueprint[], uint16 s
 		this->clients.insert(std::make_pair(client_id, qmgr));
 	}
 	TQuery* query = qmgr->initialize(oo_blueprint);
-	/* TO DO: YAML serialization (TODO) */
+	/* TO DO: json serialization (TODO) */
 	return  nullptr;
 }
 

@@ -2,8 +2,8 @@
 #include "AVXFragment.h"
 #include "AVXBlueprint.h"
 #include "AVXFind.h"
-#include <yaml/TMatch.h>
-#include <yaml/TFound.h>
+#include <TMatch.h>
+#include <TFound.h>
 #include <map>
 #include <directory.h>
 #include <book.h>
@@ -12,12 +12,9 @@ static std::unordered_set<uintptr_t> MemoryTable;
 
 bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
 {
-    uint32 seg_cnt = 0;
-    if (this->requirements == nullptr)
-        return false;
-    for (/**/; this->requirements[seg_cnt]; seg_cnt++)
-        ;
-    if (seg_cnt == 0)
+    auto frag_cnt = segment.fragments.size();
+
+    if (frag_cnt < 1)
         return false;
 
     bool hit = false;
@@ -28,24 +25,28 @@ bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
 
         uint32 w;
 
-        if (this->settings.span > 0)
+        if (query.settings.span > 0)
         {
             uint32 len = 0;
             for (w = 0; w < book.writ_cnt; w++, writ++)
             {
                 if (len == 0)
                 {
-                    len = w + this->settings.span;
+                    len = w + query.settings.span;
                     if (len > book.writ_cnt)
                         len = book.writ_cnt;
                 }
                 std::map<uint32, std::tuple<const char*, const uint16>> matched;
-                bool found = this->requirements[0]->compare(*writ, matched);
+                bool found = false; // obsolete from AVXFound: this->requirements[0]->compare(*writ, matched);
                 if (found)
                 {
                     uint32 wi = w;
                     auto spanwrit = writ + 1;
 
+                    for (auto fragment : segment.fragments)
+                    {
+                        ;
+                    }/*
                     for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
                     {
                         for (auto& segment = *(this->requirements[seg_idx]); wi < len; wi++, spanwrit++)
@@ -69,6 +70,7 @@ bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
                         found->add(match);
                     }
                     //this->results.founds.push_back(found);
+                    */
                 }
             NOT_FOUND_1:
             continue;
@@ -80,13 +82,18 @@ bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
             for (w = 0; w < book.writ_cnt; w += len, writ += len)
             {
                 std::map<uint32, std::tuple<const char*, const uint16>> matched;
-                bool found = this->requirements[0]->compare(*writ, matched);
+                bool found = false; // this->requirements[0]->compare(*writ, matched);
                 if (found)
                 {
                     uint32 wi = w;
                     uint32 wi_len = wi + len;
 
                     auto spanwrit = writ + 1;
+
+                    for (auto fragment : segment.fragments)
+                    {
+                        ;
+                    }/*
 
                     for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
                     { 
@@ -102,14 +109,14 @@ bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
                         }
                     }
                     hit = true;
-                    auto found = new AVXFound();
+                    auto found = new TFound();
                     for (auto const& [coord, pair] : matched)
                     {
                         const char* frag = std::get<0>(pair);
                         const char* feat = std::get<0>(pair);
                         auto match = new AVXMatch((uint32)coord, frag, feat);
                         found->add(match);
-                    }
+                    }*/
                     //this->results.founds.push_back(found);
                 }
             NOT_FOUND_2:
@@ -121,16 +128,13 @@ bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
 }
 bool AVXSearch::search_unquoted(TQuery& query, AVXFind& segment)
 {
-    uint32 seg_cnt = 0;
-    if (this->requirements == nullptr)
-        return false;
-    for (/**/; this->requirements[seg_cnt]; seg_cnt++)
-        ;
-    if (seg_cnt == 0)
+    auto frag_cnt = segment.fragments.size();
+
+    if (frag_cnt < 1)
         return false;
 
     bool found = false;
-    bool *hits = new bool[seg_cnt];
+    bool *hits = new bool[frag_cnt];
     for (uint8 b = 1; b <= 66; b++)
     {
         uint32 hit_cnt = 0;
@@ -142,9 +146,9 @@ bool AVXSearch::search_unquoted(TQuery& query, AVXFind& segment)
         for (/**/; writ <= until; /**/)
         {
             uint32 cnt = 0;
-            for (uint32 i = 0; i < seg_cnt; i++)
+            for (uint32 i = 0; i < frag_cnt; i++)
                 hits[i] = false;
-            uint16 span = this->settings.span > 0 ? this->settings.span : writ->wc;
+            uint16 span = query.settings.span > 0 ? query.settings.span : writ->wc;
             if (writ + span - 1 > until)
                 span = (uint16)(until - writ);
 
@@ -152,39 +156,40 @@ bool AVXSearch::search_unquoted(TQuery& query, AVXFind& segment)
             {
                 std::map<uint32, std::tuple<const char*, const uint16>> matched;
                 found = false;
-                for (uint32 s = 0; (!found) && (s < seg_cnt); s++)
+
+                for (auto frag : segment.fragments)
                 {
-                    bool hit  = this->requirements[s]->compare(writ[wi], matched);
+                    bool hit = false; //  frag->compare(writ[wi], matched);
                     if (hit)
                     {
                         cnt++;
-                        hits[s] = true;
+                        //hits[s] = true;
                     }
                     else break;
                 }
-                if (cnt >= seg_cnt)
+                if (cnt >= frag_cnt)
                 {
                     uint32 hit_cnt = 0;
-                    for (uint32 s = 0; s < seg_cnt; s++)
+                    for (uint32 s = 0; s < frag_cnt; s++)
                         if (hits[s])
                             hit_cnt++;
 
-                    if (hit_cnt == seg_cnt)
+                    if (hit_cnt == frag_cnt)
                     {
                         found = true;
-                        auto foundMatch = new TFound();
+                        auto foundMatch = false; //  new TFound();
                         for (auto const& [coord, pair] : matched)
                         {
                             const char* frag = std::get<0>(pair);
                             const char* feat = std::get<0>(pair);
-                            auto match = new TMatch((uint32)coord, frag, feat);
-                            foundMatch->add(match);
+                            //auto match = new TMatch((uint32)coord, frag, feat);
+                            //foundMatch->add(match);
                         }
                         //this->results.founds.push_back(foundMatch);
                     }
                 }
             }
-            if (this->settings.span == 0) // verse granularity
+            if (query.settings.span == 0) // verse granularity
             {
                 writ += span;
             }
@@ -198,17 +203,7 @@ bool AVXSearch::search_unquoted(TQuery& query, AVXFind& segment)
     return found;
 }
 
-/*
-    const XSearch* xsearch;
-    AVXFind& results;
-    const AVXSettings& settings;
-    std::vector<const AVXScope*> scopes;
-
-    const char* spec;
-    bool quoted;
-    AVXFragment** requirements;
-    */
-AVXSearch::AVXSearch(rapidjson::Value& find, AVXFind& results, const AVXSettings& settings):
+    /*AVXSearch::AVXSearch(rapidjson::Value& find, AVXFind& results, const AVXSettings& settings):
     segment(find),
     results(results),
     settings(settings), 
@@ -216,7 +211,7 @@ AVXSearch::AVXSearch(rapidjson::Value& find, AVXFind& results, const AVXSettings
     quoted(false), //quoted(xsearch->quoted()),
     requirements(nullptr)
 {
-    /*
+
     auto fragments = this->segment["fragments"];
 
     if (fragments != nullptr)
@@ -232,10 +227,10 @@ AVXSearch::AVXSearch(rapidjson::Value& find, AVXFind& results, const AVXSettings
             }
         }
     }
-    */
-}
+
+}    */
 AVXSearch::~AVXSearch()
-{
+{/*
     if (this->requirements != nullptr)
     {
         for (int i = 0; this->requirements[i] != nullptr; i++)
@@ -243,7 +238,7 @@ AVXSearch::~AVXSearch()
             std::free((void*)this->requirements[i]);
         }
         std::free(this->requirements);
-    }
+    }*/
 }
 
 

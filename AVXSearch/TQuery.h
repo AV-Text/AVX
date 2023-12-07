@@ -20,6 +20,9 @@
 #include <rapidjson/document.h>
 #include <AVXBlueprint.h>
 
+#include <map>
+
+class TBook;
 class TQuery
 {
 private:
@@ -31,7 +34,7 @@ public:
 	virtual ~TQuery();
 	byte book_cnt;
 	uint64 book_hits;
-	TBook* books[66];
+	std::map<byte, TBook*> books;
 	uint64 chapter_hits;
 	uint32 error_code;
 	TExpression expressions;

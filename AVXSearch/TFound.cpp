@@ -5,7 +5,8 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include "TFound.h"
+#include <TFound.h>
+#include <TQuery.h>
 
 TFound::TFound(TQuery& query, AVXFind& segment): query(query), segment(segment)
 {

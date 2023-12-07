@@ -6,7 +6,7 @@
 #include <rapidjson/document.h>
 
 #include <AVXFind.h>
-#include <yaml/TQuery.h>
+#include <TQuery.h>
 
 class AVXSearch
 {

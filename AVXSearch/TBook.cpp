@@ -5,7 +5,7 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include "TBook.h"
+#include <TBook.h>
 #include <map>
 
 TBook::TBook(byte num)
@@ -15,7 +15,8 @@ TBook::TBook(byte num)
 	// TO DO (TODO): call AVXText to fill other properties
 }
 
-TBook::~TBook(){
+TBook::~TBook()
+{
 
 }
 

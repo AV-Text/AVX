@@ -12,6 +12,7 @@
 #include "TFound.h"
 #include <vector>
 
+class TFound;
 class TChapter
 {
 
