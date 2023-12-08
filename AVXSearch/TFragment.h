@@ -18,9 +18,10 @@ class TFragment
 {
 
 public:
-	TFragment(const AVXFragment* frag);
+	TFragment(const AVXFragment& frag);
 	~TFragment();
 	uint64 hits;
+	bool anchored;
 	std::string fragment;
 	std::vector<TOption*> all_of;
 };

@@ -27,7 +27,7 @@ public:
     const char* rule;
     const bool negate;
     const bool okay;
-    const bool type;
+    const char* type;
 
     virtual uint16 compare(const WrittenContent& writ)
     {

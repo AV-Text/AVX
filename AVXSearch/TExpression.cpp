@@ -15,7 +15,7 @@ TExpression::TExpression(AVXFind& exp)
 
 	for (auto frag : exp.fragments)
 	{
-		TFragment* fragment = new TFragment(frag);
+		TFragment* fragment = new TFragment(*frag);
 		this->fragments.push_back(fragment);
 	}
 }

@@ -8,9 +8,15 @@
 #include "TFragment.h"
 #include <AVXFragment.h>
 
-TFragment::TFragment(const AVXFragment* frag)
+TFragment::TFragment(const AVXFragment& frag)
 {
+	this->anchored = frag.anchored ;
+	this->fragment = frag.fragment["fragment"].GetString();
 
+	for (auto option : frag.requirements)
+	{
+		this->all_of.push_back(new TOption(*option));
+	}
 }
 
 TFragment::~TFragment()
