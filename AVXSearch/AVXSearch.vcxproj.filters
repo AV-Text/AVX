@@ -65,7 +65,7 @@
     <ClCompile Include="TExpression.cpp">
       <Filter>Results</Filter>
     </ClCompile>
-    <ClCompile Include="THit.cpp">
+    <ClCompile Include="TMatch.cpp">
       <Filter>Results</Filter>
     </ClCompile>
     <ClCompile Include="TQuery.cpp">
@@ -139,10 +139,10 @@
     <ClInclude Include="TExpression.h">
       <Filter>Results</Filter>
     </ClInclude>
-    <ClInclude Include="THit.h">
+    <ClInclude Include="TMatch.h">
       <Filter>Results</Filter>
     </ClInclude>
-    <ClInclude Include="TMatch.h">
+    <ClInclude Include="TTag.h">
       <Filter>Results</Filter>
     </ClInclude>
     <ClInclude Include="TQuery.h">

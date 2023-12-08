@@ -37,7 +37,7 @@
     <ClCompile Include="TChapter.cpp" />
     <ClCompile Include="TClientManager.cpp" />
     <ClCompile Include="TExpression.cpp" />
-    <ClCompile Include="THit.cpp" />
+    <ClCompile Include="TMatch.cpp" />
     <ClCompile Include="TFragment.cpp" />
     <ClCompile Include="TQuery.cpp" />
     <ClCompile Include="TQueryManager.cpp" />
@@ -64,9 +64,9 @@
     <ClInclude Include="TClientManager.h" />
     <ClInclude Include="TExpression.h" />
     <ClInclude Include="TFeature.h" />
-    <ClInclude Include="THit.h" />
-    <ClInclude Include="TFragment.h" />
     <ClInclude Include="TMatch.h" />
+    <ClInclude Include="TFragment.h" />
+    <ClInclude Include="TTag.h" />
     <ClInclude Include="TOption.h" />
     <ClInclude Include="TQuery.h" />
     <ClInclude Include="TQueryManager.h" />

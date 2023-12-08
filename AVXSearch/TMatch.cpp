@@ -5,10 +5,10 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include <THit.h>
+#include <TMatch.h>
 #include <TQuery.h>
 
-THit::THit(TQuery& query, AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until) : query(query), segment(segment)
+TMatch::TMatch(TQuery& query, AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until) : query(query), segment(segment)
 {
     this->start = start;
     this->until = until;
@@ -45,16 +45,16 @@ THit::THit(TQuery& query, AVXFind& segment, std::string& expression, std::string
     }
 }
 
-THit::~THit()
+TMatch::~TMatch()
 {
 
 }
 
-bool THit::add(TMatch* match)
+bool TMatch::add(TTag* match)
 {
     if (match != nullptr)
     {
-        this->matches.push_back(match);
+        this->highlights.push_back(match);
 
         if (match->coordinates < this->start)
         {

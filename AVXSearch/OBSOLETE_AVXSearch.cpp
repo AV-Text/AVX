@@ -3,7 +3,7 @@
 #include "AVXBlueprint.h"
 #include "AVXFind.h"
 #include <TMatch.h>
-#include <THit.h>
+#include <TTag.h>
 #include <map>
 #include <directory.h>
 #include <book.h>
