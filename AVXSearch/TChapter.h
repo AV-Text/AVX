@@ -9,20 +9,20 @@
 #define EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_
 
 #include <avxgen.h>
-#include "TFound.h"
+#include "THit.h"
 #include <vector>
 
-class TFound;
+class THit;
 class TChapter
 {
 
 public:
 	TChapter();
-	virtual ~TChapter();
+	~TChapter();
 	byte chapter_num;
 	uint64 total_hits;
 	uint64 verse_hits;
 
-	std::vector<const TFound*> findings;
+	std::vector<const THit*> findings;
 };
 #endif // !defined(EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_)

@@ -31,9 +31,9 @@ We at AV-Text Ministries have adopted their objective. Four centuries later, it 
 
 ### Modular Framework with Minimal Dependencies
 
-There are just a few external dependencies of AVX-Framework: DotNet with YamlDotNet, and C++ with Rapid JSON. Dotnet is was chosen as it is open-source and cross-platform. C++ was chosen for its ubiquity and speed. JSON was also chosen for its ubiquity. YAML is chosen for its great human readability. YamlDotNet was chosen for its ability to parse/generate both YAML <u>and</u> JSON. its liberal open source license, and it being the de facto standard YAML library for Dotnet. Rapid JSON were chosen for its maturity and liberal open source licenses. JSON, with P/Invoke is the glue that facilitates efficient communication from C# to C++ and Rust. Of course, there are internal dependencies; those also are all open source (maintained by AV Text Ministries; located at https://github.com/kwonus and https://github.com/AV-Text/AVX).  
+There are just a few external dependencies of AVX-Framework: DotNet with YamlDotNet, and C++ with Rapid JSON. Dotnet is was chosen as it is open-source and cross-platform. C++ was chosen for its ubiquity and speed. JSON was also chosen for its ubiquity. YamlDotNet was chosen for its ability to parse/generate both YAML <u>and</u> JSON, along with its liberal open source license. Rapid JSON was chosen for its maturity and liberal open source license. JSON and P/Invoke serve as the glue to facilitate efficient communication from C# to C++ and Rust. There are additional internal dependencies; those also are all open source (maintained by AV Text Ministries; located at https://github.com/kwonus and https://github.com/AV-Text/AVX).  
 
-The latest architecture is highly modular. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive initially, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time.
+The latest architecture is highly modular. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive initially, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time. The downside of modularity is a more complicated build sequence. However, most of my user-base is constrained to the AV-Bible application (that application is pre-built and distributed as binaries on the Microsoft App Store. If you need help building sources, please ping me.
 
 Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, additional publicly available classes are exposed in AVX-Lib and NUPhone. Consequently, AV-Engine consumers can reach into public methods in those assemblies. The other dependencies are mostly opaque. The seven modules that compose the framework, along with file dependencies, are depicted in Figure-1 below:
 
@@ -64,7 +64,7 @@ The UML class diagram, depicted in Figure 3, reveals the two-phase approach. Gra
 
 ![](AVXSearch/AVX-Results.png)
 
-**Figure-3**: Two-Phased fetching from C# into C++ using YAML serialization
+**Figure-3**: Two-Phased fetching from C# into C++ using JSON serialization
 
 
 

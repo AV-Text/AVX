@@ -6,12 +6,24 @@
 ///////////////////////////////////////////////////////////
 
 #include "TExpression.h"
+#include "TFragment.h"
+#include <AVXFind.h>
 
-TExpression::TExpression()
+TExpression::TExpression(AVXFind& exp)
 {
+	this->segment = exp.expression;
 
+	for (auto frag : exp.fragments)
+	{
+		TFragment* fragment = new TFragment(frag);
+		this->fragments.push_back(fragment);
+	}
 }
 
-TExpression::~TExpression(){
-
+TExpression::~TExpression()
+{
+	for (auto fragment : this->fragments)
+	{
+		delete fragment;
+	}
 }

@@ -30,6 +30,10 @@ public:
                     this->okay = true;
                 }
             }
+            if (this->okay && this->segment.IsString())
+            {
+                this->expression = this->segment.GetString();
+            }
         }
         else
         {
@@ -46,6 +50,7 @@ public:
     }
     const bool quoted;
     std::vector<const AVXFragment*> fragments;
+    std::string expression;
 
 //    bool add(AVXFound* found);
 

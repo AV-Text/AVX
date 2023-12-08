@@ -10,15 +10,18 @@
 
 #include <avxgen.h>
 #include <string>
+#include <vector>
+#include <AVXFragment.h>
+#include <TOption.h>
 
 class TFragment
 {
 
 public:
-	TFragment();
-	virtual ~TFragment();
-	uint64 found_cnt;
+	TFragment(const AVXFragment* frag);
+	~TFragment();
+	uint64 hits;
 	std::string fragment;
-
+	std::vector<TOption*> all_of;
 };
 #endif // !defined(EA_463021B4_CF2F_4648_B191_F5E59539632B__INCLUDED_)

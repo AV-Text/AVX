@@ -15,14 +15,12 @@
 class TMatch
 {
 public:
-    std::string fragment;
-    std::vector<std::string> features;
+    uint16 feature;
     uint32 coordinates;
 
-    TMatch(uint32 coordinates, const char* fragment, std::vector<std::string>& features)
+    TMatch(uint32 coordinates, uint16 feature)
     {
-        this->fragment = fragment;
-        this->features = features;
+        this->feature = feature;
         this->coordinates = coordinates;
     }
     ~TMatch()

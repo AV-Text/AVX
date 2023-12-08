@@ -9,18 +9,21 @@
 #define EA_F636EEA9_3AA6_4889_8764_D28957F21DC8__INCLUDED_
 
 #include <avxgen.h>
-#include "TFragment.h"
 #include <string>
+#include <vector>
 
 #include <rapidjson/document.h>
+#include <AVXFind.h>
+#include <TFragment.h>
 
 class TExpression
 {
 
 public:
-	TExpression();
-	virtual ~TExpression();
-	TFragment* fragments;
+	TExpression(AVXFind& exp);
+	~TExpression();
+
+	std::vector<TFragment*> fragments;
 	std::string segment;
 
 };

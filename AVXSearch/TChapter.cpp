@@ -7,10 +7,12 @@
 
 #include "TChapter.h"
 
-TChapter::TChapter(){
+TChapter::TChapter()
+{
 
 }
 
-TChapter::~TChapter(){
+TChapter::~TChapter()
+{
 
 }

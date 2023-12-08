@@ -17,13 +17,12 @@
 
 class AVXFind;
 class TQuery;
-class TFound
+class THit
 {
 
 public:
-	TFound(TQuery& query, AVXFind& segment);
-	TFound(TQuery& query, AVXFind& segment, uint32 start, uint32 until);
-	virtual ~TFound();
+	THit(TQuery& query, AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until);
+	virtual ~THit();
 
 	uint32 start;
 	uint32 until;
@@ -31,6 +30,8 @@ public:
 	bool add(TMatch* match);
 
 	std::vector<const TMatch*> matches;
+	uint16 expression;
+	uint16 fragment;
 
 	TQuery& find();
 

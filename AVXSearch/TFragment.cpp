@@ -6,11 +6,17 @@
 ///////////////////////////////////////////////////////////
 
 #include "TFragment.h"
+#include <AVXFragment.h>
 
-TFragment::TFragment(){
+TFragment::TFragment(const AVXFragment* frag)
+{
 
 }
 
-TFragment::~TFragment(){
-
+TFragment::~TFragment()
+{
+	for (auto option : this->all_of)
+	{
+		delete option;
+	}
 }

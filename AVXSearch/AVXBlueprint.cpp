@@ -1,5 +1,5 @@
 #include "AVXBlueprint.h"
-#include "AVXSearch.h"
+#include "OBSOLETE_AVXSearch.h"
 #include "AVXFind.h"
 
 #include <book.h>

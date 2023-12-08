@@ -1,14 +1,17 @@
-#include "AVXSearch.h"
+#include "OBSOLETE_AVXSearch.h"
 #include "AVXFragment.h"
 #include "AVXBlueprint.h"
 #include "AVXFind.h"
 #include <TMatch.h>
-#include <TFound.h>
+#include <THit.h>
 #include <map>
 #include <directory.h>
 #include <book.h>
 
 static std::unordered_set<uintptr_t> MemoryTable;
+
+// OBSOLETE: Logic migrated to TQueryManager
+//
 
 bool AVXSearch::search_quoted(TQuery& query, AVXFind& segment)
 {

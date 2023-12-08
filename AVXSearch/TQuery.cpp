@@ -7,13 +7,21 @@
 
 #include "TQuery.h"
 
-TQuery::~TQuery(){
-
-}
-
 TQuery::TQuery(AVXBlueprint* blueprint)
 {
 	this->blueprint = blueprint;
+}
+
+TQuery::~TQuery()
+{
+	for (auto expression : this->expressions)
+	{
+		delete expression;
+	}
+	for (auto book = this->books.begin(); book != this->books.end(); book++)
+	{
+		delete book->second;
+	}
 }
 
 bool TQuery::execute(rapidjson::Document& doc)

@@ -8,6 +8,8 @@
 #include <AVXFind.h>
 #include <TQuery.h>
 
+// OBSOLETE: Logic migrated to TQueryManager
+//
 class AVXSearch
 {
 private:
