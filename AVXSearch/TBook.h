@@ -8,15 +8,13 @@
 #if !defined(EA_0419B987_84CB_472f_AF4F_C75C5A86A7D3__INCLUDED_)
 #define EA_0419B987_84CB_472f_AF4F_C75C5A86A7D3__INCLUDED_
 
-#include <avxgen.h>
-#include "TChapter.h"
+#include <IBuild.h>
 
+#include <TChapter.h>
 #include <map>
 
-class TChapter;
-class TBook
+class TBook: public IBuild
 {
-
 public:
 	TBook(byte num);
 	virtual ~TBook();
@@ -28,10 +26,14 @@ public:
 	uint64 total_hits;
 	uint64 verse_hits;
 
-	std::map<byte, TChapter*> fetch_results();
+	std::map<byte, uint64> verse_hits_by_chapter;
+	std::string fetch(byte chapter_num);
+
+	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 
 private:
 	std::map<byte, TChapter*> chapters;
 
 };
-#endif // !defined(EA_0419B987_84CB_472f_AF4F_C75C5A86A7D3__INCLUDED_)
+
+#endif // !defined(EA_0419B9book_num;87_84CB_472f_AF4F_C75C5A86A7D3__INCLUDED_)

@@ -8,23 +8,23 @@
 #if !defined(EA_F636EEA9_3AA6_4889_8764_D28957F21DC8__INCLUDED_)
 #define EA_F636EEA9_3AA6_4889_8764_D28957F21DC8__INCLUDED_
 
-#include <avxgen.h>
+#include <Serialization.h>
 #include <string>
 #include <vector>
+#include <IBuild.h>
 
-#include <rapidjson/document.h>
 #include <AVXFind.h>
 #include <TFragment.h>
 
-class TExpression
+class TExpression : public IBuild
 {
-
 public:
 	TExpression(AVXFind& exp);
-	~TExpression();
+	virtual ~TExpression();
 
 	std::vector<TFragment*> fragments;
 	std::string segment;
 
+	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 };
 #endif // !defined(EA_F636EEA9_3AA6_4889_8764_D28957F21DC8__INCLUDED_)

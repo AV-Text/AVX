@@ -28,7 +28,6 @@
     <ClCompile Include="AVXPOS16Comparator.cpp" />
     <ClCompile Include="AVXPOS32Comparator.cpp" />
     <ClCompile Include="AVXPuncComparator.cpp" />
-    <ClCompile Include="OBSOLETE_AVXSearch.cpp" />
     <ClCompile Include="AVXFragment.cpp" />
     <ClCompile Include="AVXStrongsComparator.cpp" />
     <ClCompile Include="AVXTransitionComparator.cpp" />
@@ -53,12 +52,13 @@
     <ClInclude Include="AVXPOS16Comparator.h" />
     <ClInclude Include="AVXPOS32Comparator.h" />
     <ClInclude Include="AVXPuncComparator.h" />
-    <ClInclude Include="OBSOLETE_AVXSearch.h" />
     <ClInclude Include="AVXFragment.h" />
     <ClInclude Include="AVXSettings.h" />
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
+    <ClInclude Include="IBuild.h" />
+    <ClInclude Include="Serialization.h" />
     <ClInclude Include="TBook.h" />
     <ClInclude Include="TChapter.h" />
     <ClInclude Include="TClientManager.h" />
@@ -66,11 +66,11 @@
     <ClInclude Include="TFeature.h" />
     <ClInclude Include="TMatch.h" />
     <ClInclude Include="TFragment.h" />
+    <ClInclude Include="TSettings.h" />
     <ClInclude Include="TTag.h" />
     <ClInclude Include="TOption.h" />
     <ClInclude Include="TQuery.h" />
     <ClInclude Include="TQueryManager.h" />
-    <ClInclude Include="TSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -187,13 +187,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions);#define __WINNT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -223,7 +223,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -247,13 +247,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;AVXSEARCH_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions);#define __WINNT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
@@ -283,7 +283,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)\AVXLib;$(SolutionDir)\AVXLib\XVMem;$(SolutionDir)\AVXLib\Foundations;C:\src\blueprint-blue\Blueprint-Blue-Lib;C:\tool\flatbuffers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>

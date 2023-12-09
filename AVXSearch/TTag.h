@@ -8,11 +8,12 @@
 #if !defined(EA_0242817E_0000_4662_9FD8_C11A766FDD3F__INCLUDED_)
 #define EA_0242817E_0000_4662_9FD8_C11A766FDD3F__INCLUDED_
 
-#include <avxgen.h>
+#include <Serialization.h>
 #include <string>
 #include <vector>
+#include <IBuild.h>
 
-class TTag
+class TTag : public IBuild
 {
 public:
     uint16 feature;
@@ -23,10 +24,21 @@ public:
         this->feature = feature;
         this->coordinates = coordinates;
     }
-    ~TTag()
+    virtual ~TTag()
     {
         ;
     }
+
+    virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
+    {
+        builder.StartObject();
+        builder.Key("feature");
+        builder.Uint(this->feature);
+        builder.Key("coordinates");
+        builder.Uint(this->coordinates);
+        builder.EndObject();
+    }
+    
     inline byte get_book()
     {
         return byte(coordinates >> 24);

@@ -8,21 +8,24 @@
 #if !defined(EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_)
 #define EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_
 
-#include <avxgen.h>
-#include "TMatch.h"
+#include <Serialization.h>
+#include <TMatch.h>
 #include <vector>
 
-class TMatch;
-class TChapter
+class TChapter//: public ISerialize
 {
+//private:
+//	rapidjson::Document root;
 
 public:
-	TChapter();
-	~TChapter();
+	TChapter(byte num);
+	virtual ~TChapter();
 	byte chapter_num;
 	uint64 total_hits;
 	uint64 verse_hits;
 
-	std::vector<const TMatch*> matches;
+	std::vector<TMatch*> matches;
+
+	virtual std::string serialize();
 };
 #endif // !defined(EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_)

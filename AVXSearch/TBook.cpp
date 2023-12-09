@@ -20,7 +20,16 @@ TBook::~TBook()
 
 }
 
-std::map<byte,TChapter*> TBook::fetch_results(){
+std::string TBook::fetch(byte chapter_num)
+{
+	auto chapter = this->chapters.find(chapter_num);
 
-	return this->chapters;
+	return chapter != this->chapters.end() ? chapter->second->serialize() : "";
+}
+
+void TBook::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
+{
+	builder.StartObject();
+	// TO DO: populate
+	builder.EndObject();
 }

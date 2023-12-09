@@ -58,9 +58,13 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 
 ### AV-Engine Internals
 
-AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ and Rust libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a blueprint [JSON text] is obtained for the search from the Blueprint-Blue library, it is passed to AVX-Search. AVX-Search returns JSON representations of TQuery and TChapter hierarchies using a two-phase invocation approach. All calls to native libraries are in-process via P/Invoke and use JSON for exchanging complex object hierarchies.
+AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ and Rust libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a blueprint [JSON text] is obtained for the search from the Blueprint-Blue library, it is passed to AVX-Search. Details about the input [JSON] object-model, aka "blueprint", can be found in the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
 
-The UML class diagram, depicted in Figure 3, reveals the two-phase approach. Gray boxes are not serialized; instead, they manage access to instantiated C++ objects. The query summary is represented by the TQuery (golden class) hierarchy in Figure 3. It should be noted that query_id is a (uint64) cast of the address of the instantiated TQuery object. The purple objects are the serialization of map<byte, TChapter>: these details are fetched per book [1 .. 66]. All requests to the C++ TClientManager require the two-part client_guid: this mitigates possible attempts at object hijacking. Incidentally, the query specification, aka "blueprint", is defined in the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
+The TQuery hierarchy simplifies the blueprint to facilitate rendering and highlighting. AVX-Search returns JSON representations of TQuery and TChapter hierarchies using a two-phase invocation approach. All calls to native libraries are in-process via P/Invoke and use JSON for exchanging complex object hierarchies.
+
+The UML class diagram, depicted in Figure 3, reveals the two-phase approach. Gray boxes are not serialized; instead, they manage access to instantiated C++ objects. The query summary is represented by the TQuery (golden class) hierarchy in Figure 3. It should be noted that query_id is a (uint64) cast of the address of the instantiated TQuery object. The purple objects are the serialization of map<byte, TChapter> (where byte represents chapter-number): these maps are fetched per TBook.
+
+All requests to the C++ TClientManager require the two-part client_id [GUID]: this mitigates possible attempts at object hijacking. While object hijacking within an in-process DLL is a deep security concern. This hierarchy is designed to also serve REST requests via the AV-API ASP.Net services. Object validation, by requiring the GUID of the calling client, will become a useful safeguard. In short, accessing the (TQuery*) cast via the queries map is not possible, without first supplying the correct client GUID that was used for the original object instantiation.
 
 ![](AVXSearch/AVX-Results.png)
 
@@ -84,7 +88,7 @@ We plan to harden AV-Bible (Windows desktop application) and release it into the
 
 ### Implementation Status
 
-Most of the green boxes, in the diagram, are being actively developed. Planned completion dates are identified above. Any box with a checkmark is already complete. Work will commence on the dark-gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
+Most of the green boxes, in the diagram, are being actively developed. Planned completion dates are identified above. Any box with a checkmark is already complete, with updates for refactoring not withstanding. Work will commence on the dark-gray boxes some time after AV-Bible is updated in the Microsoft Store.  It's helpful to have this pic as a roadmap. As you can see, AVX-Framework is a core dependency for all apps.
 
 All source-code for the green boxes can be found [in this repo](https://github.com/AV-Text/AVX). Source-code for the blue boxes can be found in my [companion repos](https://github.com/kwonus) at https://github.com/kwonus. 
 

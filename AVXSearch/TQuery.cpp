@@ -5,7 +5,11 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include "TQuery.h"
+#include <TQuery.h>
+#include "TBook.h"
+#include "TExpression.h"
+
+#include <Serialization.h>
 
 TQuery::TQuery(AVXBlueprint* blueprint)
 {
@@ -24,12 +28,7 @@ TQuery::~TQuery()
 	}
 }
 
-bool TQuery::execute(rapidjson::Document& doc)
-{
-	return false;
-}
-
-bool TQuery::fetch(rapidjson::Document& doc, byte book_num)
+std::string TQuery::fetch(byte book_num, byte chapter_num)
 {
 	if (book_num >= 1 && book_num <= 66)
 	{
@@ -39,10 +38,12 @@ bool TQuery::fetch(rapidjson::Document& doc, byte book_num)
 		{
 			TBook& book = *(this->books[b]);
 
-			auto results = book.fetch_results();
+			auto result = book.fetch(chapter_num);
+
+			return result;
 		}
 	}
-	return false;
+	return "";
 }
 
 bool TQuery::add_scope(uint32 spec)
@@ -67,4 +68,61 @@ bool TQuery::add_scope(uint32 spec)
 		return true;
 	}
 	return false;
+}
+
+std::string TQuery::serialize()
+{
+	rapidjson::StringBuffer sb;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> builder(sb);
+
+	builder.StartObject();
+
+	builder.Key("book_cnt");
+	builder.Uint64(this->book_cnt); // get this value from scope
+
+	builder.Key("book_hits");
+	builder.Uint64(this->book_hits);
+
+	builder.Key("chapter_hits");
+	builder.Uint64(this->chapter_hits);
+
+	builder.Key("error_code");
+	builder.Uint(this->error_code);
+
+	builder.Key("query_id");
+	builder.Uint64(this->query_id);
+
+	builder.Key("total_hits");
+	builder.Uint64(this->total_hits);
+
+	builder.Key("verse_hits");
+	builder.Uint64(this->verse_hits);
+
+	builder.Key("scope");
+	builder.StartArray();
+	for (uint32 item : this->scope)
+		builder.Uint(item);
+	builder.EndArray();
+
+	this->settings.build(builder);
+
+	builder.Key("expressions");
+	builder.StartArray();
+	for (TExpression* expression : this->expressions)
+	{
+		expression->build(builder);
+	}
+	builder.EndArray();
+
+	builder.Key("books");
+	builder.StartArray();
+	for (auto bk = this->books.begin(); bk != this->books.end(); ++bk)
+	{
+		TBook* book = bk->second;
+		book->build(builder);
+	}
+
+	builder.EndObject();
+
+	return sb.GetString();
 }

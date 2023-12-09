@@ -5,14 +5,14 @@
 
 #include <AVXSettings.h>
 
-#include <rapidjson/document.h>
+//#include <rapidjson/document.h>
 
 class AVXFind;
 
 class AVXBlueprint
 {
 private:
-    rapidjson::Document root; 
+//    rapidjson::Document root; 
     std::string error;
     bool okay;
 

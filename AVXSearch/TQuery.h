@@ -8,21 +8,19 @@
 #if !defined(EA_1A9DEEE5_474E_4a0f_BC44_4C27249CBC6A__INCLUDED_)
 #define EA_1A9DEEE5_474E_4a0f_BC44_4C27249CBC6A__INCLUDED_
 
-#include <avxgen.h>
-
-#include "TBook.h"
-#include "TExpression.h"
-#include "TSettings.h"
+#include <Serialization.h>
 
 #include <string>
 #include <map>
 
-#include <rapidjson/document.h>
+#include "TSettings.h"
 #include <AVXBlueprint.h>
 
 #include <vector>
-
+class TExpression;
+class TChapter;
 class TBook;
+
 class TQuery
 {
 private:
@@ -31,7 +29,7 @@ private:
 public:
 	TQuery(AVXBlueprint* blueprint);
 
-	~TQuery();
+	virtual ~TQuery();
 	byte book_cnt;
 	uint64 book_hits;
 	std::map<byte, TBook*> books;
@@ -44,9 +42,10 @@ public:
 	uint64 verse_hits;
 	std::vector<uint32> scope;
 
-	bool execute(rapidjson::Document& doc);
-	bool fetch(rapidjson::Document& doc, byte book);
+	std::string fetch(byte book, byte chapter);
 
 	bool add_scope(uint32 spec);
+
+	virtual std::string serialize();
 };
 #endif // !defined(EA_1A9DEEE5_474E_4a0f_BC44_4C27249CBC6A__INCLUDED_)

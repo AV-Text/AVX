@@ -27,3 +27,10 @@ TExpression::~TExpression()
 		delete fragment;
 	}
 }
+
+void TExpression::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
+{
+	builder.StartObject();
+	// TO DO: populate
+	builder.EndObject();
+}

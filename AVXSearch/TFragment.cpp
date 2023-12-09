@@ -5,7 +5,8 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include "TFragment.h"
+#include <TFragment.h>
+#include <TOption.h>
 #include <AVXFragment.h>
 
 TFragment::TFragment(const AVXFragment& frag)
@@ -25,4 +26,11 @@ TFragment::~TFragment()
 	{
 		delete option;
 	}
+}
+
+void TFragment::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
+{
+	builder.StartObject();
+	// TO DO: populate
+	builder.EndObject();
 }

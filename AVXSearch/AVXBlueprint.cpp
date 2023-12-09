@@ -1,5 +1,4 @@
 #include "AVXBlueprint.h"
-#include "OBSOLETE_AVXSearch.h"
 #include "AVXFind.h"
 
 #include <book.h>
@@ -12,10 +11,11 @@ AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, 
 {
     this->okay = false;
     
-    this->root.Parse(data);
-    if (this->root.IsArray())
+    rapidjson::Document root;
+    root.Parse(data);
+    if (root.IsArray())
     {
-        auto array = this->root.GetArray();
+        auto array = root.GetArray();
 
         for (auto segment = array.Begin(); segment != array.End(); ++segment)
         {

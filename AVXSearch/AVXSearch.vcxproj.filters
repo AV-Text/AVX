@@ -38,9 +38,6 @@
     <ClCompile Include="AVXPuncComparator.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
-    <ClCompile Include="OBSOLETE_AVXSearch.cpp">
-      <Filter>AVX</Filter>
-    </ClCompile>
     <ClCompile Include="AVXFragment.cpp">
       <Filter>AVX</Filter>
     </ClCompile>
@@ -71,9 +68,6 @@
     <ClCompile Include="TQuery.cpp">
       <Filter>Results</Filter>
     </ClCompile>
-    <ClCompile Include="TSettings.cpp">
-      <Filter>Results</Filter>
-    </ClCompile>
     <ClCompile Include="TQueryManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -81,6 +75,9 @@
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="TFragment.cpp">
+      <Filter>Results</Filter>
+    </ClCompile>
+    <ClCompile Include="TSettings.cpp">
       <Filter>Results</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,9 +107,6 @@
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXPuncComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OBSOLETE_AVXSearch.h">
       <Filter>AVX\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AVXFragment.h">
@@ -148,9 +142,6 @@
     <ClInclude Include="TQuery.h">
       <Filter>Results</Filter>
     </ClInclude>
-    <ClInclude Include="TSettings.h">
-      <Filter>Results</Filter>
-    </ClInclude>
     <ClInclude Include="TQueryManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -164,6 +155,15 @@
       <Filter>Results</Filter>
     </ClInclude>
     <ClInclude Include="TOption.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="TSettings.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialization.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="IBuild.h">
       <Filter>Results</Filter>
     </ClInclude>
   </ItemGroup>

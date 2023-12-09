@@ -27,7 +27,7 @@ extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 cli
 	TQuery* query = ClientManager.initialize(client_id, blueprint, span, lexicon, similarity, fuzzy_lemmata);
 	rapidjson::Document doc;
 
-	if (query->execute(doc))
+	//if (query->execute(doc))
 	{
 		;
 	}
@@ -46,9 +46,8 @@ extern "C" __declspec(dllexport) byte add_scope(uint64 client_id1, uint64 client
 extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 client_id2, uint64 query_id)
 {
 	uint128 client_id(client_id1, client_id2);
-	rapidjson::Document doc;
 
-	if (ClientManager.execute(doc, client_id, query_id))
+//	if (ClientManager.execute(client_id, query_id))
 	{
 		;
 	}
@@ -58,12 +57,12 @@ extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 c
 	return EMPTY;
 }
 
-extern "C" __declspec(dllexport) const char* fetch_results(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book)
+extern "C" __declspec(dllexport) const char* fetch(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter)
 {
 	uint128 client_id(client_id1, client_id2);
 	rapidjson::Document doc;
 
-	if (ClientManager.fetch_results(doc, client_id, query_id, book))
+	//if (ClientManager.fetch(client_id, query_id, book, chapter))
 	{
 		;
 	}
@@ -126,7 +125,7 @@ bool TClientManager::add_scope(uint128 client_id, uint64 query_id, byte book, by
 	return false;
 }
 
-bool TClientManager::execute(rapidjson::Document& doc, uint128 client_id, uint64 query_id)
+std::string TClientManager::execute(uint128 client_id, uint64 query_id)
 {
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -134,13 +133,13 @@ bool TClientManager::execute(rapidjson::Document& doc, uint128 client_id, uint64
 	{
 		qmgr = candidate->second;
 
-		return qmgr->execute(doc, query_id);
+		return qmgr->execute(query_id);
 	}
-	return false;
+	return "";
 }
 
 
-bool TClientManager::fetch_results(rapidjson::Document& doc, uint128 client_id, uint64 query_id, byte book)
+std::string TClientManager::fetch(uint128 client_id, uint64 query_id, byte book, byte chapter)
 {
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -148,9 +147,9 @@ bool TClientManager::fetch_results(rapidjson::Document& doc, uint128 client_id, 
 	{
 		qmgr = candidate->second;
 
-		return qmgr->fetch_results(doc, query_id, book);
+		return qmgr->fetch(query_id, book, chapter);
 	}
-	return false;
+	return "";
 }
 
 void TClientManager::release_client(uint128 client_id)

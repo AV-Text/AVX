@@ -44,19 +44,19 @@ bool TQueryManager::add_scope(uint64 query_id, byte book, byte chapter, byte ver
 	return false;
 }
 
-bool TQueryManager::execute(rapidjson::Document& doc, uint64 query_id)
+std::string TQueryManager::execute(uint64 query_id)
 {
 	auto iquery = this->queries.find(query_id);
 	if (iquery != this->queries.end())
 	{
 		TQuery* query = this->queries[query_id];
-		return query->execute(doc);
+		//return query->execute(doc);
 	}
 	return false;
 }
 
 // returns tree for map<byte, TChapter>
-bool TQueryManager::fetch_results(rapidjson::Document& doc, uint64 query_id, byte book)
+std::string TQueryManager::fetch(uint64 query_id, byte book, byte chapter)
 {
 	auto iquery = this->queries.find(query_id);
 	if (iquery != this->queries.end())
@@ -64,16 +64,12 @@ bool TQueryManager::fetch_results(rapidjson::Document& doc, uint64 query_id, byt
 		TQuery* query = this->queries[query_id];
 		if (book >= 1 && book <= 66 && query->books[book-1] != nullptr)
 		{
-			auto ibook = query->fetch(doc, book);
+			auto result = query->fetch(book, chapter);
 
-			if (iquery != this->queries.end())
-			{
-				TQuery* query = this->queries[query_id];
-				return query->fetch(doc, book);
-			}
+            return result;
 		}
 	}
-	return false;
+    return "";
 }
 
 bool TQueryManager::search_quoted(TQuery& query, AVXFind& segment)

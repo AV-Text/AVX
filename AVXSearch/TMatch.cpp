@@ -5,10 +5,11 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include <TMatch.h>
 #include <TQuery.h>
+#include <TExpression.h>
+#include <TMatch.h>
 
-TMatch::TMatch(TQuery& query, AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until) : query(query), segment(segment)
+TMatch::TMatch(AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until): query(query), segment(segment)
 {
     this->start = start;
     this->until = until;
@@ -67,4 +68,10 @@ bool TMatch::add(TTag* match)
         return true;
     }
     return false;
+}
+
+void TMatch::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
+{
+    builder.StartObject();
+    builder.EndObject();
 }

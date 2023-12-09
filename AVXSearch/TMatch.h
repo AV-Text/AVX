@@ -8,20 +8,20 @@
 #if !defined(EA_E07CC064_DC37_4046_A402_A2744A35A453__INCLUDED_)
 #define EA_E07CC064_DC37_4046_A402_A2744A35A453__INCLUDED_
 
-#include <avxgen.h>
+#include <Serialization.h>
+#include <IBuild.h>
 #include <TTag.h>
 #include <TQuery.h>
 
 #include <string>
 #include <vector>
 
-class AVXFind;
 class TQuery;
-class TMatch
+class AVXFind;
+class TMatch// : public IAssign
 {
-
 public:
-	TMatch(TQuery& query, AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until);
+	TMatch(AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until);
 	virtual ~TMatch();
 
 	uint32 start;
@@ -34,6 +34,8 @@ public:
 	uint16 fragment;
 
 	TQuery& find();
+
+	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 
 private:
 	TQuery& query;
