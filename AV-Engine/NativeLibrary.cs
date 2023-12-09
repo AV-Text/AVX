@@ -9,19 +9,17 @@
     {
         // AVX-Search:
         [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
-        private static extern UInt64 create_query(UInt64 client_id_1, UInt64 client_id_2, string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
-        [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
-        private static extern string create_query_and_execute(UInt64 client_id_1, UInt64 client_id_2, string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+        private static extern UInt64 query_create(UInt64 client_id_1, UInt64 client_id_2, string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
         [DllImport("AVXSearch.dll")]
-        private static extern byte add_scope(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id, byte book, byte chapter, byte verse);
+        private static extern byte query_add_scope(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id, byte book, byte chapter, byte verse);
         [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
-        private static extern string execute(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id);
+        private static extern string query_fetch(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id);
         [DllImport("AVXSearch.dll", CharSet = CharSet.Ansi)]
-        private static extern string fetch_results(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id, byte book);
+        private static extern string chapter_fetch(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id, byte book);
         [DllImport("AVXSearch.dll")]
-        private static extern void release_client(UInt64 client_id_1, UInt64 client_id_2);
+        private static extern void client_release(UInt64 client_id_1, UInt64 client_id_2);
         [DllImport("AVXSearch.dll")]
-        private static extern void release_query(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id);
+        private static extern void query_release(UInt64 client_id_1, UInt64 client_id_2, UInt64 query_id);
 
         private UInt64 ClientId_1
         {
@@ -58,35 +56,30 @@
         {
             this.ClientId = new Guid();
         }
-        internal UInt64 create_query(string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+        internal UInt64 query_create(string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
         {
-            var result = NativeLibrary.create_query(this.ClientId_1, this.ClientId_2, blueprint, span, lexicon, similarity, fuzzy_lemmata);
-            return result;
-        }
-        internal string create_query_and_execute(string blueprint, UInt16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
-        {
-            var result = NativeLibrary.create_query_and_execute(this.ClientId_1, this.ClientId_2, blueprint, span, lexicon, similarity, fuzzy_lemmata);
+            var result = NativeLibrary.query_create(this.ClientId_1, this.ClientId_2, blueprint, span, lexicon, similarity, fuzzy_lemmata);
             return result;
         }
         internal string fetch_results(UInt64 query_id, byte book)
         {
-            return NativeLibrary.fetch_results(this.ClientId_1, this.ClientId_2, query_id, book);
+            return NativeLibrary.chapter_fetch(this.ClientId_1, this.ClientId_2, query_id, book);
         }
-        internal bool add_scope(UInt64 query_id, byte book, byte chapter, byte verse)
+        internal bool query_add_scope(UInt64 query_id, byte book, byte chapter, byte verse)
         {
-            return NativeLibrary.add_scope(this.ClientId_1, this.ClientId_2, query_id, book, chapter, verse) == (byte)1 ? true : false;
+            return NativeLibrary.query_add_scope(this.ClientId_1, this.ClientId_2, query_id, book, chapter, verse) == (byte)1 ? true : false;
         }
-        internal string execute(UInt64 query_id)
+        internal string fetch_summary(UInt64 query_id)
         {
-            return NativeLibrary.execute(this.ClientId_1, this.ClientId_2, query_id);
+            return NativeLibrary.query_fetch(this.ClientId_1, this.ClientId_2, query_id);
         }
-        internal void release_client()
+        internal void client_release()
         {
-            NativeLibrary.release_client(this.ClientId_1, this.ClientId_2);
+            NativeLibrary.client_release(this.ClientId_1, this.ClientId_2);
         }
-        internal void release_query(UInt64 queryId) // QueryId is in the payload returned by create_query
+        internal void query_release(UInt64 queryId) // QueryId is in the payload returned by create_query
         {
-            NativeLibrary.release_query(this.ClientId_1, this.ClientId_2, queryId);
+            NativeLibrary.query_release(this.ClientId_1, this.ClientId_2, queryId);
         }
 
         // AVX-Text
@@ -124,17 +117,17 @@
                 // this.address = from the desrialized yaml
                 // brute force
 
-                this.Address = this.External.create_query(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
-                this.Summary = this.External.execute(this.Address);
+                this.Address = this.External.query_create(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
+                this.Summary = this.External.fetch_summary(this.Address);
             }
             else
             {
-                this.Address = this.External.create_query(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
+                this.Address = this.External.query_create(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
                 foreach (var spec in scope)
                 {
-                    this.External.add_scope(this.Address, spec.book, spec.chapter, spec.verse);
+                    this.External.query_add_scope(this.Address, spec.book, spec.chapter, spec.verse);
                 }
-                this.Summary = this.External.execute(this.Address);
+                this.Summary = this.External.fetch_summary(this.Address);
             }
             return (this.Address != 0 && !string.IsNullOrWhiteSpace(this.Summary));
         }
@@ -147,7 +140,7 @@
         public void Free()
         {
             if (this.Address != 0)
-                this.External.release_query(this.Address);
+                this.External.query_release(this.Address);
             this.Address = 0;
         }
         public void Release()

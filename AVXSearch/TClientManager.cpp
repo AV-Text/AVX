@@ -15,35 +15,19 @@ static TClientManager ClientManager;
 static const char* EMPTY = "";
 
 // C API:
-extern "C" __declspec(dllexport) uint64 create_query(uint64 client_id1, uint64 client_id2, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+extern "C" __declspec(dllexport) uint64 query_create(uint64 client_id1, uint64 client_id2, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
 	uint128 client_id(client_id1, client_id2);
-	return uint64(ClientManager.initialize(client_id, blueprint, span, lexicon, similarity, fuzzy_lemmata));
+	return uint64(ClientManager.query_create(client_id, blueprint, span, lexicon, similarity, fuzzy_lemmata));
 }
 
-extern "C" __declspec(dllexport) const char* create_query_and_execute(uint64 client_id1, uint64 client_id2, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+extern "C" __declspec(dllexport) byte query_add_scope(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter, byte verse_from, byte verse_to)
 {
 	uint128 client_id(client_id1, client_id2);
-	TQuery* query = ClientManager.initialize(client_id, blueprint, span, lexicon, similarity, fuzzy_lemmata);
-	rapidjson::Document doc;
-
-	//if (query->execute(doc))
-	{
-		;
-	}
-
-	// TO DO (TODO): Serialize tree into json string
-
-	return EMPTY;
+	return ClientManager.query_scope_add(client_id, query_id, book, chapter, verse_from, verse_to) ? byte(1) : byte(0);
 }
 
-extern "C" __declspec(dllexport) byte add_scope(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter, byte verse)
-{
-	uint128 client_id(client_id1, client_id2);
-	return ClientManager.add_scope(client_id, query_id, book, chapter, verse) ? byte(1) : byte(2);
-}
-
-extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 client_id2, uint64 query_id)
+extern "C" __declspec(dllexport) const char* query_fetch(uint64 client_id1, uint64 client_id2, uint64 query_id)
 {
 	uint128 client_id(client_id1, client_id2);
 
@@ -57,7 +41,7 @@ extern "C" __declspec(dllexport) const char* execute(uint64 client_id1, uint64 c
 	return EMPTY;
 }
 
-extern "C" __declspec(dllexport) const char* fetch(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter)
+extern "C" __declspec(dllexport) const char* chapter_fetch(uint64 client_id1, uint64 client_id2, uint64 query_id, byte book, byte chapter)
 {
 	uint128 client_id(client_id1, client_id2);
 	rapidjson::Document doc;
@@ -72,16 +56,16 @@ extern "C" __declspec(dllexport) const char* fetch(uint64 client_id1, uint64 cli
 	return EMPTY;
 }
 
-extern "C" __declspec(dllexport) void release_client(uint64 client_id1, uint64 client_id2)
+extern "C" __declspec(dllexport) void client_release(uint64 client_id1, uint64 client_id2)
 {
 	uint128 client_id(client_id1, client_id2);
-	ClientManager.release_client(client_id);
+	ClientManager.client_release(client_id);
 }
 
-extern "C" __declspec(dllexport) void release_query(uint64 client_id1, uint64 client_id2, uint64 query_id)
+extern "C" __declspec(dllexport) void query_release(uint64 client_id1, uint64 client_id2, uint64 query_id)
 {
 	uint128 client_id(client_id1, client_id2);
-	ClientManager.release_query(client_id, query_id);
+	ClientManager.query_release(client_id, query_id);
 }
 
 TClientManager::TClientManager(){
@@ -92,7 +76,7 @@ TClientManager::~TClientManager(){
 
 }
 
-TQuery* TClientManager::initialize(uint128 client_id, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
+TQuery* TClientManager::query_create(uint128 client_id, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata)
 {
 	AVXBlueprint* oo_blueprint = new AVXBlueprint(blueprint, span, lexicon, similarity, fuzzy_lemmata);
 
@@ -107,12 +91,12 @@ TQuery* TClientManager::initialize(uint128 client_id, char blueprint[], uint16 s
 		qmgr = new TQueryManager();
 		this->clients.insert(std::make_pair(client_id, qmgr));
 	}
-	TQuery* query = qmgr->initialize(oo_blueprint);
+	TQuery* query = qmgr->create(oo_blueprint);
 	/* TO DO: json serialization (TODO) */
 	return  nullptr;
 }
 
-bool TClientManager::add_scope(uint128 client_id, uint64 query_id, byte book, byte chapter, byte verse)
+bool TClientManager::query_scope_add(uint128 client_id, uint64 query_id, byte book, byte chapter, byte verse_from, byte verse_to)
 {
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -120,12 +104,12 @@ bool TClientManager::add_scope(uint128 client_id, uint64 query_id, byte book, by
 	{
 		qmgr = candidate->second;
 
-		return qmgr->add_scope(query_id, book, chapter, verse);
+		return qmgr->add_scope(query_id, book, chapter, verse_from, verse_to);
 	}
 	return false;
 }
 
-std::string TClientManager::execute(uint128 client_id, uint64 query_id)
+std::string TClientManager::fetch(uint128 client_id, uint64 query_id)
 {
 	TQueryManager* qmgr = nullptr;
 	auto candidate = this->clients.find(client_id);
@@ -133,7 +117,7 @@ std::string TClientManager::execute(uint128 client_id, uint64 query_id)
 	{
 		qmgr = candidate->second;
 
-		return qmgr->execute(query_id);
+		return qmgr->fetch(query_id);
 	}
 	return "";
 }
@@ -152,12 +136,12 @@ std::string TClientManager::fetch(uint128 client_id, uint64 query_id, byte book,
 	return "";
 }
 
-void TClientManager::release_client(uint128 client_id)
+void TClientManager::client_release(uint128 client_id)
 {
 	;
 }
 
-void TClientManager::release_query(uint128 client_quid, uint64 query_id)
+void TClientManager::query_release(uint128 client_quid, uint64 query_id)
 {
 	;
 }

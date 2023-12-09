@@ -41,7 +41,7 @@ public:
     
     inline byte get_book()
     {
-        return byte(coordinates >> 24);
+        return byte(coordinates & 0xFF00 >> 24);
     }
     inline byte get_chapter()
     {

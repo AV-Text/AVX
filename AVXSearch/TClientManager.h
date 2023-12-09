@@ -19,17 +19,17 @@ public:
 	virtual ~TClientManager();
 	std::map<uint128, TQueryManager*> clients;
 
-	TQuery* initialize(uint128 client_guid, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
-	bool add_scope(uint128 client_guid, uint64 query_id, byte book, byte chapter, byte verse);
+	TQuery* query_create(uint128 client_guid, char blueprint[], uint16 span, byte lexicon, byte similarity, byte fuzzy_lemmata);
+	bool query_scope_add(uint128 client_guid, uint64 query_id, byte book, byte chapter, byte verse_from, byte verse_to);
 
 	// returns json of TQuery:
-	std::string execute(uint128 client_guid, uint64 query_id);
+	std::string fetch(uint128 client_guid, uint64 query_id);
 
-	// returns json of TQuery::books[book].fetch_results():
+	// returns json of TChapter:
 	std::string fetch(uint128 client_id, uint64 query_id, byte book, byte chapter);
 
-	void release_client(uint128 client_guid);
-	void release_query(uint128 client_guid, uint64 query_id);
+	void client_release(uint128 client_guid);
+	void query_release(uint128 client_guid, uint64 query_id);
 
 };
 #endif // !defined(EA_36732251_A4F4_46b0_B9B8_642CCE3A147B__INCLUDED_)

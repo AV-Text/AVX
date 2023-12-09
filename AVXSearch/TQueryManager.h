@@ -16,17 +16,19 @@ class TQueryManager
 {
 public:
 	TQueryManager();
+
 	virtual ~TQueryManager();
 	std::map<uint64, TQuery*> queries;
 
-	TQuery* initialize(AVXBlueprint* blueprint);
-	bool add_scope(uint64 query_id, byte book, byte chapter, byte verse);
-	std::string execute(uint64 query_id);
+	TQuery* create(AVXBlueprint* blueprint);
+	bool add_scope(uint64 query_id, byte book, byte chapter, byte verse_from, byte verse_to);
+	std::string fetch(uint64 query_id);
 	std::string fetch(uint64 query_id, byte book, byte chapter);
 
 	bool search_quoted(TQuery& query, AVXFind& segment);
 	bool search_unquoted(TQuery& query, AVXFind& segment);
 
+private:
 	inline const bool find(TQuery& query, AVXFind& segment)
 	{
 		bool found = segment.quoted ? search_quoted(query, segment) : search_unquoted(query, segment);
