@@ -31,6 +31,20 @@ TFragment::~TFragment()
 void TFragment::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
 {
 	builder.StartObject();
-	// TO DO: populate
+
+	builder.Key("fragment");
+	builder.String(this->fragment.c_str());
+
+	builder.Key("anchored");
+	builder.Bool(this->anchored);
+
+	builder.Key("all_of");
+	builder.StartArray();
+	for (auto option : this->all_of)
+	{
+		option->build(builder);
+	}
+	builder.EndArray();
+
 	builder.EndObject();
 }

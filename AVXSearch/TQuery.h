@@ -46,6 +46,6 @@ public:
 
 	bool add_scope(uint32 spec);
 
-	virtual std::string serialize();
+	std::string serialize();
 };
 #endif // !defined(EA_1A9DEEE5_474E_4a0f_BC44_4C27249CBC6A__INCLUDED_)

@@ -20,7 +20,13 @@ public:
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
 	{
 		builder.StartObject();
-		// TO DO: populate
+
+		builder.Key("feature");
+		builder.String(this->feature.c_str());
+
+		builder.Key("hits");
+		builder.Uint64(this->hits);
+
 		builder.EndObject();
 	}
 };

@@ -18,7 +18,6 @@ class TBook: public IBuild
 public:
 	TBook(byte num);
 	virtual ~TBook();
-	byte book_cnt;
 	byte book_hits;
 	byte book_num;
 	byte chapter_cnt;

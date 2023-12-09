@@ -71,7 +71,30 @@ bool TMatch::add(TTag* match)
 }
 
 void TMatch::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
-{
+{/*
+    std::vector<const TTag*> highlights;*/
+
     builder.StartObject();
+
+    builder.Key("start");
+    builder.Uint(this->start);
+
+    builder.Key("until");
+    builder.Uint(this->until);
+
+    builder.Key("fragment");
+    builder.Uint(this->fragment);
+
+    builder.Key("expression");
+    builder.Uint(this->expression);
+
+    builder.Key("highlights");
+    builder.StartArray();
+    for (auto tag : this->highlights)
+    {
+        tag->build(builder);
+    }
+    builder.EndArray();
+
     builder.EndObject();
 }

@@ -26,6 +26,6 @@ public:
 
 	std::vector<TMatch*> matches;
 
-	virtual std::string serialize();
+	std::string serialize();
 };
 #endif // !defined(EA_83E1859E_E328_4c40_B295_9C616D380578__INCLUDED_)

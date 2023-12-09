@@ -29,7 +29,7 @@ public:
 
 	bool add(TTag* match);
 
-	std::vector<const TTag*> highlights;
+	std::vector<TTag*> highlights;
 	uint16 expression;
 	uint16 fragment;
 

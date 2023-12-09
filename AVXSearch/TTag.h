@@ -59,5 +59,20 @@ public:
     {
         return (uint32(b) << 24) | (uint32(c) << 16) | (uint32(v) << 8) | uint32(w);
     }
+
+    static std::string byte_to_string(byte input)
+    {
+        char num[4] = { '0', '0', '0', '\0' };
+        int position = 3;
+        byte val = input;
+        do
+        {
+            num[--position] = val % 10;
+            val /= 10;
+
+        }   while (val != 0);
+
+        return num;
+    }
 };
 #endif // !defined(EA_0242817E_0000_4662_9FD8_C11A766FDD3F__INCLUDED_)

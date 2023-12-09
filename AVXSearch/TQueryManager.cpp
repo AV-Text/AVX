@@ -56,9 +56,9 @@ std::string TQueryManager::fetch(uint64 query_id)
 	if (iquery != this->queries.end())
 	{
 		TQuery* query = this->queries[query_id];
-		//return query->execute(doc);
+		return query->serialize();
 	}
-	return false;
+    return "";
 }
 
 // returns tree for map<byte, TChapter>

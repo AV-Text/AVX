@@ -31,6 +31,17 @@ TExpression::~TExpression()
 void TExpression::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
 {
 	builder.StartObject();
-	// TO DO: populate
+
+	builder.Key("segment");
+	builder.String(segment.c_str());
+
+	builder.Key("fragments");
+	builder.StartArray();
+	for (TFragment* frag : this->fragments)
+	{
+		frag->build(builder);
+	}
+	builder.EndArray();
+
 	builder.EndObject();
 }

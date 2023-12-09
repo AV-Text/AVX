@@ -121,6 +121,7 @@ std::string TQuery::serialize()
 		TBook* book = bk->second;
 		book->build(builder);
 	}
+	builder.EndArray();
 
 	builder.EndObject();
 
