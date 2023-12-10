@@ -9,7 +9,7 @@
 #include <TOptions.h>
 #include <AVXFragment.h>
 
-TFragment::TFragment(const AVXFragment& frag, uint16 frag_idx)
+TFragment::TFragment(const AVXFragment& frag, uint16 frag_idx): fragment_avx(frag)
 {
 	this->anchored = frag.anchored ;
 	this->fragment = frag.fragment["fragment"].GetString();

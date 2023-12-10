@@ -26,6 +26,8 @@ public:
 	std::string expression;
 	uint16 expression_idx;
 
+	AVXFind& expression_avx;
+
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 };
 #endif // !defined(EA_F636EEA9_3AA6_4889_8764_D28957F21DC8__INCLUDED_)

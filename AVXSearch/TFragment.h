@@ -27,6 +27,7 @@ public:
 	uint16 fragment_idx;
 	std::vector<TOptions*> all_of;
 
+	const AVXFragment& fragment_avx;
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 };
 #endif // !defined(EA_463021B4_CF2F_4648_B191_F5E59539632B__INCLUDED_)

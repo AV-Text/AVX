@@ -5,10 +5,11 @@
 //  Original author: Me
 ///////////////////////////////////////////////////////////
 
-#include "TQueryManager.h"
-#include "AVXFragment.h"
-#include "AVXBlueprint.h"
-#include "AVXFind.h"
+#include <TQueryManager.h>
+#include <AVXFragment.h>
+#include <AVXBlueprint.h>
+#include <AVXFind.h>
+#include <TBook.h>
 #include <TMatch.h>
 #include <TTag.h>
 #include <map>
@@ -86,9 +87,11 @@ bool TQueryManager::search_quoted(TQuery& query, AVXFind& segment)
         return false;
 
     bool hit = false;
-    for (uint8 b = 1; b <= 66; b++)
+    for (auto bk = query.books.begin(); bk != query.books.end(); ++bk)
     {
-        auto book = AVXBook::GetBook(b);
+        TBook* tbook = bk->second;
+
+        auto book = AVXBook::GetBook(tbook->book_num);
         auto writ = book.getWrit();
 
         uint32 w;
@@ -199,11 +202,13 @@ bool TQueryManager::search_unquoted(TQuery& query, AVXFind& segment)
 
     bool found = false;
     bool* hits = new bool[frag_cnt];
-    for (uint8 b = 1; b <= 66; b++)
+    for (auto bk = query.books.begin(); bk != query.books.end(); ++bk)
     {
+        TBook* tbook = bk->second;
+
+        auto book = AVXBook::GetBook(tbook->book_num);
         uint32 hit_cnt = 0;
 
-        auto book = AVXBook::GetBook(b);
         auto writ = book.getWrit();
         auto until = writ + book.writ_cnt - 1;
 

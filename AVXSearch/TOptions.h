@@ -12,19 +12,20 @@ class AVXComparator;
 class TOptions : public IBuild
 {
 public:
-	TOptions(AVXMatchAny& match_any, uint16 match_any_idx)
+	TOptions(AVXMatchAny& match_any, uint16 match_any_idx): options_avx(match_any)
 	{
 		this->options = match_any.options;
 		this->options_idx = match_any_idx;
 		uint16 idx = 0;
 		for (auto feature : match_any.features)
 		{
-			this->any_of.push_back(new TFeature(feature->feature, idx++));
+			this->any_of.push_back(new TFeature(*feature, idx++));
 		}
 	}
 	std::vector<TFeature*> any_of;
 	std::string options;
 	uint16 options_idx;
+	AVXMatchAny& options_avx;
 	uint64 hits;
 
 	virtual ~TOptions()

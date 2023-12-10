@@ -11,10 +11,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="AVX\Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVXBlueprint.cpp">
@@ -82,48 +78,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AVXBlueprint.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXDeltaComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXFind.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXMatchAny.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXLemmaComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXPOS16Comparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXPOS32Comparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXPuncComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXFragment.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXStrongsComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXTransitionComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXWordComparator.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AVXSettings.h">
-      <Filter>AVX\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TBook.h">
       <Filter>Results</Filter>
     </ClInclude>
@@ -165,6 +119,48 @@
     </ClInclude>
     <ClInclude Include="TOptions.h">
       <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXBlueprint.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXComparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXDeltaComparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXFind.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXFragment.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXLemmaComparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXMatchAny.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXPOS16Comparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXPOS32Comparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXPuncComparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXSettings.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXStrongsComparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXTransitionComparator.h">
+      <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="AVXWordComparator.h">
+      <Filter>AVX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

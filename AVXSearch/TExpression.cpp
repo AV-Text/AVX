@@ -9,7 +9,7 @@
 #include "TFragment.h"
 #include <AVXFind.h>
 
-TExpression::TExpression(AVXFind& exp, uint16 exp_idx)
+TExpression::TExpression(AVXFind& exp, uint16 exp_idx): expression_avx(exp)
 {
 	this->expression = exp.expression;
 	this->expression_idx = exp_idx;

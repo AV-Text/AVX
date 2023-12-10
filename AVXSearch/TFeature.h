@@ -3,10 +3,12 @@
 #include <Serialization.h>
 #include <string>
 #include <IBuild.h>
+#include<AVXComparator.h>
+
 class TFeature : public IBuild
 {
 public:
-	TFeature(std::string feature, uint16 idx): feature(feature), feature_idx(idx), hits(0)
+	TFeature(AVXComparator& comparator, uint16 idx): feature(comparator.feature), feature_idx(idx), feature_avx(comparator), hits(0)
 	{
 		;
 	}
@@ -16,6 +18,7 @@ public:
 	}
 	const std::string feature;
 	const uint16 feature_idx;
+	AVXComparator& feature_avx;
 	uint64 hits;
 
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
