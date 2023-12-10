@@ -70,6 +70,19 @@ bool TQuery::add_scope(uint32 spec)
 	return false;
 }
 
+bool TQuery::search()
+{
+	for (auto bk = this->books.begin(); bk != this->books.end(); ++bk)
+	{
+		TBook* book = bk->second;
+
+		for (auto expression : this->expressions)
+		{
+			book->search(*expression, this->settings, this->scope); // TODO: update hits attributes in TQuery
+		}
+	}
+}
+
 std::string TQuery::serialize()
 {
 	rapidjson::StringBuffer sb;

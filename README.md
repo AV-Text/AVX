@@ -56,35 +56,55 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 
 **Figure-2**: AVX-Framework input and output definition and repository details [revision #3C02]
 
-### AV-Engine Internals
+### Blueprint-Blue Internals
 
-AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ and Rust libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a blueprint [JSON text] is obtained for the search from the Blueprint-Blue library, it is passed to AVX-Search. Details about the input [JSON] object-model, aka "blueprint", can be found in the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
+Blueprint-Blue is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to a native Rust library to parse the specialized Quelle grammar into a JSON parse tree. The relationship to the [Rust] Pinshot-blue library is shown in Figure 1. Once a parse tree [JSON text] is converted into the Blueprint-Blue object framework, it is returned to the AV-Engine for further processing.
 
-The TQuery hierarchy simplifies the blueprint to facilitate rendering and highlighting. AVX-Search returns JSON representations of TQuery and TChapter hierarchies using a two-phase invocation approach. All calls to native libraries are in-process via P/Invoke and use JSON for exchanging complex object hierarchies.
+![](QCommand.png)
 
-The UML class diagram, depicted in Figure 3, reveals the two-phase approach. Gray boxes are not serialized; instead, they manage access to instantiated C++ objects. The query summary is represented by the TQuery (golden class) hierarchy in Figure 3. It should be noted that query_id is a (uint64) cast of the address of the instantiated TQuery object. The purple objects are the per-chapter requests for TChapter serializations.
+**Figure 3-1**: The Blueprint-Blue object model (an OO Framework that represents a [Quelle](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md) parse)
 
-All requests to the C++ TClientManager require the two-part client_id [GUID]: this mitigates possible attempts at object hijacking. While object hijacking within an in-process DLL is a deep security concern. This hierarchy is designed to also serve REST requests via the AV-API ASP.Net services. Object validation, by requiring the GUID of the calling client, will become a useful safeguard. In short, accessing the (TQuery*) cast via the queries map is not possible, without first supplying the correct client GUID that was used for the original object instantiation.
+The QFind object depicted above is almost a framework in itself. Figure 3-2 provides a detailed view of the QFind hierarchy. It should be noted that AV-Engine handles all Quelle commands except QFind [find expressions] without assistance from AVX-Search or AVX-Text. However, search expressions serialize the QFind object into JSON and call AVX-Search to perform the actual search in C++ native code.
+
+![](QFind.png)
+
+**Figure 3-2**: Detail of the QFind class of the Blueprint-Blue object model
+
+
+
+### AVX-Search Internals
+
+Effectively, the QFind object is deserialized into a TQuery object hierarchy, which preserves the blueprint objects into a structure that facilitates a phased approach to yielding a search summary and search results. The TQuery object hierarchy also simplifies  rendering and highlighting for downstream clients. There are exactly two phases for each query. AVX-Search returns JSON representations of TQuery in phase one.  AVX-Search returns JSON representations of TChapter hierarchies on demand per chapter. All calls from AV-Engine to AVX-Search are in-process via P/Invoke, utilizing JSON for exchanging complex object hierarchies. The dependency on AVX-Text by AVX-Search is statically linked into the AVX-Search DLL. 
+
+The UML class diagram, depicted in Figure 3-3, reveals the two-phase approach. Gray boxes are not serialized; instead, they manage access to instantiated C++ objects. The query summary is represented by the TQuery (golden class) hierarchy in Figure 3-3. It should be noted that query_id is a (uint64) cast of the address of the instantiated TQuery object. The purple objects are the per-chapter requests for TChapter serializations.
 
 ![](AVXSearch/AVX-Results.png)
 
-**Figure-3**: Two-Phased fetching from C# into C++ using JSON serialization
+**Figure 3-3**: Two-Phased fetching from C# into C++ using JSON serialization
 
+### AVX-Text & AVX-Lib Internals
 
+AVX-Lib [C#] and AVX-Text [C++] are both similar/equivalent mechanisms that simplify access to the [Digital-AV SDK](https://github.com/kwonus/Digital-AV). The SDK, shared between the two libraries, provides NLP and linguistic features of the King James Bible. To be clear, the Digital-AV is what makes searches in the AVX-Framework, both feasible and fast. While AVX-Lib and AVX-Text do not have identical APIs, they are substantially similar, each optimized for the language in which each is written. AVX-Lib is compiled with Dotnet 8. AVX-Text is compiled with CLanc C++17 and C17 as a static library.
+
+### AV-Engine Internals
+
+AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a Quelle object model (aka blueprint) is obtained for the search from the Blueprint-Blue library, it is serialized to JSON and passed to AVX-Search. Details about the input [JSON] object-model, aka "blueprint", can be found in the next section, with additional details to be found in the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
+
+All requests to the C++ TClientManager require the two-part client_id [GUID]: this mitigates possible attempts at object hijacking. While object hijacking within an in-process DLL is a deep security concern. This hierarchy is designed to also serve REST requests via the AV-API ASP.Net services. Object validation, by requiring the GUID of the calling client, will become a useful safeguard. In short, accessing the (TQuery*) cast via the queries map is not possible, without first supplying the correct client GUID that was used for the original object instantiation.
 
 ### Development Roadmap
 
-A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure-4.
+A BETA release of AV-Bible and AV-Console are planned for 2023. The development roadmap for 2023 is depicted in Figure 4-1.
 
 ![](AVXSearch/AVX-Roadmap-2023.png)
 
-**Figure-4**: Development roadmap for BETA releases in 2023 [revision #3C02]
+**Figure 4-1**: Development roadmap for BETA releases in 2023 [revision #3C02]
 
-We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure-5, identifies anticipated application releases and estimated release dates:
+We plan to harden AV-Bible (Windows desktop application) and release it into the Microsoft Store in the first quarter of 2024. Afterwards, additional apps will be implemented and released. The diagram, depicted in Figure 4-2, identifies anticipated application releases and estimated release dates:
 
 ![](AVXSearch/AVX-Roadmap-2024.png)
 
-**Figure-5**: Roadmap for [user-facing] application releases in 2024 [revision #3C02]
+**Figure 4-2**: Roadmap for [user-facing] application releases in 2024 [revision #3C02]
 
 ### Implementation Status
 

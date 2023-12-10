@@ -29,7 +29,10 @@ public:
 	std::string fetch(byte chapter_num);
 
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
-
+	bool search(TExpression& expression, TSettings& settings, std::vector<uint32> scope);
+private:
+	bool search_quoted(TExpression& expression, TSettings& settings, std::vector<uint32> scope);
+	bool search_unquoted(TExpression& expression, TSettings& settings, std::vector<uint32> scope);
 private:
 	std::map<byte, TChapter*> chapters;
 

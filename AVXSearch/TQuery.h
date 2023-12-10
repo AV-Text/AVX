@@ -45,6 +45,7 @@ public:
 	std::string fetch(byte book, byte chapter);
 
 	bool add_scope(uint32 spec);
+	bool search();
 
 	std::string serialize();
 };
