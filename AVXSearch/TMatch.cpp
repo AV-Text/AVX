@@ -51,10 +51,10 @@ void TMatch::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
     builder.Key("until");
     builder.Uint(this->until);
 
-    builder.Key("fragment");
+    builder.Key("fragment_idx");
     builder.Uint(this->fragment.fragment_idx);
 
-    builder.Key("expression");
+    builder.Key("expression_idx");
     builder.Uint(this->expression.expression_idx);
 
     builder.Key("highlights");

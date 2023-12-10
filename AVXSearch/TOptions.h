@@ -9,10 +9,10 @@
 #include <AVXComparator.h>
 
 class AVXComparator;
-class TOption : public IBuild
+class TOptions : public IBuild
 {
 public:
-	TOption(AVXMatchAny& match_any, uint16 match_any_idx)
+	TOptions(AVXMatchAny& match_any, uint16 match_any_idx)
 	{
 		this->options = match_any.options;
 		this->options_idx = match_any_idx;
@@ -27,7 +27,7 @@ public:
 	uint16 options_idx;
 	uint64 hits;
 
-	virtual ~TOption()
+	virtual ~TOptions()
 	{
 		for (auto feature : this->any_of)
 		{

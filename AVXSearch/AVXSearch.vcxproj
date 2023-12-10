@@ -66,9 +66,9 @@
     <ClInclude Include="TFeature.h" />
     <ClInclude Include="TMatch.h" />
     <ClInclude Include="TFragment.h" />
+    <ClInclude Include="TOptions.h" />
     <ClInclude Include="TSettings.h" />
     <ClInclude Include="TTag.h" />
-    <ClInclude Include="TOption.h" />
     <ClInclude Include="TQuery.h" />
     <ClInclude Include="TQueryManager.h" />
   </ItemGroup>

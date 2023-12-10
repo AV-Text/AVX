@@ -154,9 +154,6 @@
     <ClInclude Include="TFeature.h">
       <Filter>Results</Filter>
     </ClInclude>
-    <ClInclude Include="TOption.h">
-      <Filter>Results</Filter>
-    </ClInclude>
     <ClInclude Include="TSettings.h">
       <Filter>Results</Filter>
     </ClInclude>
@@ -164,6 +161,9 @@
       <Filter>Results</Filter>
     </ClInclude>
     <ClInclude Include="IBuild.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="TOptions.h">
       <Filter>Results</Filter>
     </ClInclude>
   </ItemGroup>

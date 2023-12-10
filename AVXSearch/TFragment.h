@@ -13,7 +13,7 @@
 #include <vector>
 #include <IBuild.h>
 #include <AVXFragment.h>
-#include <TOption.h>
+#include <TOptions.h>
 
 class TFragment : public IBuild
 {
@@ -25,7 +25,7 @@ public:
 	bool anchored;
 	std::string fragment;
 	uint16 fragment_idx;
-	std::vector<TOption*> all_of;
+	std::vector<TOptions*> all_of;
 
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 };

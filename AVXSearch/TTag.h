@@ -11,16 +11,18 @@
 #include <Serialization.h>
 #include <string>
 #include <vector>
+#include <TOptions.h>
 #include <TFeature.h>
 #include <IBuild.h>
 
 class TTag : public IBuild
 {
 public:
+    TOptions& options;
     TFeature& feature;
     uint32 coordinates;
 
-    TTag(uint32 coordinates, TFeature& feature): feature(feature)
+    TTag(uint32 coordinates, TOptions& options, TFeature& feature): options(options), feature(feature)
     {
         this->coordinates = coordinates;
     }
@@ -32,8 +34,10 @@ public:
     virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
     {
         builder.StartObject();
-        builder.Key("feature");
+        builder.Key("feature_idx");
         builder.Uint(this->feature.feature_idx);
+        builder.Key("options_idx");
+        builder.Uint(this->options.options_idx);
         builder.Key("coordinates");
         builder.Uint(this->coordinates);
         builder.EndObject();

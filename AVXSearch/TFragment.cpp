@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////
 
 #include <TFragment.h>
-#include <TOption.h>
+#include <TOptions.h>
 #include <AVXFragment.h>
 
 TFragment::TFragment(const AVXFragment& frag, uint16 frag_idx)
@@ -18,7 +18,7 @@ TFragment::TFragment(const AVXFragment& frag, uint16 frag_idx)
 	uint16 idx = 0;
 	for (auto option : frag.requirements)
 	{
-		this->all_of.push_back(new TOption(*option, idx++));
+		this->all_of.push_back(new TOptions(*option, idx++));
 	}
 }
 
