@@ -19,11 +19,12 @@ class TFragment : public IBuild
 {
 
 public:
-	TFragment(const AVXFragment& frag);
+	TFragment(const AVXFragment& frag, uint16 frag_idx);
 	virtual ~TFragment();
 	uint64 hits;
 	bool anchored;
 	std::string fragment;
+	uint16 fragment_idx;
 	std::vector<TOption*> all_of;
 
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);

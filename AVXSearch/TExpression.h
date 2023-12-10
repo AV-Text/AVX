@@ -19,11 +19,12 @@
 class TExpression : public IBuild
 {
 public:
-	TExpression(AVXFind& exp);
+	TExpression(AVXFind& exp, uint16 exp_idx);
 	virtual ~TExpression();
 
 	std::vector<TFragment*> fragments;
-	std::string segment;
+	std::string expression;
+	uint16 expression_idx;
 
 	virtual void build(rapidjson::Writer<rapidjson::StringBuffer>& builder);
 };

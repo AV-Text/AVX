@@ -9,14 +9,16 @@
 #include <TOption.h>
 #include <AVXFragment.h>
 
-TFragment::TFragment(const AVXFragment& frag)
+TFragment::TFragment(const AVXFragment& frag, uint16 frag_idx)
 {
 	this->anchored = frag.anchored ;
 	this->fragment = frag.fragment["fragment"].GetString();
+	this->fragment_idx = frag_idx;
 
+	uint16 idx = 0;
 	for (auto option : frag.requirements)
 	{
-		this->all_of.push_back(new TOption(*option));
+		this->all_of.push_back(new TOption(*option, idx++));
 	}
 }
 
@@ -34,6 +36,9 @@ void TFragment::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
 
 	builder.Key("fragment");
 	builder.String(this->fragment.c_str());
+
+	builder.Key("fragment_idx");
+	builder.Uint(this->fragment_idx);
 
 	builder.Key("anchored");
 	builder.Bool(this->anchored);

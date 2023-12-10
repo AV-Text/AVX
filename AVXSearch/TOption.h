@@ -12,14 +12,19 @@ class AVXComparator;
 class TOption : public IBuild
 {
 public:
-	TOption(AVXMatchAny& option)
+	TOption(AVXMatchAny& match_any, uint16 match_any_idx)
 	{
-		for (auto feature : option.features)
+		this->options = match_any.options;
+		this->options_idx = match_any_idx;
+		uint16 idx = 0;
+		for (auto feature : match_any.features)
 		{
-			this->any_of.push_back(new TFeature(feature->feature));
+			this->any_of.push_back(new TFeature(feature->feature, idx++));
 		}
 	}
 	std::vector<TFeature*> any_of;
+	std::string options;
+	uint16 options_idx;
 	uint64 hits;
 
 	virtual ~TOption()
@@ -36,6 +41,12 @@ public:
 
 		builder.Key("hits");
 		builder.Uint64(this->hits);
+
+		builder.Key("options");
+		builder.String(this->options.c_str());
+
+		builder.Key("options_idx");
+		builder.Uint(this->options_idx);
 
 		builder.Key("any_of");
 		builder.StartArray();

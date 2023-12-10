@@ -9,13 +9,15 @@
 #include "TFragment.h"
 #include <AVXFind.h>
 
-TExpression::TExpression(AVXFind& exp)
+TExpression::TExpression(AVXFind& exp, uint16 exp_idx)
 {
-	this->segment = exp.expression;
+	this->expression = exp.expression;
+	this->expression_idx = exp_idx;
 
+	uint16 idx = 0;
 	for (auto frag : exp.fragments)
 	{
-		TFragment* fragment = new TFragment(*frag);
+		TFragment* fragment = new TFragment(*frag, idx++);
 		this->fragments.push_back(fragment);
 	}
 }
@@ -32,8 +34,11 @@ void TExpression::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
 {
 	builder.StartObject();
 
-	builder.Key("segment");
-	builder.String(segment.c_str());
+	builder.Key("expression");
+	builder.String(expression.c_str());
+
+	builder.Key("expression_idx");
+	builder.Uint(expression_idx);
 
 	builder.Key("fragments");
 	builder.StartArray();

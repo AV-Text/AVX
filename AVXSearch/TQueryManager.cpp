@@ -111,34 +111,35 @@ bool TQueryManager::search_quoted(TQuery& query, AVXFind& segment)
                     uint32 wi = w;
                     auto spanwrit = writ + 1;
 
-                    for (auto fragment : segment.fragments)
+                    for (const AVXFragment* fragment : segment.fragments)
                     {
-                        ;
-                    }/*
-                    for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
-                    {
-                        for (auto& segment = *(this->requirements[seg_idx]); wi < len; wi++, spanwrit++)
+                        for (AVXMatchAny* req : fragment->requirements)
                         {
-                            if (!segment.compare(*spanwrit, matched))
+                            if (wi > len)
+                                break;
+
+                            if (!req->compare(*spanwrit, matched))
                             {
-                                if (segment.anchored)
+                                if (fragment->anchored)
                                     goto NOT_FOUND_1;
                                 if (wi == len-1) // end-of-verse with verse-span granularity
                                     goto NOT_FOUND_1;
                             }
+                            wi++;
+                            spanwrit++;
                         }
                     }
+                    /*
                     hit = true;
-                    auto found = new TFound();
+                    auto found = new TMatch();
                     for (auto const& [coord, pair] : matched)
                     {
                         const char* frag = std::get<0>(pair);
                         const char* feat = std::get<0>(pair);
-                        auto match = new TMatch((uint32) coord, frag, feat);
+                        auto match = new TTag(uint32(coord), feat);
                         found->add(match);
-                    }
+                    }*/
                     //this->results.founds.push_back(found);
-                    */
                 }
             NOT_FOUND_1:
                 continue;
@@ -160,29 +161,24 @@ bool TQueryManager::search_quoted(TQuery& query, AVXFind& segment)
 
                     for (auto fragment : segment.fragments)
                     {
-                        ;
-                    }/*
-
-                    for (uint32 seg_idx = 1; this->requirements[seg_idx]; seg_idx++)
-                    {
-                        for (auto& segment = *(this->requirements[seg_idx]); wi < wi_len; wi++, spanwrit++)
+                        for (auto req : fragment->requirements)
                         {
-                            if (!segment.compare(*spanwrit, matched))
+                            if (!req->compare(*spanwrit, matched))
                             {
-                                if (segment.anchored)
+                                if (fragment->anchored)
                                     goto NOT_FOUND_2;
                                 if (wi == wi_len - 1) // end-of-verse with verse-span granularity
                                     goto NOT_FOUND_2;
                             }
                         }
-                    }
+                    }/*
                     hit = true;
-                    auto found = new TFound();
+                    auto found = new TMatch();
                     for (auto const& [coord, pair] : matched)
                     {
                         const char* frag = std::get<0>(pair);
                         const char* feat = std::get<0>(pair);
-                        auto match = new AVXMatch((uint32)coord, frag, feat);
+                        auto match = new TTag(uint32(coord), feat);
                         found->add(match);
                     }*/
                     //this->results.founds.push_back(found);
@@ -244,15 +240,15 @@ bool TQueryManager::search_unquoted(TQuery& query, AVXFind& segment)
 
                     if (hit_cnt == frag_cnt)
                     {
-                        found = true;
-                        auto foundMatch = false; //  new TFound();
+                        found = true;/*
+                        auto foundMatch = new TMatch();
                         for (auto const& [coord, pair] : matched)
                         {
                             const char* frag = std::get<0>(pair);
                             const char* feat = std::get<0>(pair);
-                            //auto match = new TMatch((uint32)coord, frag, feat);
-                            //foundMatch->add(match);
-                        }
+                            auto match = new TTag(uint32(coord), feat);
+                            foundMatch->add(match);
+                        }*/
                         //this->results.founds.push_back(foundMatch);
                     }
                 }

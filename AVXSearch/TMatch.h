@@ -12,6 +12,8 @@
 #include <IBuild.h>
 #include <TTag.h>
 #include <TQuery.h>
+#include <TExpression.h>
+#include <TFragment.h>
 
 #include <string>
 #include <vector>
@@ -21,7 +23,7 @@ class AVXFind;
 class TMatch// : public IAssign
 {
 public:
-	TMatch(AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until);
+	TMatch(AVXFind& segment, TExpression& expression, TFragment& fragment, uint32 start, uint32 until);
 	virtual ~TMatch();
 
 	uint32 start;
@@ -30,8 +32,8 @@ public:
 	bool add(TTag* match);
 
 	std::vector<TTag*> highlights;
-	uint16 expression;
-	uint16 fragment;
+	TExpression& expression;
+	TFragment& fragment;
 
 	TQuery& find();
 

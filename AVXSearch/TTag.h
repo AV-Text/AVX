@@ -11,17 +11,17 @@
 #include <Serialization.h>
 #include <string>
 #include <vector>
+#include <TFeature.h>
 #include <IBuild.h>
 
 class TTag : public IBuild
 {
 public:
-    uint16 feature;
+    TFeature& feature;
     uint32 coordinates;
 
-    TTag(uint32 coordinates, uint16 feature)
+    TTag(uint32 coordinates, TFeature& feature): feature(feature)
     {
-        this->feature = feature;
         this->coordinates = coordinates;
     }
     virtual ~TTag()
@@ -33,7 +33,7 @@ public:
     {
         builder.StartObject();
         builder.Key("feature");
-        builder.Uint(this->feature);
+        builder.Uint(this->feature.feature_idx);
         builder.Key("coordinates");
         builder.Uint(this->coordinates);
         builder.EndObject();

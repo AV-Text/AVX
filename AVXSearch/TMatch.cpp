@@ -9,41 +9,10 @@
 #include <TExpression.h>
 #include <TMatch.h>
 
-TMatch::TMatch(AVXFind& segment, std::string& expression, std::string& fragment, uint32 start, uint32 until): query(query), segment(segment)
+TMatch::TMatch(AVXFind& segment, TExpression& expression, TFragment& fragment, uint32 start, uint32 until): query(query), segment(segment), expression(expression), fragment(fragment)
 {
     this->start = start;
     this->until = until;
-
-    TExpression* found = nullptr;
-    int e = 0;
-    for (auto exp : query.expressions)
-    {
-        if (exp->segment == expression)
-        {
-            this->expression = e;
-            found = exp;
-            break;
-        }
-        e++;
-    }
-    if (found != nullptr)
-    {
-        int f = 0;
-        for (auto frag : found->fragments)
-        {
-            if (frag->fragment == fragment)
-            {
-                this->fragment = f;
-                break;
-            }
-            f++;
-        }
-    }
-    else
-    {
-        this->expression = 0;
-        this->fragment = 0;
-    }
 }
 
 TMatch::~TMatch()
@@ -83,10 +52,10 @@ void TMatch::build(rapidjson::Writer<rapidjson::StringBuffer>& builder)
     builder.Uint(this->until);
 
     builder.Key("fragment");
-    builder.Uint(this->fragment);
+    builder.Uint(this->fragment.fragment_idx);
 
     builder.Key("expression");
-    builder.Uint(this->expression);
+    builder.Uint(this->expression.expression_idx);
 
     builder.Key("highlights");
     builder.StartArray();
