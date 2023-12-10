@@ -35,13 +35,13 @@ There are just a few external dependencies of AVX-Framework: DotNet with YamlDot
 
 The latest architecture is highly modular. Earlier works were much more monolithic. While monolithic applications can be built faster, they are more fragile, difficult to refactor, and exhibit maintenance issues over the long haul. While a modular architecture is more labor-intensive initially, it's way easier to refactor. Modularity facilitates incremental improvements that can be accomplished in shorter timeframes. In other words, it takes longer on the onset, but it's way better over time. The downside of modularity is a more complicated build sequence. However, most of my user-base is constrained to the AV-Bible application (that application is pre-built and distributed as binaries on the Microsoft App Store. If you need help building sources, please ping me.
 
-Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, additional publicly available classes are exposed in AVX-Lib and NUPhone. Consequently, AV-Engine consumers can reach into public methods in those assemblies. The other dependencies are mostly opaque. The seven modules that compose the framework, along with file dependencies, are depicted in Figure-1 below:
+Consumers of AVX-Framework directly target a single dotnet assembly, namely AV-Engine. However, additional publicly available classes are exposed in AVX-Lib and NUPhone. Consequently, AV-Engine consumers can reach into public methods in those assemblies. The other dependencies are mostly opaque. The seven modules that compose the framework, along with file dependencies, are depicted in Figure 1 below:
 
 ![](AVXSearch/AVX-Framework.png)
 
-**Figure-1**: AVX-Framework dependency diagram [revision #3C02]
+**Figure 1**: AVX-Framework dependency diagram [revision #3C02]
 
-Evidenced by Figure-1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more granular parameter-marshalling, because it is both more efficient and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository references.
+Evidenced by Figure 1, serialization is used for parameters when crossing language-boundaries. Parameter serialization, for in-proc cross-language invocation, is used in lieu more granular parameter-marshalling, because it is both more efficient and less fragile than marshalling. In-proc method invocations that do <u>not</u> cross language boundaries utilize POCO (plain old C# objects \<or\> plain old C++ objects). The table in Figure 2 identifies serialization formats used for inputs and outputs per module, along with repository references.
 
 | **Module**  *(repository)*<br/>source code folder            | **Input**                                                    | **Output**                                                   |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -54,11 +54,11 @@ Evidenced by Figure-1, serialization is used for parameters when crossing langua
 | **Blueprint-Blue** *(github.com/kwonus/blueprint-blue)*<br/>[./Blueprint-Blue-Lib](https://github.com/kwonus/blueprint-blue/tree/main/Blueprint-Blue-Lib) | null-terminated text                                         | json-formatted text [blueprint]<br/>*(null-terminated text)* |
 | **NUPhone** *(github.com/kwonus/NUPhone)*<br/>[./PhonemeEmbeddings](https://github.com/kwonus/NUPhone) | C# Classes/Methods                                           | C# Classes/Methods                                           |
 
-**Figure-2**: AVX-Framework input and output definition and repository details [revision #3C02]
+**Figure 2**: AVX-Framework input and output definition and repository details [revision #3C02]
 
 ### Blueprint-Blue Internals
 
-Blueprint-Blue is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to a native Rust library to parse the specialized Quelle grammar into a JSON parse tree. The relationship to the [Rust] Pinshot-blue library is shown in Figure 1. Once a parse tree [JSON text] is converted into the Blueprint-Blue object framework, it is returned to the AV-Engine for further processing.
+Blueprint-Blue is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to a native Rust library to parse the specialized Quelle grammar into a JSON parse tree. The relationship to the [Rust] [Pinshot-blue library](https://github.com/kwonus/pinshot-blue) is shown in Figure 1. Once a parse tree [JSON text] is converted into the Blueprint-Blue object framework, it is returned to the AV-Engine for further processing. The OO model/blueprint is depicted in Figure 3-1.
 
 ![](QCommand.png)
 
@@ -90,7 +90,7 @@ AVX-Lib [C#] and AVX-Text [C++] are both similar/equivalent mechanisms that simp
 
 AV-Engine is an in-process .NET 8 assembly. It uses standard C# interfaces for parameters and the return types. However, the assembly also obfuscates calls to native C++ libraries as shown in Figure 1 (This simplifies usage for any downstream .NET client). Once a Quelle object model (aka blueprint) is obtained for the search from the Blueprint-Blue library, it is serialized to JSON and passed to AVX-Search. Details about the input [JSON] object-model, aka "blueprint", can be found in the next section, with additional details to be found in the [Quelle-AVX specification](https://github.com/kwonus/Quelle/blob/main/Quelle-AVX.md).
 
-All requests to the C++ TClientManager require the two-part client_id [GUID]: this mitigates possible attempts at object hijacking. While object hijacking within an in-process DLL is a deep security concern. This hierarchy is designed to also serve REST requests via the AV-API ASP.Net services. Object validation, by requiring the GUID of the calling client, will become a useful safeguard. In short, accessing the (TQuery*) cast via the queries map is not possible, without first supplying the correct client GUID that was used for the original object instantiation.
+All requests to the C++ TClientManager require the two-part client_id [GUID]: this mitigates possible attempts at object hijacking. While object hijacking within an in-process DLL is <u>not</u> a deep security concern. This hierarchy is designed to also serve REST requests via the AV-API ASP.Net services. By requiring the GUID of the calling client, object safeguarding is already in place for later development on the roadmap. In short, accessing the (TQuery*) cast via the queries map is not possible, without first supplying the correct client GUID that was used for the original object instantiation.  This validation is in addition to any safeguarding on the REST service itself. To be clear, object hijacking is not really a concern for in-proc usage; instead, it becomes a useful safegard once it is invokable via a REST API (as depicted in Figure 4-2).
 
 ### Development Roadmap
 
