@@ -43,9 +43,9 @@ bool TQueryManager::add_scope(uint64 query_id, byte book, byte chapter, byte ver
         uint32 verse_range = 0;
         if (verse_from != 0)
         {
-            verse_range = uint32(verse_from) << 24 + uint32(verse_to) << 16;
+            verse_range = (uint32(verse_from) << 24) | (uint32(verse_to) << 16);
         }
-		query->scope.push_back(uint32(book) << 16 | uint32(chapter) << 8 | verse_range);
+		query->scope.push_back(uint32(book) << 16 | uint32(chapter) << 8 | verse_range);	// Note that scope ranges look very different than match/tag coordinates
 		return true;
 	}
 	return false;

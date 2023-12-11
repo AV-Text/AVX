@@ -19,9 +19,12 @@ AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, 
 
         for (auto segment = array.Begin(); segment != array.End(); ++segment)
         {
-            rapidjson::GenericObject<false, rapidjson::Value> expression = segment->GetObj();
-            this->searches.push_back(new AVXFind(expression));
-            this->okay = true;
+            if (segment->IsObject())
+            {
+                rapidjson::GenericObject<false, rapidjson::Value> expression = segment->GetObj();
+                this->searches.push_back(new AVXFind(expression));
+                this->okay = true;
+            }
         }
     }
     else

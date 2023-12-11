@@ -14,14 +14,14 @@ public:
 
     friend class AVXBlueprint;
 
-    AVXFind(const rapidjson::GenericObject<false, rapidjson::Value>& expression): segment(expression), quoted(expression["isQuoted"].GetBool())
+    AVXFind(const rapidjson::GenericObject<false, rapidjson::Value>& expression): segment(expression), quoted(expression["IsQuoted"].GetBool())
     {
         this->okay = false;
         if (this->segment.IsObject())
         {
-            if (this->segment["fragments"].IsArray())
+            if (this->segment["Fragments"].IsArray())
             {
-                auto array = this->segment["fragments"].GetArray();
+                auto array = this->segment["Fragments"].GetArray();
 
                 for (auto fragment = array.Begin(); fragment != array.End(); ++fragment)
                 {

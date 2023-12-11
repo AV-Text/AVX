@@ -2,17 +2,17 @@
 #include "AVXMatchAny.h"
 #include <directory.h>
 
-AVXFragment::AVXFragment(rapidjson::GenericObject<true, rapidjson::Value>& frag) : fragment(frag), anchored(frag["anchored"].GetBool())
+AVXFragment::AVXFragment(rapidjson::GenericObject<true, rapidjson::Value>& frag) : fragment(frag), anchored(frag["Anchored"].GetBool())
 {
     this->okay = false;
 
-    if (this->fragment["requirements"].IsArray())
+    if (this->fragment["MatchAll"].IsArray())
     {
-        auto array = this->fragment["requirements"].GetArray();
+        auto array = this->fragment["MatchAll"].GetArray();
 
-        for (auto fragment = array.Begin(); fragment != array.End(); ++fragment)
+        for (auto options = array.Begin(); options != array.End(); ++options)
         {
-            rapidjson::GenericObject<true, rapidjson::Value> reqs = fragment->GetObj();
+            rapidjson::GenericObject<true, rapidjson::Value> reqs = options->GetObj();
             this->requirements.push_back(new AVXMatchAny(reqs));
             this->okay = true;
         }

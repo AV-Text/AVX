@@ -46,8 +46,41 @@ namespace AVXFramework
                             else if (blueprint.Commands != null)
                             {
                                 var expression = blueprint.Commands.Searches.ToList();
-//                              string yaml = ICommand.YamlSerializerRaw(expression);
-                                string yaml = ICommand.JsonSerializerRaw(expression);
+                                string yaml = ICommand.YamlSerializerRaw(expression);
+                                string json = ICommand.JsonSerializerRaw(expression);
+                                
+                                // brute-force pretty-print (for debugging)
+                                var json_pretty = json
+                                    .Replace("}]}]", "  }]}]").Replace("}],", "  }],")
+                                    .Replace("false, \"",       "false,")
+                                    .Replace("\"IsQuoted\":",   "\n\tIsQuoted:")
+                                    .Replace("\"Fragments\":",  "\n\tFragments:")
+                                    .Replace("Fragments\":",    "\n\tFragments:")
+                                    .Replace("\"MatchAll\":",   "\n\t\tMatchAll:")
+                                    .Replace("\"AnyFeature\":", "\n\t\t\tAnyFeature:")
+                                    .Replace("\"Type\":",       "\n\t\t\t\tType:")
+                                    .Replace("\"WordKeys\":",   "\n\t\t\t\tWordKeys:")
+                                    .Replace("\"Phonetics\":",  "\n\t\t\t\tPhonetics:")
+                                    .Replace("\"Negate\":",     "\n\t\t\t\tNegate:")
+                                    .Replace("\"Text\":",       "\n\t\t\t\tText:")
+                                    .Replace("\"Anchored\":",   "\n\t\tAnchored:")
+                                    .Replace("Text\":",         "\n\tText:")
+                                    .Replace("\"Verb\":",       "\n\tVerb:")
+                                    .Replace("\"find\"}]",      "\"find\"\n}]");
+
+                                Console.Write("Specify yaml and/or json display (default is none) > ");
+                                var answer = Console.ReadLine().ToLower();
+
+                                if (answer.Contains("yaml") || answer.Contains("both"))
+                                {
+                                    Console.WriteLine("YAML:");
+                                    Console.WriteLine(yaml);
+                                }
+                                if (answer.Contains("json") || answer.Contains("both"))
+                                {
+                                    Console.WriteLine("JSON:");
+                                    Console.WriteLine(json_pretty);
+                                }
 
                                 // CancellationToken++ code needs to be refactored with RapidJson (delete references to RapidYaml)
                                 UInt16 span = blueprint.LocalSettings.Span.Value;
@@ -57,7 +90,7 @@ namespace AVXFramework
 
                                 List<(byte book, byte chapter, byte verse)> scope = new();
 
-                                if (this.SearchEngine.Search(yaml, span, lexicon, similarity, fuzzyLemmata, scope))
+                                if (this.SearchEngine.Search(json, span, lexicon, similarity, fuzzyLemmata, scope))
                                 {
                                     return (blueprint, "", this.SearchEngine.Summary);
                                 }

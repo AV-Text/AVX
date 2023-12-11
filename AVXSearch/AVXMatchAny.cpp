@@ -4,13 +4,13 @@
 #include <AVXComparator.h>
 #include <vector>
 
-AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts) : matchany(opts), options(opts["options"].GetString())
+AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts) : matchany(opts), options(opts["AnyFeature"].GetString())
 {
     this->okay = false;
 
-    if (this->matchany["features"].IsArray())
+    if (this->matchany["AnyFeature"].IsArray())
     {
-        auto array = this->matchany["features"].GetArray();
+        auto array = this->matchany["AnyFeature"].GetArray();
 
         for (auto feature = array.Begin(); feature != array.End(); ++feature)
         {

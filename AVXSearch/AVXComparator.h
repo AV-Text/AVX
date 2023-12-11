@@ -12,12 +12,12 @@ class TTag;
 class AVXComparator
 {
 private:
-    AVXComparator(const rapidjson::Value& node, bool bad) : node(node), type(node["type"].GetString()), feature(node["feature"].GetString()), negate(node["negate"].GetString()), rule(node["rule"].GetString()), okay(false)
+    AVXComparator(const rapidjson::Value& node, bool bad) : node(node), type(node["Type"].GetString()), feature(node["Text"].GetString()), negate(node["Negate"].GetString()), okay(false)
     {
         ;
     }
 protected:
-    AVXComparator(const rapidjson::Value& node) : node(node), type(node["type"].GetString()), feature(node["feature"].GetString()), negate(node["negate"].GetString()), rule(node["rule"].GetString()), okay(true)
+    AVXComparator(const rapidjson::Value& node) : node(node), type(node["Type"].GetString()), feature(node["Text"].GetString()), negate(node["Negate"].GetString()), okay(true)
     {
         ;
     }
@@ -26,7 +26,6 @@ public:
 
     const rapidjson::Value& node;
     const char* feature;
-    const char* rule;
     const bool negate;
     const bool okay;
     const char* type;
