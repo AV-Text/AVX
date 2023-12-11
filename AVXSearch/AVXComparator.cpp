@@ -10,41 +10,42 @@
 
 AVXComparator* AVXComparator::Create(const rapidjson::GenericObject<true, rapidjson::Value>& node)
 {
-    auto feature = node["feature"].GetString();
+    auto feature = node["Text"].GetString();
 
     if (feature != nullptr)
     {
-        auto rule = node["rule"].GetString();
+        auto type = node["Type"].GetString();
 
-        if (std::strncmp(rule, "word", 4) == 0 || std::strncmp(rule, "wildcard", 8) == 0)
+        if (std::strncmp(type, "Word", 4) == 0 || std::strncmp(type, "Wildcard", 8) == 0)
         {
             return new AVXWordComparator(node);
         }
-        if (std::strncmp(rule, "pnpos", 4) == 0)
+        if (std::strncmp(type, "PartOfSpeech", 12) == 0)
         {
-            return new AVXPOS16Comparator(node);
+            if (node.HasMember("PnPos12") && (node["PnPos12"].GetUint() > 0))
+                return new AVXPOS16Comparator(node);
+            if (node.HasMember("Pos32") && (node["Pos32"].GetUint() > 0))
+                return new AVXPOS32Comparator(node);
+
+            return new AVXComparator(node, false);
         }
-        if (std::strncmp(rule, "pos32", 8) == 0)
-        {
-            return new AVXPOS32Comparator(node);
-        }
-        if (std::strncmp(rule, "lemma", 8) == 0)
+        if (std::strncmp(type, "Lemma", 8) == 0)
         {
             return new AVXLemmaComparator(node);
         }
-        if (std::strncmp(rule, "delta", 8) == 0)
+        if (std::strncmp(type, "Delta", 8) == 0)
         {
             return new AVXDeltaComparator(node);
         }
-        if (std::strncmp(rule, "punctuation", 11) || std::strncmp(rule, "decoration", 10) == 0)
+        if (std::strncmp(type, "Punctuation", 11) || std::strncmp(type, "Decoration", 10) == 0)
         {
             return new AVXPuncComparator(node);
         }
-        if (std::strncmp(rule, "strongs", 8) == 0)
+        if (std::strncmp(type, "Strongs", 8) == 0)
         {
             return new AVXStrongsComparator(node);
         }
-        if (std::strncmp(rule, "transition", 8) == 0)
+        if (std::strncmp(type, "Transition", 8) == 0)
         {
             return new AVXTransitionComparator(node);
         }

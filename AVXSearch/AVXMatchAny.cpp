@@ -4,9 +4,10 @@
 #include <AVXComparator.h>
 #include <vector>
 
-AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts) : matchany(opts), options(opts["AnyFeature"].GetString())
+AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts) : matchany(opts)
 {
     this->okay = false;
+    this->options = "";
 
     if (this->matchany["AnyFeature"].IsArray())
     {
@@ -15,8 +16,13 @@ AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts)
         for (auto feature = array.Begin(); feature != array.End(); ++feature)
         {
             rapidjson::GenericObject<true, rapidjson::Value> option = feature->GetObj();
-            this->features.push_back(AVXComparator::Create(option));
+            AVXComparator * comparator = AVXComparator::Create(option);
+            this->features.push_back(comparator);
             this->okay = true;
+
+            if (this->options.length() > 0)
+                this->options += '|';
+            this->options += comparator->feature;
         }
     }
 
@@ -24,7 +30,6 @@ AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts)
     {
         error = "Unable to extract any fragments from the search expression";
     }
-    this->options = "foo-option"; // xoption->option()->c_str();
 }
 
 // OBSOLETE FUNCTION (no longer used)

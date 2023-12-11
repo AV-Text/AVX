@@ -14,6 +14,9 @@
 TQuery::TQuery(AVXBlueprint* blueprint)
 {
 	this->blueprint = blueprint;
+	// TO DO:
+	// call constructors // populate TQuery obeject
+	this->search();
 }
 
 TQuery::~TQuery()
@@ -72,15 +75,27 @@ bool TQuery::add_scope(uint32 spec)
 
 bool TQuery::search()
 {
+	int cnt = 0;
+	int ok = true;
 	for (auto bk = this->books.begin(); bk != this->books.end(); ++bk)
 	{
+		cnt++;
 		TBook* book = bk->second;
 
 		for (auto expression : this->expressions)
 		{
-			book->search(*expression, this->settings, this->scope); // TODO: update hits attributes in TQuery
+			ok = book->search(*expression, this->settings, this->scope); // TODO: update hits attributes in TQuery
+			if (!ok)
+				return false;
 		}
 	}
+	if (cnt > 0)
+		return true;
+
+	for (byte b = 1; b <= 66; b++)
+		this->books[b] = new TBook(b);
+
+	return search();
 }
 
 std::string TQuery::serialize()

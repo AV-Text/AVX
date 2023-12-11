@@ -22,14 +22,24 @@ uint16 AVXWordComparator::compare(const WrittenContent& writ, TMatch& match, TTa
 
 AVXWordComparator::AVXWordComparator(const rapidjson::GenericObject<true, rapidjson::Value>& node) : AVXComparator(node)
 {
-	if (this->node["wkeys"].IsArray())
+	if (this->node.HasMember("WordKeys") && this->node["WordKeys"].IsArray())
 	{
-		auto array = this->node["wkeys"].GetArray();
+		auto array = this->node["WordKeys"].GetArray();
 
 		for (auto word = array.Begin(); word != array.End(); ++word)
 		{
 			uint16 num = word->GetUint();
 			this->wkeys.push_back(num);
+		}
+	}
+	if (this->node.HasMember("Phonetics") && this->node["Phonetics"].IsArray())
+	{
+		auto array = this->node["Phonetics"].GetArray();
+
+		for (auto item = array.Begin(); item != array.End(); ++item)
+		{
+			auto ipa = item->GetString();
+			this->phonetics.push_back(ipa);
 		}
 	}
 }

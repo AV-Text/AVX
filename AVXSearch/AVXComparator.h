@@ -12,12 +12,22 @@ class TTag;
 class AVXComparator
 {
 private:
-    AVXComparator(const rapidjson::Value& node, bool bad) : node(node), type(node["Type"].GetString()), feature(node["Text"].GetString()), negate(node["Negate"].GetString()), okay(false)
+    AVXComparator(const rapidjson::Value& node, bool bad)
+        : node(node)
+        , type(node.HasMember("Type") ? node["Type"].GetString() : "")
+        , feature(node.HasMember("Text") ? node["Text"].GetString() : "")
+        , negate(node.HasMember("Negate") ? node["Negate"].GetBool() : false)
+        , okay(false)
     {
         ;
     }
 protected:
-    AVXComparator(const rapidjson::Value& node) : node(node), type(node["Type"].GetString()), feature(node["Text"].GetString()), negate(node["Negate"].GetString()), okay(true)
+    AVXComparator(const rapidjson::Value& node)
+        : node(node)
+        , type(node.HasMember("Type") ? node["Type"].GetString() : "")
+        , feature(node.HasMember("Text") ? node["Text"].GetString() : "")
+        , negate(node.HasMember("Negate") ? node["Negate"].GetBool() : false)
+        , okay(true)
     {
         ;
     }
@@ -25,10 +35,10 @@ public:
     static AVXComparator* Create(const rapidjson::GenericObject<true, rapidjson::Value>& node);
 
     const rapidjson::Value& node;
-    const char* feature;
+    const std::string type;
+    const std::string feature;
     const bool negate;
     const bool okay;
-    const char* type;
 
     virtual uint16 compare(const WrittenContent& writ, TMatch& match, TTag& tag)
     {

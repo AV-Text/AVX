@@ -11,7 +11,7 @@ class AVXComparator;
 class AVXMatchAny
 {
 public:
-	const char* options;
+	std::string options;
 	std::vector <AVXComparator*> features;
 
 	AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts);
