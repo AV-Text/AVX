@@ -17,7 +17,7 @@ private:
     bool okay;
 
 public:
-    AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching);
+    AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool enable_lemma_matching);
 
     const AVXSettings settings;
     std::vector<const AVXFind*> searches;

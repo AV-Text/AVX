@@ -6,8 +6,8 @@
 #include <rapidjson/document.h>
 
 
-AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool auto_lemma_matching)
-    : settings(span, lex, similarity, auto_lemma_matching)
+AVXBlueprint::AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool enable_lemma_matching)
+    : settings(span, lex, similarity, enable_lemma_matching)
 {
     this->okay = false;
     

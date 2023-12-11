@@ -9,7 +9,7 @@
 #include <TExpression.h>
 #include <TMatch.h>
 
-TMatch::TMatch(AVXFind& segment, TExpression& expression, TFragment& fragment, uint32 start, uint32 until): query(query), segment(segment), expression(expression), fragment(fragment)
+TMatch::TMatch(TExpression& expression, TFragment& fragment, uint32 start, uint32 until): query(query), segment(segment), expression(expression), fragment(fragment)
 {
     this->start = start;
     this->until = until;

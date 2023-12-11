@@ -22,7 +22,7 @@ public:
     TFeature& feature;
     uint32 coordinates;
 
-    TTag(uint32 coordinates, TOptions& options, TFeature& feature): options(options), feature(feature)
+    TTag(TOptions& options, TFeature& feature, uint32 coordinates = 0): options(options), feature(feature)
     {
         this->coordinates = coordinates;
     }

@@ -17,7 +17,8 @@ public:
 
 	~AVXFragment();
 
-	bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched);
+	// OBSOLETE FUNCTION (no longer used)
+	// bool compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched);
 
 private:
 	bool okay;

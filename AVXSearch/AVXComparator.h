@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+class TMatch;
+class TTag;
 class AVXComparator
 {
 private:
@@ -29,7 +31,7 @@ public:
     const bool okay;
     const char* type;
 
-    virtual uint16 compare(const WrittenContent& writ)
+    virtual uint16 compare(const WrittenContent& writ, TMatch& match, TTag& tag)
     {
         return 0;
     }

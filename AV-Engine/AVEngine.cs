@@ -53,7 +53,7 @@ namespace AVXFramework
                                 UInt16 span = blueprint.LocalSettings.Span.Value;
                                 byte lexicon = (byte) (blueprint.LocalSettings.Lexicon.Value);
                                 byte similarity = blueprint.LocalSettings.Similarity.Value;
-                                bool fuzzyLemmata = blueprint.LocalSettings.Similarity.AutomaticLemmaMatching;
+                                bool fuzzyLemmata = blueprint.LocalSettings.Similarity.EnableLemmaMatching;
 
                                 List<(byte book, byte chapter, byte verse)> scope = new();
 

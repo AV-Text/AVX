@@ -3,7 +3,7 @@
 #include <directory.h>
 #include <lexicon.h>
 
-uint16 AVXDeltaComparator::compare(const WrittenContent& writ)
+uint16 AVXDeltaComparator::compare(const WrittenContent& writ, TMatch& match, TTag& tag)
 {
 	if (directory::GLOBAL != nullptr && directory::GLOBAL->isOkay())
 	{

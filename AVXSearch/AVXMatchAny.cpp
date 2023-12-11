@@ -27,6 +27,8 @@ AVXMatchAny::AVXMatchAny(rapidjson::GenericObject<true, rapidjson::Value>& opts)
     this->options = "foo-option"; // xoption->option()->c_str();
 }
 
+// OBSOLETE FUNCTION (no longer used)
+/*
 bool AVXMatchAny::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched)
 {
     for (AVXComparator* feature : this->features)
@@ -41,7 +43,7 @@ bool AVXMatchAny::compare(const WrittenContent& writ, std::map<uint32, std::tupl
         }
     }
     return false;
-}
+}*/
 
 AVXMatchAny::~AVXMatchAny()
 {

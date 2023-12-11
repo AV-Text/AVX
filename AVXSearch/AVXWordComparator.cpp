@@ -6,7 +6,7 @@
 // private methods on this class can handle the delegaton to the proper method
 // for match logic
 //
-uint16 AVXWordComparator::compare(const WrittenContent& writ)
+uint16 AVXWordComparator::compare(const WrittenContent& writ, TMatch& match, TTag& tag)
 {
 	bool positive = !this->negate;
 

@@ -29,6 +29,8 @@ AVXFragment::~AVXFragment()
     ;
 }
 
+// OBSOLETE FUNCTION (no longer used)
+/*
 bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tuple<const char*, const uint16>>& matched)
 {
     for (auto req : this->requirements) // fragments are AND conditions (&)
@@ -36,4 +38,4 @@ bool AVXFragment::compare(const WrittenContent& writ, std::map<uint32, std::tupl
             return true;
 
     return false;
-}
+}*/

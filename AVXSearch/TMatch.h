@@ -23,7 +23,7 @@ class AVXFind;
 class TMatch// : public IAssign
 {
 public:
-	TMatch(AVXFind& segment, TExpression& expression, TFragment& fragment, uint32 start, uint32 until);
+	TMatch(TExpression& expression, TFragment& fragment, uint32 start = 0, uint32 until = 0);
 	virtual ~TMatch();
 
 	uint32 start;

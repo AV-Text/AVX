@@ -1,7 +1,7 @@
 #include "AVXStrongsComparator.h"
 #include <stdlib.h>
 
-uint16 AVXStrongsComparator::compare(const WrittenContent& writ)
+uint16 AVXStrongsComparator::compare(const WrittenContent& writ, TMatch& match, TTag& tag)
 {
 	char code = this->lang.length() == 1 ? this->lang[0] : 'X';
 
