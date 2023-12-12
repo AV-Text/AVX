@@ -9,10 +9,12 @@
 #include <TOptions.h>
 #include <AVXFragment.h>
 
+#include <Deserialization.h>
+
 TFragment::TFragment(const AVXFragment& frag, uint16 frag_idx): fragment_avx(frag)
 {
-	this->anchored = frag.anchored ;
-	this->fragment = frag.fragment["fragment"].GetString();
+	this->anchored = frag.anchored;
+	this->fragment = frag.text;
 	this->fragment_idx = frag_idx;
 
 	uint16 idx = 0;

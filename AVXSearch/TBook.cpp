@@ -71,7 +71,7 @@ bool TBook::search_quoted(TExpression& expression, TSettings& settings, std::vec
                     auto match = new TMatch(expression, *fragment);
                     for (auto feature : options->any_of)
                     {
-                        auto coord = (uint32(spanwrit->b) << 24) | (uint32(spanwrit->b) << 16) | (uint32(spanwrit->v) << 8) | uint32(spanwrit->wc);
+                        auto coord = (uint32(this->book_num) << 24) | (uint32(spanwrit->b) << 16) | (uint32(spanwrit->v) << 8) | uint32(spanwrit->wc);
                         auto tag = new TTag(*options, *feature, coord);
                         if (wi > len)
                             break;
@@ -132,7 +132,6 @@ bool TBook::search_quoted(TExpression& expression, TSettings& settings, std::vec
     {
         for (w = 0; w < book.writ_cnt; w++, writ += writ->wc)
         {
-            uint32 wi = w;
             auto spanwrit = writ + 1;
 
             for (TFragment* fragment : expression.fragments)
@@ -146,7 +145,7 @@ bool TBook::search_quoted(TExpression& expression, TSettings& settings, std::vec
                     auto match = new TMatch(expression, *fragment);
                     for (auto feature : options->any_of)
                     {
-                        auto coord = (uint32(spanwrit->b) << 24) | (uint32(spanwrit->b) << 16) | (uint32(spanwrit->v) << 8) | uint32(spanwrit->wc);
+                        auto coord = (uint32(this->book_num) << 24) | (uint32(spanwrit->b) << 16) | (uint32(spanwrit->v) << 8) | uint32(spanwrit->wc);
                         auto tag = new TTag(*options, *feature, coord);
 
                         if (feature->feature_avx.compare(*spanwrit, *match, *tag) && (all_of_remaining == 0))
@@ -186,7 +185,6 @@ bool TBook::search_quoted(TExpression& expression, TSettings& settings, std::vec
                                 goto NOT_FOUND_2;
                             }
                         }
-                        wi++;
                         spanwrit++;
                     }
                 }
@@ -213,8 +211,6 @@ bool TBook::search_unquoted(TExpression& expression, TSettings& settings, std::v
 
     for (/**/; writ <= until; /**/)
     {
-        uint32 cnt = 0;
-
         uint16 span = settings.span > 0 ? settings.span : writ->wc;
         if (writ + span - 1 > until)
             span = (uint16)(until - writ);
@@ -227,8 +223,10 @@ bool TBook::search_unquoted(TExpression& expression, TSettings& settings, std::v
             matched.clear();
             found = false;
 
+            // TO DO: memory management :: LOTS OF LEAKS HERE !!!
             for (auto fragment : expression.fragments)
             {
+                byte c = 0;
                 for (auto options : fragment->all_of)
                 {
                     auto option_key = uint64(options);
@@ -236,19 +234,26 @@ bool TBook::search_unquoted(TExpression& expression, TSettings& settings, std::v
                     auto match = new TMatch(expression, *fragment);
                     for (auto feature : options->any_of)
                     {
-                        auto coord = (uint32(writ->b) << 24) | (uint32(spanwrit.b) << 16) | (uint32(spanwrit.v) << 8) | uint32(spanwrit.wc);
+                        auto coord = (uint32(this->book_num) << 24) | (uint32(spanwrit.c) << 16) | (uint32(spanwrit.v) << 8) | uint32(spanwrit.wc);
                         auto tag = new TTag(*options, *feature, coord);
 
                         if (feature->feature_avx.compare(spanwrit, *match, *tag))
                         {
                             matched[option_key] = true;
+                            if (c == 0)
+                                c = spanwrit.c;
+
+                            if (fragment->all_of.size() == matched.size())
+                            {
+                                bool exists = (this->chapters.find(c) == this->chapters.end());
+                                auto chapter = exists ? this->chapters[c] : new TChapter(c);
+                                chapter->matches.push_back(match);
+                                if (!exists)
+                                    this->chapters[c] = chapter;
+                            }
                             break;
                         }
                     }
-                }
-                if (fragment->all_of.size() == matched.size())
-                {
-
                 }
             }
         }

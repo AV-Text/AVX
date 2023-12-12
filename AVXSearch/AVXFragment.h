@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <directory.h>
-#include <rapidjson/document.h>
+#include <Deserialization.h>
 
 class AVXMatchAny;
 class AVXFragment
@@ -13,6 +13,7 @@ public:
 
 	const rapidjson::GenericObject<true, rapidjson::Value>& fragment;
 	const bool anchored;
+	std::string text;
 	std::vector <AVXMatchAny*> requirements;
 
 	~AVXFragment();

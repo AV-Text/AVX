@@ -6,9 +6,13 @@
 ///////////////////////////////////////////////////////////
 
 #include "TSettings.h"
-//#include <rapidjson/document.h>
+#include <AVXSettings.h>
 
-TSettings::TSettings()
+TSettings::TSettings(const AVXSettings& avx)
+	: fuzzy_lemmata(avx.enable_lemma_matching ? 1 : 0)
+	, lexicon(avx.lexicon)
+	, similarity(avx.similarity)
+	, span(avx.span)
 {
 	;
 }

@@ -111,9 +111,6 @@
     <ClInclude Include="TSettings.h">
       <Filter>Results</Filter>
     </ClInclude>
-    <ClInclude Include="Serialization.h">
-      <Filter>Results</Filter>
-    </ClInclude>
     <ClInclude Include="IBuild.h">
       <Filter>Results</Filter>
     </ClInclude>
@@ -161,6 +158,12 @@
     </ClInclude>
     <ClInclude Include="AVXWordComparator.h">
       <Filter>AVX</Filter>
+    </ClInclude>
+    <ClInclude Include="deserialization.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="serialization.h">
+      <Filter>Results</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

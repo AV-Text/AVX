@@ -11,7 +11,7 @@ uint16 AVXWordComparator::compare(const WrittenContent& writ, TMatch& match, TTa
 	bool positive = !this->negate;
 
 	for (auto key : this->wkeys)
-		if (key == (writ.wkey & 0x3FF))
+		if (key == (writ.wkey & 0x3FFF))
 			return positive ? AVXComparator::FullMatch : 0;
 
 	// TO DO: (TODO)

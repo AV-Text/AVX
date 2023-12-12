@@ -57,8 +57,9 @@
     <ClInclude Include="AVXStrongsComparator.h" />
     <ClInclude Include="AVXTransitionComparator.h" />
     <ClInclude Include="AVXWordComparator.h" />
+    <ClInclude Include="serialization.h" />
+    <ClInclude Include="deserialization.h" />
     <ClInclude Include="IBuild.h" />
-    <ClInclude Include="Serialization.h" />
     <ClInclude Include="TBook.h" />
     <ClInclude Include="TChapter.h" />
     <ClInclude Include="TClientManager.h" />

@@ -26,11 +26,15 @@ TQueryManager::~TQueryManager(){
 
 TQuery * TQueryManager::create(AVXBlueprint* blueprint)
 {
-	auto query = new TQuery(blueprint);
-	auto query_id = uint64(query);
-	this->queries[query_id] = query; // we don't really need a map for this, but it is the current design
+	if (blueprint != nullptr)
+	{
+		auto query = new TQuery(*blueprint);
+		auto query_id = uint64(query);
+		this->queries[query_id] = query; // we don't really need a map for this, but it is the current design
 
-	return query;
+		return query;
+	}
+	return nullptr;
 }
 
 bool TQueryManager::add_scope(uint64 query_id, byte book, byte chapter, byte verse_from, byte verse_to)

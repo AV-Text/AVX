@@ -5,8 +5,6 @@
 
 #include <AVXSettings.h>
 
-//#include <rapidjson/document.h>
-
 class AVXFind;
 
 class AVXBlueprint
@@ -20,7 +18,7 @@ public:
     AVXBlueprint(char data[], uint16 span, byte lex, byte similarity, bool enable_lemma_matching);
 
     const AVXSettings settings;
-    std::vector<const AVXFind*> searches;
+    std::vector<AVXFind*> searches;
     inline bool isOkay() { return okay; }
 
 //  rapidjson::Value& request;

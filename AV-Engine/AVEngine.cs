@@ -51,10 +51,9 @@ namespace AVXFramework
                                 
                                 // brute-force pretty-print (for debugging)
                                 var json_pretty = json
+                                    .Replace("}], \"Text\":",  "}],\n\tText:")
                                     .Replace("}]}]", "  }]}]").Replace("}],", "  }],")
-                                    .Replace("false, \"",       "false,")
                                     .Replace("\"IsQuoted\":",   "\n\tIsQuoted:")
-                                    .Replace("\"Fragments\":",  "\n\tFragments:")
                                     .Replace("Fragments\":",    "\n\tFragments:")
                                     .Replace("\"MatchAll\":",   "\n\t\tMatchAll:")
                                     .Replace("\"AnyFeature\":", "\n\t\t\tAnyFeature:")
@@ -64,7 +63,6 @@ namespace AVXFramework
                                     .Replace("\"Negate\":",     "\n\t\t\t\tNegate:")
                                     .Replace("\"Text\":",       "\n\t\t\t\tText:")
                                     .Replace("\"Anchored\":",   "\n\t\tAnchored:")
-                                    .Replace("Text\":",         "\n\tText:")
                                     .Replace("\"Verb\":",       "\n\tVerb:")
                                     .Replace("\"find\"}]",      "\"find\"\n}]");
 

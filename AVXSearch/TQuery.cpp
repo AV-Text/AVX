@@ -6,16 +6,26 @@
 ///////////////////////////////////////////////////////////
 
 #include <TQuery.h>
-#include "TBook.h"
-#include "TExpression.h"
+#include <TBook.h>
+#include <TExpression.h>
+#include <AVXFind.h>
 
 #include <Serialization.h>
 
-TQuery::TQuery(AVXBlueprint* blueprint)
+TQuery::TQuery(AVXBlueprint& blueprint): blueprint(blueprint), query_id(uint64(this)), settings(blueprint.settings)
 {
-	this->blueprint = blueprint;
-	// TO DO:
-	// call constructors // populate TQuery obeject
+	this->book_cnt = 0;
+	this->book_hits = 0;
+	this->chapter_hits = 0;
+	this->verse_hits = 0;
+	this->total_hits = 0;
+	this->error_code = 0;
+
+	uint16 idx = 0;
+	for (AVXFind* avx : this->blueprint.searches)
+	{
+		this->expressions.push_back(new TExpression(*avx, idx++));
+	}
 	this->search();
 }
 
@@ -51,23 +61,24 @@ std::string TQuery::fetch(byte book_num, byte chapter_num)
 
 bool TQuery::add_scope(uint32 spec)
 {
-	byte book = spec >> 16;
+	byte book = spec >> 24;
 
 	if (book == 0)
 	{
-		for (byte idx = 0; idx < 66; idx++)
+		for (byte num = 1; num <= 66; num++)
 		{
-			this->books[idx] = new TBook(idx+1);
+			this->books[num] = new TBook(num);
 		}
+		this->book_cnt = 66;
+		return true;
 	}
 	else if (book >= 1 && book <= 66)
 	{
-		byte idx = book - 1;
-
-		if (this->books[idx] == nullptr)
+		if (books.find(book) == this->books.end())
 		{
-			this->books[idx] = new TBook(book);
+			this->books[book] = new TBook(book);
 		}
+		this->book_cnt = byte(this->books.size());
 		return true;
 	}
 	return false;
@@ -75,27 +86,24 @@ bool TQuery::add_scope(uint32 spec)
 
 bool TQuery::search()
 {
+	if (this->book_cnt == 0)
+		this->add_scope(0);
+
 	int cnt = 0;
 	int ok = true;
 	for (auto bk = this->books.begin(); bk != this->books.end(); ++bk)
 	{
-		cnt++;
 		TBook* book = bk->second;
 
 		for (auto expression : this->expressions)
 		{
+			cnt++;
 			ok = book->search(*expression, this->settings, this->scope); // TODO: update hits attributes in TQuery
 			if (!ok)
 				return false;
 		}
 	}
-	if (cnt > 0)
-		return true;
-
-	for (byte b = 1; b <= 66; b++)
-		this->books[b] = new TBook(b);
-
-	return search();
+	return (cnt > 0);
 }
 
 std::string TQuery::serialize()

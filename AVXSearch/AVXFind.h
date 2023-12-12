@@ -14,7 +14,7 @@ public:
 
     friend class AVXBlueprint;
 
-    AVXFind(const rapidjson::GenericObject<false, rapidjson::Value>& expression): segment(expression), quoted(expression["IsQuoted"].GetBool())
+    AVXFind(const rapidjson::GenericObject<false, rapidjson::Value>& expression): quoted(expression["IsQuoted"].GetBool()), segment(expression)
     {
         this->okay = false;
         if (this->segment.IsObject())

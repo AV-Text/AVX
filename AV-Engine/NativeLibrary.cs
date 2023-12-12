@@ -110,26 +110,19 @@
             this.Free();
             this.Summary = string.Empty;
 
-            if (scope.Count == 0)
-            {
-                // TO DO (TODO):
-                // this.yaml = this.External.create_query_and_execute(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
-                // this.address = from the desrialized yaml
-                // brute force
+            this.Address = this.External.query_create(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
 
-                this.Address = this.External.query_create(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
-                this.Summary = this.External.fetch_summary(this.Address);
-            }
-            else
+            if (this.Address != 0)
             {
-                this.Address = this.External.query_create(blueprint, span, lexicon, similarity, fuzzy_lemmata ? (byte)1 : (byte)0);
                 foreach (var spec in scope)
                 {
                     this.External.query_add_scope(this.Address, spec.book, spec.chapter, spec.verse);
                 }
                 this.Summary = this.External.fetch_summary(this.Address);
+
+                return (this.Address != 0 && !string.IsNullOrWhiteSpace(this.Summary));
             }
-            return (this.Address != 0 && !string.IsNullOrWhiteSpace(this.Summary));
+            return false;
         }
         public string Fetch(UInt64 client_id, byte book)
         {

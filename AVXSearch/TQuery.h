@@ -24,10 +24,10 @@ class TBook;
 class TQuery
 {
 private:
-	AVXBlueprint* blueprint;
+	AVXBlueprint& blueprint;
 
 public:
-	TQuery(AVXBlueprint* blueprint);
+	TQuery(AVXBlueprint& blueprint);
 
 	virtual ~TQuery();
 	byte book_cnt;
@@ -36,7 +36,7 @@ public:
 	uint64 chapter_hits;
 	uint32 error_code;
 	std::vector<TExpression*> expressions;
-	uint64 query_id;
+	const uint64 query_id;
 	TSettings settings;
 	uint64 total_hits;
 	uint64 verse_hits;
