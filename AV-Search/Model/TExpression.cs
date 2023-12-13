@@ -11,6 +11,7 @@ namespace AVSearch
 		{
 			this.fragments = new();
 		}
+		public bool Quoted               { get; private set; }
 
 		public List<TFragment> fragments { get; private set; }
 		public string expression		 { get; private set; }

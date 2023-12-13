@@ -31,11 +31,46 @@ namespace AVSearch
 
 		public bool add_scope(UInt32 spec)
 		{
-			return false;
-		}
+            byte book = (byte) (spec >> 24);
+
+            if (book == 0)
+            {
+                for (byte num = 1; num <= 66; num++)
+                {
+                    this.books[num] = new TBook(num);
+                }
+                this.book_cnt = 66;
+                return true;
+            }
+            else if (book >= 1 && book <= 66)
+            {
+                if (!books.ContainsKey(book))
+                {
+                    this.books[book] = new TBook(book);
+                }
+                this.book_cnt = (byte) this.books.Count;
+                return true;
+            }
+            return false;
+        }
 		public bool search()
 		{
-			return false;
-		}
+            if (this.book_cnt == 0)
+                this.add_scope(0);
+
+            int cnt = 0;
+            bool ok = true;
+            foreach (TBook book in this.books.Values)
+            {
+                foreach (var expression in this.expressions)
+                {
+                    cnt++;
+                    //ok = book.search(ref expression, ref this.settings, ref this.scope); // TODO: update hits attributes in TQuery
+                    if (!ok)
+                        return false;
+                }
+            }
+            return (cnt > 0);
+        }
 	}
 }

@@ -25,8 +25,10 @@ namespace AVSearch
 		}
 		public bool search(ref TExpression expression, ref TSettings settings, ref List<UInt32> scope)
 		{
-			return false;
-		}
+            return expression.Quoted
+                ? search_quoted(ref expression, ref settings, ref scope)
+                : search_unquoted(ref expression, ref settings, ref scope);
+        }
 		private bool search_quoted(ref TExpression expression, ref TSettings settings, ref List<UInt32> scope)
         {
 			return false;
