@@ -17,10 +17,13 @@
         private TextWriter? bomOmega_MD5;
         private TextWriter? bomOmega;
 
-        private BinaryReader? phoneticReader;
+        // This was used to add NUPhone to the 3911 release // It is not needed for 4xyz releases
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
+        private BinaryReader? phoneticReader;  
+#endif
         private BinaryReader? sdkReader;
         private BinaryWriter? newWriter;
-        private UInt64 version;
+        private UInt32 version;
         private string SDK;
 
         public ManageOmega(string baseSDK, string newSDK)
@@ -33,14 +36,18 @@
             this.newWriter = sdk.writer;
             this.SDK = sdk.path;
 
+            // This was used to add NUPhone to the 3911 release // It is not needed for 4xyz releases
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
             this.phoneticReader = AVXManager.OpenBinaryReader("AV-Phonetics", ".binary");
-
+#endif
             version = 0;
-            for (int i = 1; i < newSDK.Length; i++)
+            string str = newSDK.ToUpper();
+            for (int i = 1; i < str.Length; i++)
             {
-                int c = (int) (newSDK[i]);
-                int digit = c - (int)'0';
-                version *= 10;
+                char c = str[i];
+                byte val = (byte) c;
+                int digit =  c >= (byte)'0' && c <= (byte)'9' ? val - (byte)'0' : c >= (byte)'A' && c <= (byte)'F' ? (val - (byte)'A') + 10 : 0;
+                version *= 0x10;
                 version += (byte) digit;
             }
         }
@@ -54,8 +61,11 @@
             if (this.newWriter != null)
                 this.newWriter.Close();
 
+            // This was used to add NUPhone to the 3911 release // It is not needed for 4xyz releases
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
             if (this.phoneticReader != null)
                 this.phoneticReader.Close();
+#endif
         }
         public void CloseMD5()
         {
@@ -63,6 +73,9 @@
                 this.bomOmega_MD5.Close();
         }
         private static char[] whitespace = new char[] { ' ', '\t' };
+
+        // This was used to add NUPhone to the 3911 release // It is not needed for 4xyz releases
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
         private void UpdatePhoneticsBOM()
         {
             if (this.phoneticReader != null)
@@ -97,6 +110,7 @@
                 bom.hash = this.CalculateMD5(this.phoneticReader.ReadBytes((int)len));
             }
         }
+#endif
         private void WriteBinaryBOM(TOC bom)
         {
             if (this.newWriter != null)
@@ -173,12 +187,190 @@
                     }
                     WriteBinaryBOM(bom);
                 }
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
                 this.UpdatePhoneticsBOM();
                 bom = BOM.Inventory[BOM.Phonetics];
                 WriteBinaryBOM(bom);
+#endif
             }
         }
-        private void FixBookArtifact()
+        private void FixBadModernTranslations()
+        {
+//          byte[] art = new byte[] {   44,   17,   29,     3 }; // coordinates[] B C V W Acts 17:29 (3rd to last word)
+//          byte[] art = new byte[] { 0x2C, 0x11, 0x1D, 0x033 }; // coordinates[] B C V W Acts 17:29 (3rd to last word)
+            UInt32 coord = (UInt32) 0x_03_1D_11_2C;
+
+            UInt16 noun12 = 0x0010;
+            UInt32 noun32 = 0;
+
+
+            if (this.sdkReader != null && this.newWriter != null)
+            {
+                using (var mem = new MemoryStream())
+                {
+                    var mwriter = new BinaryWriter(mem, Encoding.UTF8);
+
+                    var bom = BOM.Inventory[BOM.Written];
+                    this.sdkReader.BaseStream.Seek((int)bom.originalOffset, SeekOrigin.Begin);
+
+                    for (UInt32 w = 0; w < bom.recordCount; w++)
+                    {
+                        int len = 0;
+                        var strongs = this.sdkReader.ReadUInt64(); len += 8;
+                        var bcvw = this.sdkReader.ReadUInt32(); len += 4;
+                        var wkey = this.sdkReader.ReadUInt16(); len += 2;
+                        var punc = this.sdkReader.ReadByte(); len ++;
+                        var tran = this.sdkReader.ReadByte(); len ++;
+                        var pnPos12 = this.sdkReader.ReadUInt16(); len += 2;
+                        var pos32 = this.sdkReader.ReadUInt32(); len += 4;
+                        var lemma = this.sdkReader.ReadUInt16(); len += 2;
+
+                        if (noun32 == 0 && pnPos12 == noun12)
+                        {
+                            noun32 = pos32;
+                        }
+                        if (bcvw == coord)
+                        {
+                            lemma |= 0x4000; // modernization-squelch-bit ("art" here should *not* be modernized into "are")
+                            pnPos12 = noun12;
+                            pos32 = noun32;
+                        }
+
+                        if (len != 24)
+                        {
+                            break;
+                        }
+                        mwriter.Write(strongs);
+                        mwriter.Write(bcvw);
+                        mwriter.Write(wkey);
+                        mwriter.Write(punc);
+                        mwriter.Write(tran);
+                        mwriter.Write(pnPos12);
+                        mwriter.Write(pos32);
+                        mwriter.Write(lemma);
+                    }
+                    var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
+
+                    mreader.BaseStream.Seek(0, SeekOrigin.Begin);
+                    var bytes = mreader.ReadBytes((int)bom.length);
+                    bom.hash = CalculateMD5(bytes);
+
+                    var position = this.newWriter.BaseStream.Position;
+                    this.newWriter.BaseStream.Seek(0 + (BOM.Book * bom.recordLength) - (2 * sizeof(UInt64)), SeekOrigin.Begin);
+                    this.newWriter.Write(bom.hash[0]);
+                    this.newWriter.Write(bom.hash[1]);
+                    this.newWriter.BaseStream.Seek(position, SeekOrigin.Begin);
+                    this.newWriter.Write(bytes);
+
+                    mreader.Close();
+                }
+            }
+        }
+        private void FixBookArtifactWithCurrentVersion()
+        {
+            if (this.sdkReader != null && this.newWriter != null)
+            {
+                using (var mem = new MemoryStream())
+                {
+                    var mwriter = new BinaryWriter(mem, Encoding.UTF8);
+
+                    (UInt32 idx, UInt16 cnt) previous = (0, 0);
+                    var bom = BOM.Inventory[BOM.Book];
+                    this.sdkReader.BaseStream.Seek((int)bom.originalOffset, SeekOrigin.Begin);
+
+                    for (byte b = 0; b < bom.recordCount; b++)
+                    {
+                        int len = 0;
+                        var bookNum = this.sdkReader.ReadByte(); len++;
+                        var chapterCnt = this.sdkReader.ReadByte(); len++;
+                        var chapterIdx = this.sdkReader.ReadUInt16(); len += 2;
+                        var writCnt = this.sdkReader.ReadUInt16(); len += 2;
+                        var writIdx = this.sdkReader.ReadUInt32(); len += 4;
+
+                        var name = this.sdkReader.ReadBytes(16); len += name.Length;
+                        var abbr = this.sdkReader.ReadBytes(22); len += abbr.Length;
+
+                        if (len != 48)
+                        {
+                            break;
+                        }
+                        byte[] digits = new[] { (byte)(this.version / 0x1000), (byte)((this.version % 0x1000) / 0x0100), (byte)((this.version % 0x0100) / 0x0010), (byte)(this.version % 0x0010) };
+                        if (b == 0)
+                        {
+                            writIdx = (UInt32)this.version;
+                            for (int i = "Omega ".Length; i < name.Length; i++) // map version to new one; e.g. 3.9.11 => 4.2.17
+                            {
+                                switch(i)
+                                {
+                                    case 0: name[i] = digits[0]; break;
+                                    case 2: name[i] = digits[1]; break;
+                                    case 4: name[i] = digits[2]; break;
+                                    case 5: name[i] = digits[3]; break;
+                                }
+                                if (i >= 5)
+                                    break;
+                            }
+                            int cnt = 0;
+                            int two = 0;
+                            for (int i = 0; i < abbr.Length; i++) // 35 => 39
+                            {
+                                if (two == 2)
+                                {
+                                    two = 0;
+                                    cnt++;
+                                }
+                                if (cnt == 3)
+                                {
+                                    break;
+                                }
+                                byte c = abbr[i];
+
+                                // if it's a numeric, it needs to be replaced
+                                if ( (c >= (byte)'0' && c <= (byte)'9') 
+                                ||   (c >= (byte)'A' && c <= (byte)'F')
+                                ||   (c >= (byte)'a' && c <= (byte)'f') )
+                                {
+                                    abbr[i] = digits[two];
+                                    two++;
+                                }
+                            }
+                        }
+                        else if (b == 1)
+                        {
+                            previous = (0, writCnt);
+                            writIdx = 0;
+                        }
+                        else
+                        {
+                            writIdx = previous.idx + previous.cnt;
+                            previous = (writIdx, writCnt);
+                        }
+                        mwriter.Write(bookNum);
+                        mwriter.Write(chapterCnt);
+                        mwriter.Write(chapterIdx);
+                        mwriter.Write(writCnt);
+                        mwriter.Write(writIdx);
+                        mwriter.Write(name);
+                        mwriter.Write(abbr);
+                    }
+                    var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
+
+                    mreader.BaseStream.Seek(0, SeekOrigin.Begin);
+                    var bytes = mreader.ReadBytes((int)bom.length);
+                    bom.hash = CalculateMD5(bytes);
+
+                    var position = this.newWriter.BaseStream.Position;
+                    this.newWriter.BaseStream.Seek(0 + (BOM.Book * bom.recordLength) - (2 * sizeof(UInt64)), SeekOrigin.Begin);
+                    this.newWriter.Write(bom.hash[0]);
+                    this.newWriter.Write(bom.hash[1]);
+                    this.newWriter.BaseStream.Seek(position, SeekOrigin.Begin);
+                    this.newWriter.Write(bytes);
+
+                    mreader.Close();
+                }
+            }
+        }
+        private void FixBookArtifact3911()
         {
             if (this.sdkReader != null && this.newWriter != null)
             {
@@ -287,16 +479,28 @@
         public void Manage()
         {
             this.CreateDirectory();
-
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
             for (byte idx = 1; idx < BOM.Phonetics; idx++)
+#else
+            for (byte idx = 1; idx <= BOM.Phonetics; idx++)
+#endif
             {
+#if BASELINE_IS_EARLIER_THAN_3911
                 if (idx == BOM.Book)
                     this.FixBookArtifact();
                 else
+#endif
+                if (idx == BOM.Book)
+                    this.FixBookArtifactWithCurrentVersion();
+                else if (idx == BOM.Written)
+                    this.FixBadModernTranslations();
+                else
                     this.CreateExistingArtifact(idx);
             }
+            // This was used to add NUPhone to the 3911 release // It is not needed for 4xyz releases
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
             this.CreateNewArtifact(BOM.Phonetics, this.phoneticReader);
-
+#endif
             for (byte idx = 0; idx <= BOM.Phonetics; idx++)
             {
                 var bom = BOM.Inventory[idx];

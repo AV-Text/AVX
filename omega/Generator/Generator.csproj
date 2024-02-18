@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);REQUIRES_EXTERNAL_NUPHONE_BINARY</DefineConstants>
+  </PropertyGroup>
+
 </Project>
