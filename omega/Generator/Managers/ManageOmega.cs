@@ -1,16 +1,9 @@
 ﻿namespace Generator
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Reflection.PortableExecutable;
-    using System.Runtime.ExceptionServices;
-    using System.Runtime.InteropServices;
     using System.Text;
-    using System.Threading.Channels;
-    using System.Xml.Linq;
-    using static System.Net.WebRequestMethods;
 
     public class ManageOmega
     {
@@ -23,8 +16,10 @@
 #endif
         private BinaryReader? sdkReader;
         private BinaryWriter? newWriter;
-        private UInt32 version;
+        private UInt64 version;
+        private char[] VERSION;
         private string SDK;
+        
 
         public ManageOmega(string baseSDK, string newSDK)
         {
@@ -35,6 +30,7 @@
             var sdk = AVXManager.CreateSDK("AVX-Omega" + newSDK);
             this.newWriter = sdk.writer;
             this.SDK = sdk.path;
+            this.VERSION = new char[4];
 
             // This was used to add NUPhone to the 3911 release // It is not needed for 4xyz releases
 #if REQUIRES_EXTERNAL_NUPHONE_BINARY
@@ -49,6 +45,8 @@
                 int digit =  c >= (byte)'0' && c <= (byte)'9' ? val - (byte)'0' : c >= (byte)'A' && c <= (byte)'F' ? (val - (byte)'A') + 10 : 0;
                 version *= 0x10;
                 version += (byte) digit;
+                if (i-1 < VERSION.Length)
+                    VERSION[i-1] = c;
             }
         }
         public void CloseAllButMD5()
@@ -122,7 +120,7 @@
                 this.newWriter.Write(bom.recordCount);
                 this.newWriter.Write(bom.hash[0]);
                 this.newWriter.Write(bom.hash[1]);
-            }
+             }
         }
         private void WriteTextBOM(TOC bom)
         {
@@ -159,7 +157,11 @@
             if (this.sdkReader != null)
             {
                 TOC bom;
+#if REQUIRES_EXTERNAL_NUPHONE_BINARY
                 for (byte idx = 0; idx < BOM.Phonetics; idx++)
+#else
+                for (byte idx = 0; idx <= BOM.Phonetics; idx++)
+#endif
                 {
                     bom = BOM.Inventory[idx];
                     bom.hash = new UInt64[2];
@@ -194,6 +196,25 @@
 #endif
             }
         }
+        private bool RewriteData(TOC toc, byte[] data)
+        {
+            RecalculateMD5(toc, data);
+            WriteBinaryBOM(toc);
+
+            bool ok = (this.newWriter != null);
+
+            if (ok)
+            {
+                this.newWriter.BaseStream.Seek(toc.offset, SeekOrigin.Begin);
+                this.newWriter.Write(data);
+            }
+            return ok;
+        }
+        private void RecalculateMD5(TOC toc, byte[] data)
+        {
+            toc.hash = CalculateMD5(data);
+        }
+
         private void FixBadModernTranslations()
         {
 //          byte[] art = new byte[] {   44,   17,   29,     3 }; // coordinates[] B C V W Acts 17:29 (3rd to last word)
@@ -250,18 +271,9 @@
                         mwriter.Write(lemma);
                     }
                     var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
-
                     mreader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    var bytes = mreader.ReadBytes((int)bom.length);
-                    bom.hash = CalculateMD5(bytes);
-
-                    var position = this.newWriter.BaseStream.Position;
-                    this.newWriter.BaseStream.Seek(0 + (BOM.Book * bom.recordLength) - (2 * sizeof(UInt64)), SeekOrigin.Begin);
-                    this.newWriter.Write(bom.hash[0]);
-                    this.newWriter.Write(bom.hash[1]);
-                    this.newWriter.BaseStream.Seek(position, SeekOrigin.Begin);
-                    this.newWriter.Write(bytes);
-
+                    var data = mreader.ReadBytes((int)bom.length);
+                    this.RewriteData(bom, data);                   
                     mreader.Close();
                 }
             }
@@ -294,22 +306,35 @@
                         {
                             break;
                         }
-                        byte[] digits = new[] { (byte)(this.version / 0x1000), (byte)((this.version % 0x1000) / 0x0100), (byte)((this.version % 0x0100) / 0x0010), (byte)(this.version % 0x0010) };
                         if (b == 0)
                         {
                             writIdx = (UInt32)this.version;
                             for (int i = "Omega ".Length; i < name.Length; i++) // map version to new one; e.g. 3.9.11 => 4.2.17
                             {
-                                switch(i)
+                                if (this.VERSION.Length == 4)
                                 {
-                                    case 0: name[i] = digits[0]; break;
-                                    case 2: name[i] = digits[1]; break;
-                                    case 4: name[i] = digits[2]; break;
-                                    case 5: name[i] = digits[3]; break;
+                                    switch (i)
+                                    {
+                                        case 0: name[i] = (byte)this.VERSION[0]; break;
+                                        case 2: name[i] = (byte)this.VERSION[1]; break;
+                                        case 4: name[i] = (byte)this.VERSION[2]; break;
+                                        case 5: name[i] = (byte)this.VERSION[3]; break;
+                                    }
                                 }
+                                else
+                                {
+                                    switch (i)
+                                    {
+                                        case 0: name[i] = (byte)'X'; break;
+                                        case 2: name[i] = (byte)'X'; break;
+                                        case 4: name[i] = (byte)'X'; break;
+                                        case 5: name[i] = (byte)'X'; break;
+                                    }                                }
                                 if (i >= 5)
                                     break;
                             }
+                            char major = this.VERSION.Length >= 1 ? this.VERSION[0] : 'X';
+                            char minor = this.VERSION.Length >= 2 ? this.VERSION[1] : 'X';
                             int cnt = 0;
                             int two = 0;
                             for (int i = 0; i < abbr.Length; i++) // 35 => 39
@@ -330,7 +355,11 @@
                                 ||   (c >= (byte)'A' && c <= (byte)'F')
                                 ||   (c >= (byte)'a' && c <= (byte)'f') )
                                 {
-                                    abbr[i] = digits[two];
+                                    switch(two)
+                                    {
+                                        case 0: abbr[i] = (byte) major; break;
+                                        case 1: abbr[i] = (byte) minor; break;
+                                    }
                                     two++;
                                 }
                             }
@@ -354,18 +383,9 @@
                         mwriter.Write(abbr);
                     }
                     var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
-
                     mreader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    var bytes = mreader.ReadBytes((int)bom.length);
-                    bom.hash = CalculateMD5(bytes);
-
-                    var position = this.newWriter.BaseStream.Position;
-                    this.newWriter.BaseStream.Seek(0 + (BOM.Book * bom.recordLength) - (2 * sizeof(UInt64)), SeekOrigin.Begin);
-                    this.newWriter.Write(bom.hash[0]);
-                    this.newWriter.Write(bom.hash[1]);
-                    this.newWriter.BaseStream.Seek(position, SeekOrigin.Begin);
-                    this.newWriter.Write(bytes);
-
+                    var data = mreader.ReadBytes((int)bom.length);
+                    this.RewriteData(bom, data);
                     mreader.Close();
                 }
             }
@@ -438,18 +458,9 @@
                         mwriter.Write(abbr);
                     }
                     var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
-
                     mreader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    var bytes = mreader.ReadBytes((int)bom.length);
-                    bom.hash = CalculateMD5(bytes);
-
-                    var position = this.newWriter.BaseStream.Position;
-                    this.newWriter.BaseStream.Seek(0 + (BOM.Book * bom.recordLength) - (2 * sizeof(UInt64)), SeekOrigin.Begin);
-                    this.newWriter.Write(bom.hash[0]);
-                    this.newWriter.Write(bom.hash[1]);
-                    this.newWriter.BaseStream.Seek(position, SeekOrigin.Begin);
-                    this.newWriter.Write(bytes);
-
+                    var data = mreader.ReadBytes((int)bom.length);
+                    this.RewriteData(bom, data);
                     mreader.Close();
                 }
             }

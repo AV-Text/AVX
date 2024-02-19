@@ -6,7 +6,7 @@
 
     public static class BOM
     {
-        public const string Omega_Version = "-Ω39";
+//      public const string Omega_Version = "-Ω42";
 
 #pragma warning disable SYSLIB0045
         public static HashAlgorithm? hasher { get; private set; } = HashAlgorithm.Create(HashAlgorithmName.MD5.ToString());
@@ -26,21 +26,22 @@
 
         public static Dictionary<byte, TOC> Inventory = new()
         {
-            {BOM.DIRECTORY,      new TOC("Directory") },
-            {BOM.Book,           new TOC("Book") },
-            {BOM.Chapter,        new TOC("Chapter") },
-            {BOM.Written,        new TOC("Written") },
-            {BOM.Lexicon,        new TOC("Lexicon") },
-            {BOM.Lemmata,        new TOC("Lemmata") },
-            {BOM.OOV,            new TOC("OOV-Lemmata") },
-            {BOM.Names,          new TOC("Names") },
-            {BOM.Phonetics,      new TOC("Phonetics") },
+            {BOM.DIRECTORY,      new TOC(DIRECTORY, "Directory") },
+            {BOM.Book,           new TOC(Book,      "Book") },
+            {BOM.Chapter,        new TOC(Chapter,   "Chapter") },
+            {BOM.Written,        new TOC(Written,   "Written") },
+            {BOM.Lexicon,        new TOC(Lexicon,   "Lexicon") },
+            {BOM.Lemmata,        new TOC(Lemmata,   "Lemmata") },
+            {BOM.OOV,            new TOC(OOV,       "OOV-Lemmata") },
+            {BOM.Names,          new TOC(Names,     "Names") },
+            {BOM.Phonetics,      new TOC(Phonetics, "Phonetics") },
         };
     }
     public class TOC
     {
-        public TOC(string label)
+        public TOC(byte id, string label)
         {
+            this.ID = id;
             this.label = new byte[16];
             for (int i = 0; i < label.Length && i < 16; i++)
                 this.label[i] = (byte)label[i];
@@ -61,6 +62,7 @@
         public UInt64[] hash;
         public UInt32 recordLength;
         public UInt32 recordCount;
+        public byte ID { get; private set; }
     }
 
     public enum ORDER
