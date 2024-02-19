@@ -13,7 +13,7 @@
             // The global bom gets messed up when we build 3.1 and 3.2 at the same time.
             // Choose which one:
 
-            var omega = new ManageOmega("-3911".ToUpper(), "-4217".ToUpper());
+            var omega = new ManageOmega("-3911".ToUpper(), "-4219".ToUpper());
             omega.Manage();
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -20,7 +20,6 @@
         private char[] VERSION;
         private string SDK;
         
-
         public ManageOmega(string baseSDK, string newSDK)
         {
             this.bomOmega_MD5 = AVXManager.OpenTextWriter("AVX-Omega" + newSDK, ".md5");
@@ -152,9 +151,35 @@
                 this.bomOmega.Write("\n");
             }
         }
-        private void CreateDirectory()
+        private void RewriteDirectory()
         {
-            if (this.sdkReader != null)
+            if (this.newWriter != null)
+            {
+                this.newWriter.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                for (byte idx = 0; idx <= BOM.Phonetics; idx++)
+                {
+                    TOC toc = BOM.Inventory[idx];
+
+                    if (idx == BOM.DIRECTORY)
+                    {
+                        toc.hash[0] = 0;
+                        toc.hash[1] = this.version;
+                        toc.recordCount = (UInt32)(BOM.Phonetics + 1);
+                        toc.length = (UInt32)(toc.recordCount * toc.recordLength);
+                    }
+                    else
+                    {
+                        byte prev = (byte)(idx - 1);
+                        toc.offset = (UInt32)(BOM.Inventory[prev].offset + BOM.Inventory[prev].length);
+                    }
+                    WriteBinaryBOM(toc);
+                }
+            }
+        }
+        private void CloneDirectory()
+        {
+            if (this.sdkReader != null && this.newWriter != null)
             {
                 TOC bom;
 #if REQUIRES_EXTERNAL_NUPHONE_BINARY
@@ -196,16 +221,14 @@
 #endif
             }
         }
-        private bool RewriteData(TOC toc, byte[] data)
+        private bool WriteBulkData(TOC toc, byte[] data)
         {
             RecalculateMD5(toc, data);
-            WriteBinaryBOM(toc);
-
             bool ok = (this.newWriter != null);
 
             if (ok)
             {
-                this.newWriter.BaseStream.Seek(toc.offset, SeekOrigin.Begin);
+                toc.length = (UInt32) data.Length;
                 this.newWriter.Write(data);
             }
             return ok;
@@ -217,9 +240,9 @@
 
         private void FixBadModernTranslations()
         {
-//          byte[] art = new byte[] {   44,   17,   29,     3 }; // coordinates[] B C V W Acts 17:29 (3rd to last word)
-//          byte[] art = new byte[] { 0x2C, 0x11, 0x1D, 0x033 }; // coordinates[] B C V W Acts 17:29 (3rd to last word)
-            UInt32 coord = (UInt32) 0x_03_1D_11_2C;
+//          byte[] art = new byte[] {   44,   17,   29,    4 }; // coordinates[] B C V W Acts 17:29 (4th to last word)
+//          byte[] art = new byte[] { 0x2C, 0x11, 0x1D, 0x04 }; // coordinates[] B C V W Acts 17:29 (4th to last word)
+            UInt32 coord = (UInt32) 0x_04_1D_11_2C;
 
             UInt16 noun12 = 0x0010;
             UInt32 noun32 = 0;
@@ -273,7 +296,7 @@
                     var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
                     mreader.BaseStream.Seek(0, SeekOrigin.Begin);
                     var data = mreader.ReadBytes((int)bom.length);
-                    this.RewriteData(bom, data);                   
+                    this.WriteBulkData(bom, data);                   
                     mreader.Close();
                 }
             }
@@ -385,7 +408,7 @@
                     var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
                     mreader.BaseStream.Seek(0, SeekOrigin.Begin);
                     var data = mreader.ReadBytes((int)bom.length);
-                    this.RewriteData(bom, data);
+                    this.WriteBulkData(bom, data);
                     mreader.Close();
                 }
             }
@@ -460,7 +483,7 @@
                     var mreader = new BinaryReader(mwriter.BaseStream, Encoding.UTF8);
                     mreader.BaseStream.Seek(0, SeekOrigin.Begin);
                     var data = mreader.ReadBytes((int)bom.length);
-                    this.RewriteData(bom, data);
+                    this.WriteBulkData(bom, data);
                     mreader.Close();
                 }
             }
@@ -489,7 +512,7 @@
         }
         public void Manage()
         {
-            this.CreateDirectory();
+            this.CloneDirectory();
 #if REQUIRES_EXTERNAL_NUPHONE_BINARY
             for (byte idx = 1; idx < BOM.Phonetics; idx++)
 #else
@@ -517,6 +540,8 @@
                 var bom = BOM.Inventory[idx];
                 this.WriteTextBOM(bom);
             }
+
+            this.RewriteDirectory();
             this.CloseAllButMD5();
 
             if (this.bomOmega_MD5 != null)
