@@ -242,7 +242,7 @@
         {
 //          byte[] art = new byte[] {   44,   17,   29,    4 }; // coordinates[] B C V W Acts 17:29 (4th to last word)
 //          byte[] art = new byte[] { 0x2C, 0x11, 0x1D, 0x04 }; // coordinates[] B C V W Acts 17:29 (4th to last word)
-            UInt32 coord = (UInt32) 0x_04_1D_11_2C;
+            UInt32 coord_of_art_as_a_noun = (UInt32) 0x_04_1D_11_2C;
 
             UInt16 noun12 = 0x0010;
             UInt32 noun32 = 0;
@@ -269,11 +269,16 @@
                         var pos32 = this.sdkReader.ReadUInt32(); len += 4;
                         var lemma = this.sdkReader.ReadUInt16(); len += 2;
 
+                        if ((lemma & 0x4000) != 0) // this was a legacy usage of this bit and no longer applies
+                        {
+                            lemma ^= 0x4000;
+                        }
+
                         if (noun32 == 0 && pnPos12 == noun12)
                         {
                             noun32 = pos32;
                         }
-                        if (bcvw == coord)
+                        if (bcvw == coord_of_art_as_a_noun)
                         {
                             lemma |= 0x4000; // modernization-squelch-bit ("art" here should *not* be modernized into "are")
                             pnPos12 = noun12;
